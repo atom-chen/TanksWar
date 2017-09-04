@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: fea03acb996968b4e89abf0337e777e6
+timeCreated: 1488177003
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: DFPHeiW5-GB
+  fontNames:
+  - DFPHeiW5-GB
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
