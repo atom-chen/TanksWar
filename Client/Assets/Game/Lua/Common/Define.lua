@@ -8,8 +8,6 @@
 Module = {
 	Common = "Common",
 	Main = "Main",
-	DDZ = "DDZ",
-	GYMJ = "GYMJ",
 }
 
 ----通用界面相关
@@ -45,42 +43,6 @@ Main_Panel = {
 	CreateRoomPanel = "CreateRoomPanel",
 	JoinRoomPanel = "JoinRoomPanel",
 }
-
---------------------------------------------------------------------------
-----斗地主相关配置
-DDZ_Ctrl = {
-	MainCtrl = "MainCtrl",
-	PromptCtrl = "PromptCtrl",
-	MessageCtrl = "MessageCtrl",
-	LoginCtrl = "LoginCtrl",
-	LobbyCtrl = "LobbyCtrl",
-}
-
-DDZ_Panel = {
-	PromptPanel = "PromptPanel",	
-	MessagePanel = "MessagePanel",
-	LoginPanel = "LoginPanel",
-	LobbyPanel = "LobbyPanel",
-}
-
---------------------------------------------------------------------------
-----麻将相关配置
-GYMJ_Ctrl = {
-	MainCtrl = "MainCtrl",
-	PromptCtrl = "PromptCtrl",
-	MessageCtrl = "MessageCtrl",
-	LoginCtrl = "LoginCtrl",
-	LobbyCtrl = "LobbyCtrl",
-}
-
-GYMJ_Panel = {
-	PromptPanel = "PromptPanel",	
-	MessagePanel = "MessagePanel",
-	LoginPanel = "LoginPanel",
-	LobbyPanel = "LobbyPanel",
-}
-
---------------------------------------------------------------------------
 
 
 --协议类型--
