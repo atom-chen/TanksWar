@@ -96,6 +96,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0e79701ef59c75948af658b571fb4440, type: 3}
   - {fileID: 21300000, guid: 60ac87ae7552b3d478de4dfe07205388, type: 3}
   - {fileID: 21300000, guid: 18b7066f13a64ec4a97a0f00ebde215c, type: 3}
+  - {fileID: 21300000, guid: 3f64c111c378e154e860001e12e8bb7f, type: 3}
+  - {fileID: 21300000, guid: 6b11c12b5cdb4ae439b4ffb6ba49e266, type: 3}
+  - {fileID: 21300000, guid: 22bd639cb7e6ea4418186bc1601267af, type: 3}
   m_audios: []
   CommonRes: {fileID: 0}
 --- !u!1001 &100100000
