@@ -43,7 +43,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1405057014993946
 GameObject:
   m_ObjectHideFlags: 1
@@ -797,7 +797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.13832179, g: 0.28676468, b: 0.101211056, a: 1}
+  m_Color: {r: 0.6691177, g: 0.14267953, b: 0.4367589, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -806,18 +806,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: ae3bb8e34ba2669479a4f12e09097aa2, type: 3}
-    m_FontSize: 32
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 5
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u767B\u5F55\u754C\u9762"
+  m_Text: "\u7528\u6237\u767B\u5F55"
 --- !u!114 &114682631059625920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1024,7 +1024,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3f2a9efe4b4b1b348bd588a40c1c0631, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4dd8475c8b377b04dbf18167187eb413, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

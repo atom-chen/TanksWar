@@ -95,6 +95,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 49a40a89a666cd1408e014e719787d9d, type: 3}
   - {fileID: 21300000, guid: b022bb05468cce84184ed9fc54bbc34f, type: 3}
   - {fileID: 21300000, guid: 0e1251c3225a6774cbc3095289e5f449, type: 3}
+  - {fileID: 21300000, guid: 4dd8475c8b377b04dbf18167187eb413, type: 3}
   m_audios:
   - {fileID: 8300000, guid: 83f05560129ea3349b954cad5b3e215b, type: 3}
   - {fileID: 8300000, guid: ef47b9f923eda2346a138d34c7f59843, type: 3}

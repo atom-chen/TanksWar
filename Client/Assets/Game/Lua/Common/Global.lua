@@ -30,9 +30,6 @@ NetWork = require "NetWork"
 
 require "MsgDef"
 
---网络消息
-proto = require "cs-common/protocal"
-
 Event = require 'events'
 cjson = require "cjson"
 

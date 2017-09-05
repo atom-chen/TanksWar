@@ -17,7 +17,6 @@ function LoginCtrl:Ctor()
 end
 
 function LoginCtrl:OnInit()
-	self:AddEvent(proto.s_userInfo, self.OnLoginCallback)
 	self:AddEvent(Msg.Connect, self.OnConnect)
 end
 
