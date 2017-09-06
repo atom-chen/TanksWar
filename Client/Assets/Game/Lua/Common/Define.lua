@@ -30,18 +30,12 @@ Main_Ctrl = {
 	MainCtrl = "MainCtrl",
 	LoginCtrl = "LoginCtrl",
 	LobbyCtrl = "LobbyCtrl",
-	SettingCtrl = "SettingCtrl",
-	CreateRoomCtrl = "CreateRoomCtrl",
-	JoinRoomCtrl = "JoinRoomCtrl",
 }
 
 Main_Panel = {
 	LoginPanel = "LoginPanel",
 	MainPanel = "MainPanel",
 	LobbyPanel = "LobbyPanel",
-	SettingPanel = "SettingPanel",
-	CreateRoomPanel = "CreateRoomPanel",
-	JoinRoomPanel = "JoinRoomPanel",
 }
 
 
