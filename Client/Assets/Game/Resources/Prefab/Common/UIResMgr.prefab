@@ -99,6 +99,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3f64c111c378e154e860001e12e8bb7f, type: 3}
   - {fileID: 21300000, guid: 6b11c12b5cdb4ae439b4ffb6ba49e266, type: 3}
   - {fileID: 21300000, guid: 22bd639cb7e6ea4418186bc1601267af, type: 3}
+  - {fileID: 21300000, guid: 412e281380e719a4fb20bbc28a38100e, type: 3}
+  - {fileID: 21300000, guid: 092384b4a8a9f8f4392b65970a5576cc, type: 3}
+  - {fileID: 21300000, guid: e7e43f468bdf7124a96aaedb7c42d17c, type: 3}
+  - {fileID: 21300000, guid: 1b448a39187f15e41b149f6bc652e910, type: 3}
+  - {fileID: 21300000, guid: 0ec87c7cc6d89eb4e889bfe72dfb0e7c, type: 3}
+  - {fileID: 21300000, guid: 0cbb27ec32c0180488807b5bb09265d3, type: 3}
+  - {fileID: 21300000, guid: 1a41cdce5c7a53942b36926e1c8716f0, type: 3}
+  - {fileID: 21300000, guid: cd7c2b1f5f0b8ec40b69a7ed2c64b58e, type: 3}
+  - {fileID: 21300000, guid: 5abe435f7e8d9d74ea5e72345dab65f8, type: 3}
   m_audios: []
   CommonRes: {fileID: 0}
 --- !u!1001 &100100000

@@ -1,0 +1,362 @@
+fileFormatVersion: 2
+guid: aabe956b81a25c44d98b8afe92994a68
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: dm_ml01
+    100004: dm_ml01 1
+    100006: dm_ml01 10
+    100008: dm_ml01 11
+    100010: dm_ml01 12
+    100012: dm_ml01 13
+    100014: dm_ml01 14
+    100016: dm_ml01 15
+    100018: dm_ml01 16
+    100020: dm_ml01 17
+    100022: dm_ml01 18
+    100024: dm_ml01 19
+    100026: dm_ml01 2
+    100028: dm_ml01 20
+    100030: dm_ml01 21
+    100032: dm_ml01 22
+    100034: dm_ml01 23
+    100036: dm_ml01 24
+    100038: dm_ml01 3
+    100040: dm_ml01 4
+    100042: dm_ml01 5
+    100044: dm_ml01 6
+    100046: dm_ml01 7
+    100048: dm_ml01 8
+    100050: dm_ml01 9
+    100052: dm_ml02
+    100054: dm_ml02 1
+    100056: dm_ml02 2
+    100058: dm_ml02 3
+    100060: dm_ml02 4
+    100062: dm_ml02 5
+    100064: dm_ml02 6
+    100066: dm_ml02 7
+    100068: dm_ml02 8
+    100070: dm_ml02 9
+    100072: dm_ml03
+    100074: dm_ml03 1
+    100076: dm_ml03 10
+    100078: dm_ml03 2
+    100080: dm_ml03 3
+    100082: dm_ml03 4
+    100084: dm_ml03 5
+    100086: dm_ml03 6
+    100088: dm_ml03 7
+    100090: dm_ml03 8
+    100092: dm_ml03 9
+    100094: dm_ml04
+    100096: dm_ml04 1
+    100098: dm_ml04 2
+    100100: dm_ml04 3
+    100102: dm_ml04 4
+    100104: dm_ml04 5
+    100106: dm_ml04 6
+    100108: dm_ml05
+    100110: dm_ml06
+    100112: dm_ml06 1
+    100114: dm_ml06 2
+    100116: dm_ml06 3
+    100118: dm_ml07
+    100120: dm_ml08
+    400000: //RootNode
+    400002: dm_ml01
+    400004: dm_ml01 1
+    400006: dm_ml01 10
+    400008: dm_ml01 11
+    400010: dm_ml01 12
+    400012: dm_ml01 13
+    400014: dm_ml01 14
+    400016: dm_ml01 15
+    400018: dm_ml01 16
+    400020: dm_ml01 17
+    400022: dm_ml01 18
+    400024: dm_ml01 19
+    400026: dm_ml01 2
+    400028: dm_ml01 20
+    400030: dm_ml01 21
+    400032: dm_ml01 22
+    400034: dm_ml01 23
+    400036: dm_ml01 24
+    400038: dm_ml01 3
+    400040: dm_ml01 4
+    400042: dm_ml01 5
+    400044: dm_ml01 6
+    400046: dm_ml01 7
+    400048: dm_ml01 8
+    400050: dm_ml01 9
+    400052: dm_ml02
+    400054: dm_ml02 1
+    400056: dm_ml02 2
+    400058: dm_ml02 3
+    400060: dm_ml02 4
+    400062: dm_ml02 5
+    400064: dm_ml02 6
+    400066: dm_ml02 7
+    400068: dm_ml02 8
+    400070: dm_ml02 9
+    400072: dm_ml03
+    400074: dm_ml03 1
+    400076: dm_ml03 10
+    400078: dm_ml03 2
+    400080: dm_ml03 3
+    400082: dm_ml03 4
+    400084: dm_ml03 5
+    400086: dm_ml03 6
+    400088: dm_ml03 7
+    400090: dm_ml03 8
+    400092: dm_ml03 9
+    400094: dm_ml04
+    400096: dm_ml04 1
+    400098: dm_ml04 2
+    400100: dm_ml04 3
+    400102: dm_ml04 4
+    400104: dm_ml04 5
+    400106: dm_ml04 6
+    400108: dm_ml05
+    400110: dm_ml06
+    400112: dm_ml06 1
+    400114: dm_ml06 2
+    400116: dm_ml06 3
+    400118: dm_ml07
+    400120: dm_ml08
+    2300000: dm_ml01
+    2300002: dm_ml01 1
+    2300004: dm_ml01 10
+    2300006: dm_ml01 11
+    2300008: dm_ml01 12
+    2300010: dm_ml01 13
+    2300012: dm_ml01 14
+    2300014: dm_ml01 15
+    2300016: dm_ml01 16
+    2300018: dm_ml01 17
+    2300020: dm_ml01 18
+    2300022: dm_ml01 19
+    2300024: dm_ml01 2
+    2300026: dm_ml01 20
+    2300028: dm_ml01 21
+    2300030: dm_ml01 22
+    2300032: dm_ml01 23
+    2300034: dm_ml01 24
+    2300036: dm_ml01 3
+    2300038: dm_ml01 4
+    2300040: dm_ml01 5
+    2300042: dm_ml01 6
+    2300044: dm_ml01 7
+    2300046: dm_ml01 8
+    2300048: dm_ml01 9
+    2300050: dm_ml02
+    2300052: dm_ml02 1
+    2300054: dm_ml02 2
+    2300056: dm_ml02 3
+    2300058: dm_ml02 4
+    2300060: dm_ml02 5
+    2300062: dm_ml02 6
+    2300064: dm_ml02 7
+    2300066: dm_ml02 8
+    2300068: dm_ml02 9
+    2300070: dm_ml03
+    2300072: dm_ml03 1
+    2300074: dm_ml03 10
+    2300076: dm_ml03 2
+    2300078: dm_ml03 3
+    2300080: dm_ml03 4
+    2300082: dm_ml03 5
+    2300084: dm_ml03 6
+    2300086: dm_ml03 7
+    2300088: dm_ml03 8
+    2300090: dm_ml03 9
+    2300092: dm_ml04
+    2300094: dm_ml04 1
+    2300096: dm_ml04 2
+    2300098: dm_ml04 3
+    2300100: dm_ml04 4
+    2300102: dm_ml04 5
+    2300104: dm_ml04 6
+    2300106: dm_ml05
+    2300108: dm_ml06
+    2300110: dm_ml06 1
+    2300112: dm_ml06 2
+    2300114: dm_ml06 3
+    2300116: dm_ml07
+    2300118: dm_ml08
+    3300000: dm_ml01
+    3300002: dm_ml01 1
+    3300004: dm_ml01 10
+    3300006: dm_ml01 11
+    3300008: dm_ml01 12
+    3300010: dm_ml01 13
+    3300012: dm_ml01 14
+    3300014: dm_ml01 15
+    3300016: dm_ml01 16
+    3300018: dm_ml01 17
+    3300020: dm_ml01 18
+    3300022: dm_ml01 19
+    3300024: dm_ml01 2
+    3300026: dm_ml01 20
+    3300028: dm_ml01 21
+    3300030: dm_ml01 22
+    3300032: dm_ml01 23
+    3300034: dm_ml01 24
+    3300036: dm_ml01 3
+    3300038: dm_ml01 4
+    3300040: dm_ml01 5
+    3300042: dm_ml01 6
+    3300044: dm_ml01 7
+    3300046: dm_ml01 8
+    3300048: dm_ml01 9
+    3300050: dm_ml02
+    3300052: dm_ml02 1
+    3300054: dm_ml02 2
+    3300056: dm_ml02 3
+    3300058: dm_ml02 4
+    3300060: dm_ml02 5
+    3300062: dm_ml02 6
+    3300064: dm_ml02 7
+    3300066: dm_ml02 8
+    3300068: dm_ml02 9
+    3300070: dm_ml03
+    3300072: dm_ml03 1
+    3300074: dm_ml03 10
+    3300076: dm_ml03 2
+    3300078: dm_ml03 3
+    3300080: dm_ml03 4
+    3300082: dm_ml03 5
+    3300084: dm_ml03 6
+    3300086: dm_ml03 7
+    3300088: dm_ml03 8
+    3300090: dm_ml03 9
+    3300092: dm_ml04
+    3300094: dm_ml04 1
+    3300096: dm_ml04 2
+    3300098: dm_ml04 3
+    3300100: dm_ml04 4
+    3300102: dm_ml04 5
+    3300104: dm_ml04 6
+    3300106: dm_ml05
+    3300108: dm_ml06
+    3300110: dm_ml06 1
+    3300112: dm_ml06 2
+    3300114: dm_ml06 3
+    3300116: dm_ml07
+    3300118: dm_ml08
+    4300000: dm_ml01
+    4300002: dm_ml01
+    4300004: dm_ml01
+    4300006: dm_ml04
+    4300008: dm_ml04
+    4300010: dm_ml08
+    4300012: dm_ml01
+    4300014: dm_ml01
+    4300016: dm_ml01
+    4300018: dm_ml01
+    4300020: dm_ml05
+    4300022: dm_ml06
+    4300024: dm_ml06
+    4300026: dm_ml06
+    4300028: dm_ml06
+    4300030: dm_ml01
+    4300032: dm_ml01
+    4300034: dm_ml01
+    4300036: dm_ml04
+    4300038: dm_ml04
+    4300040: dm_ml03
+    4300042: dm_ml03
+    4300044: dm_ml03
+    4300046: dm_ml03
+    4300048: dm_ml01
+    4300050: dm_ml03
+    4300052: dm_ml02
+    4300054: dm_ml01
+    4300056: dm_ml02
+    4300058: dm_ml01
+    4300060: dm_ml01
+    4300062: dm_ml02
+    4300064: dm_ml01
+    4300066: dm_ml01
+    4300068: dm_ml01
+    4300070: dm_ml01
+    4300072: dm_ml03
+    4300074: dm_ml04
+    4300076: dm_ml03
+    4300078: dm_ml02
+    4300080: dm_ml02
+    4300082: dm_ml07
+    4300084: dm_ml01
+    4300086: dm_ml04
+    4300088: dm_ml03
+    4300090: dm_ml01
+    4300092: dm_ml01
+    4300094: dm_ml01
+    4300096: dm_ml03
+    4300098: dm_ml01
+    4300100: dm_ml01
+    4300102: dm_ml03
+    4300104: dm_ml01
+    4300106: dm_ml03
+    4300108: dm_ml02
+    4300110: dm_ml04
+    4300112: dm_ml02
+    4300114: dm_ml02
+    4300116: dm_ml02
+    4300118: dm_ml02
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

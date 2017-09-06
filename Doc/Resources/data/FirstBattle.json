@@ -1,0 +1,28 @@
+{
+  "Version": 1.0,
+  "Seed": 1261341228,
+  "Type": 0,
+  "Param": 0,
+  "Camp1":
+{"PlayerName":"FirstBattlePlayer1","PlayerID":4028,"Level":40,"MainHeroID":10008,"Pos":7,"PosLevel":2,"PosAttrId":10,"PosAttrValue":0.1,"JXAddAttack":0.0,"JXDecDefence":0.0,"TechAttr":"",
+"Groups":
+[
+{"PosId":1,"Hero":{"ID":10041,"Level":60,"Attrs":{"Strength":72.0,"Intel":83.0,"Yineng":85.0},"Soldier":10005},"ShiQi":50,"SecondAttrs":"34.23772,1.019552,43.5234,0.9914101,62.8725,0.7173408,3240,1974,0.01,0,0.01","EquiptAttrs":""},
+{"PosId":3,"Hero":{"ID":10041,"Level":60,"Attrs":{"Strength":72.0,"Intel":83.0,"Yineng":85.0},"Soldier":10005},"ShiQi":50,"SecondAttrs":"34.23772,1.019552,43.5234,0.9914101,62.8725,0.7173408,3240,1974,0.01,0,0.01","EquiptAttrs":""},
+{"PosId":5,"Hero":{"ID":10007,"Level":60,"Attrs":{"Strength":72.0,"Intel":83.0,"Yineng":85.0},"Soldier":10005},"ShiQi":75,"SecondAttrs":"34.23772,1.019552,43.5234,0.9914101,62.8725,0.7173408,3240,1974,0.01,0,0.01","EquiptAttrs":""},
+{"PosId":7,"Hero":{"ID":10051,"Level":60,"Attrs":{"Strength":72.0,"Intel":83.0,"Yineng":85.0},"Soldier":10005},"ShiQi":75,"SecondAttrs":"34.23772,1.019552,43.5234,0.9914101,62.8725,0.7173408,3240,1974,0.01,0,0.01","EquiptAttrs":""},
+{"PosId":9,"Hero":{"ID":10051,"Level":60,"Attrs":{"Strength":82.0,"Intel":77.0,"Yineng":88.0},"Soldier":10002},"ShiQi":75,"SecondAttrs":"334.2254,0.564024,715.6512,0.2698143,629.937,0.3115086,3682,3682,0.03,0.03,0.02","EquiptAttrs":""}
+]
+},
+"Camp2":
+{"PlayerName":"FirstBattlePlayer2","PlayerID":19,"Level":100,"MainHeroID":10017,"Pos":4,"PosLevel":2,"PosAttrId":14,"PosAttrValue":0.109999999403954,"JXAddAttack":0.0,"JXDecDefence":0.0,"TechAttr":"",
+"Groups":
+[
+{"PosId":1,"Hero":{"ID":10023,"Level":100,"Attrs":{"Strength":58.0,"Intel":32.0,"Yineng":63.0},"Soldier":10003},"ShiQi":50,"SecondAttrs":"292.32,0.5401026,317.52,0.5375621,179.0208,0.5537098,1608,1608,0.01,0.05,0.01","EquiptAttrs":""},
+{"PosId":3,"Hero":{"ID":10023,"Level":100,"Attrs":{"Strength":58.0,"Intel":32.0,"Yineng":63.0},"Soldier":10003},"ShiQi":50,"SecondAttrs":"292.32,0.5401026,317.52,0.5375621,179.0208,0.5537098,1608,1608,0.01,0.05,0.01","EquiptAttrs":""},
+{"PosId":4,"Hero":{"ID":10033,"Level":100,"Attrs":{"Strength":58.0,"Intel":32.0,"Yineng":63.0},"Soldier":10003},"ShiQi":75,"SecondAttrs":"292.32,0.5401026,317.52,0.5375621,179.0208,0.5537098,1608,1608,0.01,0.05,0.01","EquiptAttrs":""},
+{"PosId":6,"Hero":{"ID":10033,"Level":100,"Attrs":{"Strength":73.0,"Intel":57.0,"Yineng":77.0},"Soldier":10001},"ShiQi":75,"SecondAttrs":"367.92,0.4992677,388.08,0.4974135,318.8808,0.5406136,1760,1760,0.01,0,0.01","EquiptAttrs":""},
+{"PosId":8,"Hero":{"ID":10046,"Level":100,"Attrs":{"Strength":55.0,"Intel":66.0,"Yineng":43.0},"Soldier":10002},"ShiQi":75,"SecondAttrs":"277.2,0.507786,216.72,0.4793864,369.2304,0.5360493,1342,1342,0.01,0,0.01","EquiptAttrs":""}
+]
+},
+"Score":{"WinCamp":2,"Score":"F","LeftHP1":0,"TotalHP1":6922,"LeftHP2":1674,"TotalHP2":4710,"Report":""},"Result":"ok","Msg":"SingleBattleReportRes"}

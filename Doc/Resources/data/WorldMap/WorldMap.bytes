@@ -1,0 +1,13 @@
+//格子数256*256
+Rows=256
+Cols=256
+
+//一个格子的图片大小(因为采用3d，宽=高，考虑Tiled的投影显示问题todo)
+TileWidth=256
+TileHeight=256
+
+//用到的三张图集(考虑合并成一张图集，减少渲染次数)
+//使用了三层地表，分别表示不同的含义。每层只使用一张图片
+Image1=Terrain.png,firstid=1,w=8,h=16
+Image2=Represent.png,firstid=129,w=2,h=8
+Image3=Object.png,firstid=145,w=8,h=8
