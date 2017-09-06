@@ -10,40 +10,30 @@ function LobbyPanel:Ctor()
 	
 	--log("LobbyPanel Ctor---->>>")
 	self.m_comp.imgHead = UIImageEx
-	self.m_comp.txtName = UITextEx
-	self.m_comp.txtGold = UITextEx
-	self.m_comp.txtDiamond = UITextEx
-	self.m_comp.btnAddDiamond = UIButtonEx
-	self.m_comp.btnReferer = UIButtonEx
-	self.m_comp.btnReality = UIButtonEx
-	self.m_comp.btnInvite = UIButtonEx
-	self.m_comp.btnShop = UIButtonEx
-	self.m_comp.btnShare = UIButtonEx
-	self.m_comp.btnRule = UIButtonEx
-	self.m_comp.btnScore = UIButtonEx
-	self.m_comp.btnActivity = UIButtonEx
-	self.m_comp.btnMsg = UIButtonEx
-	self.m_comp.btnSetting = UIButtonEx
+	-- self.m_comp.txtName = UITextEx
+	-- self.m_comp.txtGold = UITextEx
+	-- self.m_comp.txtDiamond = UITextEx
+	-- self.m_comp.btnSetting = UIButtonEx
 	self.m_comp.btnEntter = UIButtonEx
-	self.m_comp.btnHead = UIButtonEx
-	self.m_comp.groupGame = UIGroup
+	-- self.m_comp.btnHead = UIButtonEx
+	-- self.m_comp.groupGame = UIGroup
 
 end
 
 function LobbyPanel:OnInit()
-	self.m_comp.btnAddDiamond:AddLuaClick(self.ClickAddDiamond, self)
-	self.m_comp.btnReferer:AddLuaClick(self.ClickReferer, self)
-	self.m_comp.btnReality:AddLuaClick(self.ClickReality, self)
-	self.m_comp.btnInvite:AddLuaClick(self.ClickInvite, self)
-	self.m_comp.btnShop:AddLuaClick(self.ClickShop, self)
-	self.m_comp.btnShare:AddLuaClick(self.ClickShare, self)
-	self.m_comp.btnRule:AddLuaClick(self.ClickRule, self)
-	self.m_comp.btnScore:AddLuaClick(self.ClickScore, self)
-	self.m_comp.btnActivity:AddLuaClick(self.ClickActivity, self)
-	self.m_comp.btnMsg:AddLuaClick(self.ClickMsg, self)
-	self.m_comp.btnSetting:AddLuaClick(self.ClickSetting, self)
+	-- self.m_comp.btnAddDiamond:AddLuaClick(self.ClickAddDiamond, self)
+	-- self.m_comp.btnReferer:AddLuaClick(self.ClickReferer, self)
+	-- self.m_comp.btnReality:AddLuaClick(self.ClickReality, self)
+	-- self.m_comp.btnInvite:AddLuaClick(self.ClickInvite, self)
+	-- self.m_comp.btnShop:AddLuaClick(self.ClickShop, self)
+	-- self.m_comp.btnShare:AddLuaClick(self.ClickShare, self)
+	-- self.m_comp.btnRule:AddLuaClick(self.ClickRule, self)
+	-- self.m_comp.btnScore:AddLuaClick(self.ClickScore, self)
+	-- self.m_comp.btnActivity:AddLuaClick(self.ClickActivity, self)
+	-- self.m_comp.btnMsg:AddLuaClick(self.ClickMsg, self)
+	-- self.m_comp.btnSetting:AddLuaClick(self.ClickSetting, self)
 	self.m_comp.btnEntter:AddLuaClick(self.ClickEntter, self)
-	self.m_comp.btnHead:AddLuaClick(self.ClickHead, self)
+	-- self.m_comp.btnHead:AddLuaClick(self.ClickHead, self)
 
 
 	--  游戏玩法配置
@@ -113,7 +103,8 @@ function LobbyPanel:ClickSetting()
 end
 
 function LobbyPanel:ClickEntter()
-	UIMgr.Open(Main_Panel.JoinRoomPanel)
+	local sceneId = 1000
+	SceneMgr.ChangeScene(sceneId)
 end
 
 function LobbyPanel:ClickHead()
@@ -121,17 +112,15 @@ function LobbyPanel:ClickHead()
 end
 
 function LobbyPanel:OnOpen()
-	--log("LobbyPanel OnOpen---->>>")
-   	--log("LoginPanel OnOpen---->>>")
     
-	local itemCount = GameCfg.GetGameCount()
-	self.m_comp.groupGame:SetCount(itemCount)
-	for i = 0, itemCount-1 do 
-		local go = self.m_comp.groupGame:Get(i)
-		local data = GameCfg.GetById(i+1)
-		item = LobbyItem.New(go)
-		item:Init(data)
-	end
+	-- local itemCount = GameCfg.GetGameCount()
+	-- self.m_comp.groupGame:SetCount(itemCount)
+	-- for i = 0, itemCount-1 do 
+	-- 	local go = self.m_comp.groupGame:Get(i)
+	-- 	local data = GameCfg.GetById(i+1)
+	-- 	item = LobbyItem.New(go)
+	-- 	item:Init(data)
+	-- end
 
 end
 

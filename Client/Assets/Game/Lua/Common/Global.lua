@@ -18,12 +18,14 @@ require "CtrlMgr"
 require "UIMgr"
 require "SDKMgr"
 require "PlayerMgr"
+require "SceneMgr"
 
 require "ActivityCfg"
 require "GameCfg"
 require "RuleCfg"
 require "SettingCfg"
 require "ShareCfg"
+require "SceneCfg"
 
 
 NetWork = require "NetWork"
