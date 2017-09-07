@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using LuaInterface;
+using UnityEngine.SceneManagement;
 
 using BindType = ToLuaMenu.BindType;
 using UnityEngine.UI;
@@ -145,6 +146,8 @@ public static class CustomSettings
 		_GT(typeof(Resources)),
         _GT(typeof(Canvas)),
         _GT(typeof(CanvasGroup)),
+
+        _GT(typeof(SceneManager)),
           
         //for Game
         //UnityEngine UI

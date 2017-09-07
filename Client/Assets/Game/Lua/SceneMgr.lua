@@ -14,7 +14,8 @@ end
 
 function ChangeScene(sceneId)
 	local info = SceneCfg.Get(sceneId)
-	log("info --- "..info.name)
+	log("info --- "..info.sceneName)
+	SceneManager.LoadScene(info.sceneName)
 end
 
 --更新

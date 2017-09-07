@@ -61,6 +61,7 @@ UIScrollRect = UnityEngine.UI.ScrollRect
 UISlider = UnityEngine.UI.Slider
 UIToggleGroup = UnityEngine.UI.ToggleGroup
 UIScrollbar = UnityEngine.UI.Scrollbar
+SceneManager = UnityEngine.SceneManagement.SceneManager
 
 --custom
 UITextEx = UI.TextEx
