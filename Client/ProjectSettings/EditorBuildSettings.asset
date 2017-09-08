@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scene/Main/level1.unity
     guid: 60467a56ff49aa34784a0f6f041bcd6e
+  - enabled: 1
+    path: Assets/Game/Scene/Main/template.unity
+    guid: 7cf8af3b46b392046ad0de4a21d66cf7
