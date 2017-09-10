@@ -8,8 +8,8 @@ local sproto = require "3rd/sproto/sproto"
 local core = require "sproto.core"
 local print_r = require "3rd/sproto/print_r"
 
-local msgTool = require "cs-common/msgtool"
-
+-- local msgTool = require "cs-common/msgtool"
+local msgTool = cjson
 Network = {};
 local this = Network;
 
