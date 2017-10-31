@@ -1,6 +1,5 @@
 local _M = { }
 
--- 麻将的ID 需写定
 _M.Cfg = 
 {
     {id = 1,	name = "涡阳麻将",	icon = "guoyang",	lock = 0,    short = 1},

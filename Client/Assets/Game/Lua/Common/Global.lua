@@ -29,6 +29,8 @@ ShareCfg = require "Config.ShareCfg"
 ShopCfg = require "Config.ShopCfg"
 ViewCfg = require "Config.ViewCfg"
 OpenCfg = require "Config.OpenModuleCfg"
+RoomCfg = require "Config.RoomCfg"
+RoleCfg = require "Config.RoleCfg"
 
 gyCfg= require "cs-common.gymahjong.config"
 fyCfg= require "cs-common.fymahjong.config"

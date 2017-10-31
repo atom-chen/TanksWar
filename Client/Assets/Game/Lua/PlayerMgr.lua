@@ -12,6 +12,10 @@ local mySelf = false	--自己--
 
 function CoInit(mdName)
 	modName = mdName
+
+
+	
+
 end
 
 function AddMainPlayer(id, info)
