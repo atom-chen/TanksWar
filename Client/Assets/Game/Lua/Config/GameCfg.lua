@@ -8,21 +8,16 @@ _M.Cfg =
 }
 
 function _M.GetById(ID)
-	-- body
    for k,v in pairs(_M.Cfg) do
-	   if v.id==ID then
-	   	  -- log(v.name)
+	   if v.id == ID then
           return v
 	   end
    end
-   
+
    return nil
-   -- log("  GetById   "..ID)
 end
 
 function _M.GetGameCount()
-	-- body
-	-- log(#Cfg)
 	return #_M.Cfg
 end
 

@@ -145,13 +145,12 @@ function Card:GetState()
 end
 
 function Card:OnClick()
-	local state = self:GetState() + math.random(1,2)
 	-- logWarn("card click -- "..self.m_num..' state - '..self.m_curState)
-	if state > CardState.Lock then
-		state = CardState.Normal
+	if self.m_curState == CardState.Select then
+		self.m_parent:OnClick(self)
+		return
 	end
-	self.m_parent:OnClick(self)
-	self:SetState(state)
+	self:SetState(CardState.Select)
 end
 
 function Card:OnDragBegin(eventData)
