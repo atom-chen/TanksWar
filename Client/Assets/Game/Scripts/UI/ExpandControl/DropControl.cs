@@ -5,30 +5,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace UI
+public class DropControl : MonoBehaviour, IDropHandler//, IPointerEnterHandler, IPointerExitHandler
 {
-    public class DropControl : MonoBehaviour, IDropHandler//, IPointerEnterHandler, IPointerExitHandler
+    public Action<object> m_onDrop;
+
+    public void OnDrop(PointerEventData data)
     {
-        public Action<object> m_onDrop;
-
-        public void OnDrop(PointerEventData data)
+        var originalObj = data.pointerDrag;
+        if (originalObj == null)
         {
-            var originalObj = data.pointerDrag;
-            if (originalObj == null)
-            {
-                return;
-            }
+            return;
+        }
 
-            var dragControl = originalObj.GetComponent<DragControl>();
-            if (dragControl == null)
-            {
-                return;
-            }
+        var dragControl = originalObj.GetComponent<DragControl>();
+        if (dragControl == null)
+        {
+            return;
+        }
 
-            if (m_onDrop != null)
-            {
-                m_onDrop.Invoke(dragControl.m_data);
-            }
+        if (m_onDrop != null)
+        {
+            m_onDrop.Invoke(dragControl.m_data);
         }
     }
 }

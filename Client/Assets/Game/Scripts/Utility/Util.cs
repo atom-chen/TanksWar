@@ -590,21 +590,6 @@ public class Util
         } while (true);
     }
 
-    public static GameObject GetRoot(Transform t, string name)
-    {
-        if (t == null) return null;
-        do
-        {
-            var component =  t.GetComponent(name);
-            if (component != null)
-                return component.gameObject;
-            if (t.parent != null)
-                t = t.parent;
-            else
-                return null;
-        } while (true);
-    }
-
     public static T GetRoot<T>(Transform t) where T : Component
     {
         do

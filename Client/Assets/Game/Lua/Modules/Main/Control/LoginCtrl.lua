@@ -17,16 +17,18 @@ function LoginCtrl:Ctor()
 end
 
 function LoginCtrl:OnInit()
-	self:AddEvent(Msg.Connect, self.OnConnect)
+	self:AddEvent(proto.login, self.OnLoginCallback, self)
+	self:AddEvent(Msg.Connect, self.OnConnect, self)
 end
 
 function LoginCtrl:OnStart()
-	if not next(LocalConfig) or not LocalConfig.Token or LocalConfig.Token == "" then
+	if not next(LocalConfig) or not LocalConfig.token or LocalConfig.token == "" then
 		UIMgr.Open(Main_Panel.LoginPanel)
 	else
 		if not LocalConfig.ip or not LocalConfig.port then
 			UIMgr.Open(Main_Panel.LoginPanel)
 		else
+			UIMgr.Open(Common_Panel.WaitPanel)
 			NetWork.ConnectServer(LocalConfig.ip, LocalConfig.port)
 		end
 	end
@@ -34,47 +36,83 @@ end
 
 ----http获取token socket连接服务器
 function LoginCtrl:CoConnect()
-	local form = WWWForm()
-    form:AddField("gameId",g_Config.gameID)
+
+	local sendData = {}
 	
+    sendData.gameId = g_Config.gameID
 	local url = ""
 	if self.m_loginType == LoginType.Wechat then
-		form:AddField("openId",self:GetRandomGuestID())
+		local info = SDKMgr.WechatInfo
 		url = g_Config.wechatUrl
+		if Platform.Iphone then
+			sendData.openId = info.uid
+			sendData.sys = ios
+		elseif Platform.Android then
+			sendData.openId = info.openID
+			sendData.sys = "android"
+		end
+
+		sendData.accessToken = info.token
+		sendData.packageName = g_Config.packageName
 	elseif self.m_loginType == LoginType.Guest then
-		form:AddField("guestId",self:GetRandomGuestID())
+		sendData.guestId = self:GetRandomGuestID()
 		url = g_Config.guestUrl
 	end
 
+	local content = cjson.encode(sendData)
+	local encrypt_data = XXTEA.EncryptToBase64String(content, Game.XXTEAKey)
+
+	log("加密数据--"..encrypt_data)
+
+	local form = WWWForm()
+    form:AddField("info", Game.GameFlag..encrypt_data)
+
     local www = WWW(url,form);
 	coroutine.www(www);
-	log('www.text:\n'..www.text)
+
+	if www.error then
+		logError('error: '..tostring(www.error)..'\n www.text: '..www.text)
+	end
+	log("www-- "..www.text)
     local recTbl = cjson.decode(www.text)
-    LocalConfig.token = recTbl.token
-	LocalConfig.ip = recTbl.socketServer.host
-	LocalConfig.port = recTbl.socketServer.port
-	-- LocalConfig.ip = "192.168.1.240"
+	local res = XXTEA.DecryptBase64StringToString(recTbl.info, Game.XXTEAKey)
+    local recData = cjson.decode(res)
+    LocalConfig.loginType = self.m_loginType
+    LocalConfig.token = recData.token
+    LocalConfig.ip = recData.socketServer.host
+	LocalConfig.port = recData.socketServer.port
+	-- LocalConfig.ip = "192.168.1.231"
 	-- LocalConfig.port = "5012"
 	
-	util.SaveFile(g_Config.configFileName)
+	-- 保存文件手机上路径不对 不允许写入 需要改路径
+	util.SaveFile(g_Config.configFileName, LocalConfig)
 
 	NetWork.ConnectServer(LocalConfig.ip, LocalConfig.port)
 end
 
 function LoginCtrl:OnWechatLogin()
 	self.m_loginType = LoginType.Wechat
-	SDKMgr.AuthorizeWeiChat()
+	--先认证 再请求token 后连接
+	if not SDKMgr.IsClientValid(PlatformType.WeChat) then
+		UIMgr.Open(Common_Panel.TipsPanel, Lang.wechatClientTips)
+		return
+	end
+	SDKMgr.Authorize(PlatformType.WeChat)
 end
 
 function LoginCtrl:OnGuestLogin()
 	self.m_loginType = LoginType.Guest
+	--直接连接 动态生成guestid
 	self:OnLogin()
 end
 
-function LoginCtrl:OnLogin( )
+function LoginCtrl:OnLogin()
 	if not g_Config.single then
 		UIMgr.Open(Common_Panel.WaitPanel)
-		coroutine.start(self.CoConnect, self)
+		-- coroutine.start(self.CoConnect, self)
+		coroutine.start(function ()
+			self:CoConnect()
+	    end)
 	else
 		local lobbyCtrl = CtrlMgr.Get(Main_Ctrl.LobbyCtrl)
 		lobbyCtrl:OnStart()
@@ -83,11 +121,30 @@ function LoginCtrl:OnLogin( )
 end
 
 function LoginCtrl:OnLoginCallback(tbl)
-	PlayerMgr.AddMainPlayer(tbl.userId, tbl)
+
+	UIMgr.Close(Common_Panel.WaitPanel)
+
+	if tbl.code ~= 0 then
+		UIMgr.Open(Common_Panel.Tips, tbl.msg)
+		return
+	end
+
+	local data = tbl.data
+
+	if data.guestId then
+		LocalConfig.guestId = data.guestId
+		util.SaveFile(g_Config.configFileName, LocalConfig)
+	end
+
+	PlayerMgr.AddMainPlayer(data.userId, data)
 	local lobbyCtrl = CtrlMgr.Get(Main_Ctrl.LobbyCtrl)
 	lobbyCtrl:OnStart()
-	UIMgr.Close(Main_Panel.LoginPanel)
-	UIMgr.Close(Common_Panel.WaitPanel)
+
+	--自动登录时没有打开登录界面
+	local panel = UIMgr.Get(Main_Panel.LoginPanel)
+	if panel:IsOpen() then
+		panel:Close()
+	end
 end
 
 function LoginCtrl:GetRandomGuestID()
@@ -102,7 +159,7 @@ function LoginCtrl:GetRandomGuestID()
 end
 
 function LoginCtrl:OnConnect()
-	-- log("连接服务器成功--------")
+	log("OnConnect OK --->")
 	NetWork.SendMsg(proto.login, {token = LocalConfig.token})
 end
 

@@ -4,11 +4,11 @@
 
 module("util",package.seeall)
 
-local jsonUtil = require "3rd.cjson.util"
+jsonUtil = require "3rd.cjson.util"
 
 local compType = typeof(UnityEngine.Component)
 local goType = typeof(UnityEngine.GameObject)
-local monoTableType = typeof(UI.MonoTable)
+local monoTableType = typeof(MonoTable)
 -- 传入一个游戏对象和类型定义，返回table，如果table没有传进来则新建一个
 function GetMonoTable(gameObject,define,table)
 	table = table or {}
@@ -64,9 +64,9 @@ function CheckTableForPrint(table)
 	for k,v in pairs(table) do
 		local vType = type(v)
 		if vType == "table" then
-			t2[k] = CheckTableForPrint(v)
+			t2[k] =CheckTableForPrint(v)
 		elseif vType == "userdata" then
-			t2[k] = tostring(v)
+			t2[k] =tostring(v)
 		else
 			t2[k] =v
 		end      
@@ -156,6 +156,58 @@ function Log(log)
 	Debugger.Log(""..log.."\n"..debug.traceback())
 end
 
+function AddComponentIfNoExist(go, comp)
+	-- log("AddComponentIfNoExist -- "..tostring(comp))
+	local co = go:GetComponent(tostring(comp))
+	if (not co or co == null) then
+	    return go:AddComponent(comp)
+	else
+	    return co
+	end
+end
+
+function GetUVPosByCard(id)
+	local ny = Bit.andOp(id, 0xF0)%0x0F
+	local nx = Bit.andOp(id, 0x0F)
+
+	--定义的牌和显示的图片有出入 需要处理下
+	if ny == 1 then		--万
+		ny = 2
+	elseif ny == 2 then	--筒
+		ny = 3
+	elseif ny == 3 then	--条
+		ny = 1
+    elseif ny == 5 then	--花
+        if id == 0x51 then	--春
+        	ny = 4
+        	nx = 8
+    	elseif id == 0x52 then	--夏
+    		ny = 5
+    		nx = 1
+		elseif id == 0x53 then	--秋
+			ny = 5
+			nx = 2
+		elseif id == 0x54 then	--冬
+			ny = 4
+			nx = 9
+		elseif id == 0x55 then	--梅
+			ny = 5
+			nx = 3
+		elseif id == 0x56 then	--兰
+			ny = 5
+			nx = 4
+		elseif id == 0x57 then	--竹
+			ny = 5
+			nx = 5
+		elseif id == 0x58 then	--菊
+			ny = 5
+			nx = 6
+    	end
+	end
+
+	return ny, nx
+end
+
 local prevFilePath = ""
 function OnRefresh(scriptName)
 	local findCount = 0
@@ -207,7 +259,7 @@ function OnRefresh(scriptName)
 		local ctrl = mod.m_ctrl
 		--清空button事件
 		for _,comp in pairs(mod.m_comp) do
-			--string.find(tostring(comp), tostring(typeof(UIButtonEx)))
+			--string.find(tostring(comp), tostring(typeof(ButtonEx)))
 			if (string.find(tostring(comp), "UI.StateHandle")) then
 				comp:Clear()	
 			end
@@ -218,25 +270,30 @@ function OnRefresh(scriptName)
 		ctrl:OpenPanel()
 	end
 
-	----刷新item
-	if string.find(scriptName, "Panel") and string.find(scriptName, "Item") then
-		local panelList = UIMgr.GetAll()
-		local panel = nil
-		for i=1, #panelList do
-			if string.find(scriptName, panelList[i].m_name) then
-				panel = panelList[i]
-				break
-			end
+	if string.find(scriptName, "Cfg") then
+		if prevFilePath ~= "" then
+			filePath = prevFilePath
 		end
-		if not panel then
-			logError("未找到脚本"..scriptName.."的父级panel 可能名字错误")
+		package.loaded[filePath] = nil
+		local ok, err = pcall( function() _G[scriptName] = require(filePath) end)
+		if not ok then
+			logError('脚本报错：\n'..tostring(err))
+			prevFilePath = filePath
 			return
 		end
-		log("刷新item------")
-	end
 
-	----刷新Cfg
-	if string.find(scriptName, "Cfg") then
+	end
+	
+	----刷新ctrl
+	if string.find(scriptName, "Ctrl") then
+		--log("是Ctrl脚本")
+		mod = CtrlMgr.Get(scriptName)
+		if not mod then
+			logError("ctrl为空："..scriptName)
+			return
+		end	
+
+		----可能上次刷新失败了
 		if prevFilePath ~= "" then
 			filePath = prevFilePath
 		end
@@ -247,18 +304,21 @@ function OnRefresh(scriptName)
 			prevFilePath = filePath
 			return
 		end
-	end
-	
-	----刷新ctrl
-	if string.find(scriptName, "Ctrl") then
-		--log("是Ctrl脚本")
-		mod = CtrlMgr.Get(scriptName)
+
+		prevFilePath = ""
+		local panel = mod.m_panel
+		local modul = mod.m_modName
+		CtrlMgr.RemoveCtrl(scriptName)
+
+		local ctrl = _G[scriptName].New(modul)
+		ctrl:Init()
+		CtrlMgr.AddCtrl(ctrl.m_id, ctrl)
 	end
 	
 end
 
 function SaveFile(fileName, tbl)
-	jsonUtil.file_save(fileName, cjson.encode(tbl))
+	jsonUtil.file_save(Util.DataPath..fileName, cjson.encode(tbl))
 end
 
 function LoadFile(fileName)
@@ -266,7 +326,7 @@ function LoadFile(fileName)
 		logError("传入文件名不正确 fileName--"..tostring(fileName))
 		return nil
 	end
-	local cfg = jsonUtil.file_load(fileName)
+	local cfg = jsonUtil.file_load(Util.DataPath..fileName)
 	if cfg ~= "null" and cfg then
 		return cjson.decode(cfg)
 	end
@@ -285,4 +345,35 @@ function Test()
 		prevFilePath = filePath
 		return
 	end
+end
+
+function OnGM(param)
+	log("OnGm --- "..param)
+	local paramList = string.split(param, " ")
+	for k, v in pairs(paramList) do
+		log(" k -- "..k..' v - '..v)
+	end
+	
+	local protoId = 0
+	local data = {}
+	local mySelf = PlayerMgr.GetMyself()
+	if string.lower(paramList[1]) == "forcedepart" then
+		protoId = proto.forceDepart
+		data.roomId = mySelf:Get("roomId")
+	else
+		UIMgr.Open(Common_Panel.TipsPanel, "命令错误："..param)
+		return
+	end
+
+	coroutine.start(function()
+		local res = NetWork.Request(protoId, data)
+		if res.code == 0 then
+			UIMgr.Open(Common_Panel.TipsPanel, "执行GM命令成功")
+			return
+		else
+			UIMgr.Open(Common_Panel.TipsPanel, res.msg)
+			return
+		end
+	end)
+
 end

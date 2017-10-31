@@ -8,26 +8,23 @@ module(..., package.seeall)
 
 local playerList = {};	--控制器列表--
 local modName = ""
-local player = false	--自己--
+local mySelf = false	--自己--
 
 function CoInit(mdName)
 	modName = mdName
-	require ('Modules/'..modName.."/Player")
-	require ('Modules/'..modName.."/PlayerOther")
-	-- log("PlayerMgr.Init----->>>");
 end
 
-function AddMainPlayer( id, info )
-	player = Player.New()
-	player:Init(info)
-	AddPlayer(player)
-	return player
+function AddMainPlayer(id, info)
+	mySelf = Player.New()
+	mySelf:Init(info)
+	AddPlayer(id, mySelf)
+	return mySelf
 end
 
-function AddOtherPlayer( id, info )
-	local p = OtherPlayer.New()
+function AddOtherPlayer(id, info)
+	local p = PlayerOther.New()
 	p:Init(info)
-	AddPlayer(p)
+	AddPlayer(id, p)
 	return p
 end
 
@@ -45,15 +42,93 @@ function AddPlayer(id, p)
 		return
 	end
 
-	playerList[id] = p;
+	playerList[id] = p
 	return p
 end
 
 --获取player--
 function Get(id)
-	return playerList[id];
+	return playerList[id]
 end
 
+function GetAll()
+	return playerList
+end
+
+function IsMyself(o)
+	local p = GetMyself()
+	if type(o) == "number" then
+		return o == p:GetID()
+	else
+		return o == p
+	end
+end
+
+--获取自己--
+function GetMyself()
+	return mySelf
+end
+
+function GetMyselfID()
+	return mySelf:GetID()
+end
+
+function GetName(userId)
+	local p
+	if not userId then
+		p = player
+	else
+		p = Get(userId)
+	end
+	if p ~= nil then
+		return p:GetName()
+	end
+	logError('未找到玩家--'..tostring(userId))
+	return
+end
+
+function GetGold(userId)
+	local p
+	if not userId then
+		p = player
+	else
+		p = Get(userId)
+	end
+	if p ~= nil then
+		return p:GetGold()
+	end
+	logError('未找到玩家--'..tostring(userId))
+	return
+end
+
+function GetDiamond(userId)
+	local p
+	if not userId then
+		p = player
+	else
+		p = Get(userId)
+	end
+	if p ~= nil then
+		return p:GetDiam()
+	end
+	logError('未找到玩家--'..tostring(userId))
+	return
+end
+
+----获取玩家属性值
+function GetAttr(attr, userId)
+	local p
+	if not userId then
+		p = player
+	else
+		p = Get(userId)
+	end
+	if p ~= nil then
+		return p:Get(attr)
+	end
+	logError('未找到玩家--'..tostring(userId))
+	return
+end
 
 --更新
 function Update()
@@ -64,8 +139,20 @@ function Update()
 	end
 end
 
---移除panel--
-function RemovePlayer(id)
+--移除player--
+function RemovePlayer(o)
+	local id = false
+	if type(o) == "number" then
+		id = o
+	else
+		id = o:GetID()
+	end
+
+	if not id then
+		util.LogError("没有找到要删除玩家："..tostring(o))
+		return
+	end
+
 	if playerList[id] ~= nil then
 		playerList[id]:UnLoad()
 	end
@@ -74,7 +161,12 @@ end
 
 --卸载模块--
 function UnLoad(modName)
+	local my = GetMyself()
 	for _, player in pairs(playerList) do
-		player:UnLoad()
+		if player ~= my then
+			player:UnLoad()
+			RemovePlayer(player:GetID())
+			player = nil
+		end
 	end
 end

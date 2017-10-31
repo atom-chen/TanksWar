@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UI;
 
 public class UILoading : View {
 
     public ImageEx m_progressBar;
     public TextEx m_percent;
     public TextEx m_desc;
+    public TextEx m_speed;
     private string message;
 
     float m_progressWidth;
     static string DescStr;
     static string DataStr;
+    static string DataSpeed;
 
     public static UILoading Instance;
     ///<summary>
@@ -48,7 +49,7 @@ public class UILoading : View {
 	
 	// Update is called once per frame
 	void Update () {
-        UpdateProgress(DataStr, DescStr);
+        UpdateProgress(DataStr, DescStr, DataSpeed);
     }
 
     /// <summary>
@@ -81,6 +82,9 @@ public class UILoading : View {
                 DataStr = body.ToString();
                 //UpdateProgress(body.ToString());
                 break;
+            case NotiConst.UPDATE_SPEED:        //更新下载速度
+                DataSpeed = body.ToString();
+                break;
         }
     }
     
@@ -96,7 +100,7 @@ public class UILoading : View {
         m_desc.text = data;
     }
 
-    public void UpdateProgress(string dataStr, string descStr)
+    public void UpdateProgress(string dataStr, string descStr, string dataSpeed)
     {
         if (dataStr == null || descStr == null)
             return;
@@ -104,12 +108,31 @@ public class UILoading : View {
         this.message = dataStr;
         m_percent.text = dataStr + "%";
         m_desc.text = descStr;
+        if (string.IsNullOrEmpty(dataSpeed))
+            m_speed.gameObject.SetActive(false);
+        else
+        {
+            m_speed.gameObject.SetActive(true);
+            m_speed.text = dataSpeed;
+        }
+
         var rect = m_progressBar.GetComponent<RectTransform>();
+        int num = 0;
+        if (!int.TryParse(dataStr, out num))
+        {
+            Debug.LogError("UILoading dataStr-----" + dataStr);
+            return;
+        }
+
         rect.sizeDelta = new Vector2(int.Parse(dataStr) / 100.0f * m_progressWidth, rect.sizeDelta.y);
     }
 
     public void LoadEnd()
     {
         gameObject.SetActive(false);
+
+        DescStr = "";
+        DataStr = "";
+        DataSpeed = "";
     }
 }

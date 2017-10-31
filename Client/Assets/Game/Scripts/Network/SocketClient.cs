@@ -215,7 +215,7 @@ public class SocketClient {
         ByteBuffer buffer = new ByteBuffer(message);
         //int mainId = buffer.ReadShort();
         //NetworkManager.AddEvent(mainId, buffer);
-        NetworkManager.AddEvent(104, buffer);
+        NetworkManager.AddEvent(Protocal.Message, buffer);
     }
 
 

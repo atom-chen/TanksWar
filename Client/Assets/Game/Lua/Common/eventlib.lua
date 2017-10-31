@@ -171,7 +171,11 @@ assert(self.handlers, "no handler table")
     for k, v in pairs(self.handlers) do
         i = i + 1
         spawn(function() 
-            v(unpack(self.args)) 
+            -- v(unpack(self.args)) 
+            local ok, err = pcall(function() v(unpack(self.args)) end)
+            if not ok then 
+                util.LogError(" err -- "..tostring(err))
+            end
             i = i - 1
             if i == 0 then self.executing = false end
         end)

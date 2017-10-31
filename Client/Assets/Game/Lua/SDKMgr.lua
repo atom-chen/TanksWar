@@ -6,16 +6,52 @@
 
 module(..., package.seeall)
 
+WeChatOpenID = ""
+WechatInfo = false
 function OnStart( )
 	log("SDKMgr -------")
 end
 
-function AuthorizeWeiChat()
-	SDKManager.instance:Authorize(22)
+function Authorize(platFormType)
+	SDKManager.instance:Authorize(platFormType)
 end
 
-function OnAuthResult(reqID, state, type, result)
-	logError(' OnAuthResult --  state -- '..tostring(state)..' type -- '..tostring(type)..' result -- '..tostring(result))
+function IsClientValid(platFormType)
+	return SDKManager.instance:IsClientValid(platFormType)
+end
+
+function OnShareFriends(userID)
+	local text = string.format(g_Config.shareText, userID)
+	local title = g_Config.shareTitle
+	local imgURL = g_Config.shareImgUrl
+	local site = g_Config.shareSite
+	local url = g_Config.shareFriendsUrl
+	
+	SDKManager.instance:ShareWeChatFriend(url, text, title, imgURL, site)
+
+end
+
+function OnShareMoments(userID)
+	local text = string.format(g_Config.shareText, userID)
+	local title = g_Config.shareTitle
+	local imgURL = g_Config.shareImgUrl
+	local site = g_Config.shareSite
+	local url = g_Config.shareMomentsUrl
+	
+	SDKManager.instance:ShareWeChatMoments(url, text, title, imgURL, site)
+end
+
+function OnAuthResult(reqID, state, type, result, wechatStr)
+    if wechatStr == "" then
+    	UIMgr.Open(Common_Panel.TipsPanel, Lang.loginFaild)
+    	logError("OnAuthResult--"..tostring(result))
+    	return
+    end
+	WechatInfo = cjson.decode(wechatStr)
+	-- logError("  cjson.decode(wechatStr)  ----  "..cjson.decode(wechatStr))
+    WeChatOpenID = reqID
+    local loginCtrl = CtrlMgr.Get(Main_Ctrl.LoginCtrl)
+    loginCtrl:OnLogin()
 end
 
 function OnGetUserInfoResult(reqID, state, type, result)

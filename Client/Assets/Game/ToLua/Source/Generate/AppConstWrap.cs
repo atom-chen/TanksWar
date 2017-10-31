@@ -9,19 +9,22 @@ public class AppConstWrap
 		L.BeginClass(typeof(AppConst), typeof(System.Object));
 		L.RegFunction("New", _CreateAppConst);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegConstant("DebugMode", 0);
-		L.RegConstant("UpdateMode", 0);
-		L.RegConstant("LuaByteMode", 1);
-		L.RegConstant("LuaBundleMode", 0);
-		L.RegConstant("PrefabBundleMod", 0);
-		L.RegConstant("TimerInterval", 1);
-		L.RegConstant("GameFrameRate", 30);
-		L.RegVar("AppName", get_AppName, null);
-		L.RegVar("LuaTempDir", get_LuaTempDir, null);
-		L.RegVar("AppPrefix", get_AppPrefix, null);
-		L.RegVar("ExtName", get_ExtName, null);
-		L.RegVar("AssetDir", get_AssetDir, null);
-		L.RegVar("WebUrl", get_WebUrl, null);
+		L.RegVar("ConfigURL", get_ConfigURL, set_ConfigURL);
+		L.RegVar("DebugMode", get_DebugMode, set_DebugMode);
+		L.RegVar("UpdateMode", get_UpdateMode, set_UpdateMode);
+		L.RegVar("LuaByteMode", get_LuaByteMode, set_LuaByteMode);
+		L.RegVar("LuaBundleMode", get_LuaBundleMode, set_LuaBundleMode);
+		L.RegVar("PrefabBundleMod", get_PrefabBundleMod, set_PrefabBundleMod);
+		L.RegVar("UpdateResource", get_UpdateResource, set_UpdateResource);
+		L.RegVar("TestResourceFolder", get_TestResourceFolder, set_TestResourceFolder);
+		L.RegVar("TimerInterval", get_TimerInterval, set_TimerInterval);
+		L.RegVar("GameFrameRate", get_GameFrameRate, set_GameFrameRate);
+		L.RegVar("AppName", get_AppName, set_AppName);
+		L.RegVar("LuaTempDir", get_LuaTempDir, set_LuaTempDir);
+		L.RegVar("AppPrefix", get_AppPrefix, set_AppPrefix);
+		L.RegVar("ExtName", get_ExtName, set_ExtName);
+		L.RegVar("AssetDir", get_AssetDir, set_AssetDir);
+		L.RegVar("WebUrl", get_WebUrl, set_WebUrl);
 		L.RegVar("UserId", get_UserId, set_UserId);
 		L.RegVar("SocketPort", get_SocketPort, set_SocketPort);
 		L.RegVar("SocketAddress", get_SocketAddress, set_SocketAddress);
@@ -46,6 +49,146 @@ public class AppConstWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: AppConst.New");
 			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ConfigURL(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, AppConst.ConfigURL);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_DebugMode(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, AppConst.DebugMode);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_UpdateMode(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, AppConst.UpdateMode);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LuaByteMode(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, AppConst.LuaByteMode);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_LuaBundleMode(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, AppConst.LuaBundleMode);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_PrefabBundleMod(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, AppConst.PrefabBundleMod);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_UpdateResource(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushboolean(L, AppConst.UpdateResource);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_TestResourceFolder(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushstring(L, AppConst.TestResourceFolder);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_TimerInterval(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushinteger(L, AppConst.TimerInterval);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_GameFrameRate(IntPtr L)
+	{
+		try
+		{
+			LuaDLL.lua_pushinteger(L, AppConst.GameFrameRate);
+			return 1;
 		}
 		catch(Exception e)
 		{
@@ -186,6 +329,246 @@ public class AppConstWrap
 		{
 			LuaDLL.lua_pushstring(L, AppConst.FrameworkRoot);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ConfigURL(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.ConfigURL = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_DebugMode(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			AppConst.DebugMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_UpdateMode(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			AppConst.UpdateMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_LuaByteMode(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			AppConst.LuaByteMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_LuaBundleMode(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			AppConst.LuaBundleMode = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_PrefabBundleMod(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			AppConst.PrefabBundleMod = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_UpdateResource(IntPtr L)
+	{
+		try
+		{
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			AppConst.UpdateResource = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_TestResourceFolder(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.TestResourceFolder = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_TimerInterval(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			AppConst.TimerInterval = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_GameFrameRate(IntPtr L)
+	{
+		try
+		{
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			AppConst.GameFrameRate = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_AppName(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.AppName = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_LuaTempDir(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.LuaTempDir = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_AppPrefix(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.AppPrefix = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ExtName(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.ExtName = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_AssetDir(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.AssetDir = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_WebUrl(IntPtr L)
+	{
+		try
+		{
+			string arg0 = ToLua.CheckString(L, 2);
+			AppConst.WebUrl = arg0;
+			return 0;
 		}
 		catch(Exception e)
 		{

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Text;
 using System.IO;
-using UI;
 
 public class ToolMenu
 {
@@ -378,6 +377,34 @@ public class ToolMenu
 
             UnityEngine.Object.DestroyImmediate(btn);
             AddStateButton(go);    
+        }
+    }
+
+    [MenuItem("Tool/小工具/转换所有Text为TextEx")]
+    static public void ChangeToTextEx()
+    {
+        GameObject[] gos = GameObject.FindObjectsOfType<GameObject>();//注意不能找到inactive的游戏对象
+        Text txt;
+        foreach (var go in gos)
+        {
+            
+            txt = go.GetComponent<Text>();
+            if (!txt)
+                continue;
+
+            string textStr = txt.text;
+            int fontSize = txt.fontSize;
+            FontStyle fontStyle = txt.fontStyle;
+            Font font = txt.font;
+            Color color = txt.color;
+
+            UnityEngine.Object.DestroyImmediate(txt);
+            
+            TextEx newTxt = go.AddComponent<TextEx>();
+            newTxt.fontSize = fontSize;
+            newTxt.fontStyle = fontStyle;
+            newTxt.font = font;
+            newTxt.color = color;
         }
     }
 

@@ -64,7 +64,7 @@ namespace LuaInterface
         LUA_ERRMEM = 4,
         LUA_ERRERR = 5,
     }
-
+   
     public class LuaIndexes
     {
         public static int LUA_REGISTRYINDEX = -10000;

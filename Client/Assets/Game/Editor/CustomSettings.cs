@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 using BindType = ToLuaMenu.BindType;
 using UnityEngine.UI;
+using Xxtea;
 using System.Reflection;
 
 public static class CustomSettings
@@ -138,6 +139,7 @@ public static class CustomSettings
         _GT(typeof(QueueMode)),  
         _GT(typeof(PlayMode)),
         _GT(typeof(WrapMode)),
+        _GT(typeof(Quaternion)),
 
         _GT(typeof(QualitySettings)),
         _GT(typeof(RenderSettings)),                                                   
@@ -148,7 +150,7 @@ public static class CustomSettings
         _GT(typeof(CanvasGroup)),
 
         _GT(typeof(SceneManager)),
-          
+        
         //for Game
         //UnityEngine UI
         _GT(typeof(RectTransform)),
@@ -171,6 +173,8 @@ public static class CustomSettings
         _GT(typeof(ToggleGroup)),
         _GT(typeof(Slider)),
         _GT(typeof(SpriteState)),
+        _GT(typeof(XXTEA)),
+        _GT(typeof(UnityEngine.EventSystems.PointerEventData)),
 
         _GT(typeof(Util)),
         _GT(typeof(AppConst)),
@@ -190,46 +194,48 @@ public static class CustomSettings
         _GT(typeof(UILoading)),
         _GT(typeof(UIResTool)),
         _GT(typeof(UIResMgr)),
+        _GT(typeof(UVTools)),
 
         //for thirdPart
         _GT(typeof(cn.sharesdk.unity3d.PlatformType)),
         _GT(typeof(cn.sharesdk.unity3d.ResponseState)),
 
-        //Custom UI
-        _GT(typeof(UI.MonoTable)),
-        _GT(typeof(UI.UIGroup)),
-        _GT(typeof(UI.ImageEx)),
-        _GT(typeof(UI.TextEx)),
-        _GT(typeof(UI.UIArtFont)),
-        _GT(typeof(UI.UIProgressEx)),
-        _GT(typeof(UI.UIScrollTips)),
-        _GT(typeof(UI.DragControl)),
-        _GT(typeof(UI.DropControl)),
-        _GT(typeof(UI.CurveMove)),
-        _GT(typeof(UI.UIScrollWrap)),
+        //Custom
+        _GT(typeof(MonoTable)),
+        _GT(typeof(UIGroup)),
+        _GT(typeof(ImageEx)),
+        _GT(typeof(TextEx)),
+        _GT(typeof(UIArtFont)),
+        _GT(typeof(UIProgressEx)),
+        _GT(typeof(UIScrollTips)),
+        _GT(typeof(DragControl)),
+        _GT(typeof(DropControl)),
+        _GT(typeof(CurveMove)),
+        _GT(typeof(UIScrollWrap)),
 
-        _GT(typeof(UI.IHandle)),
-        _GT(typeof(UI.Handle)),
-        _GT(typeof(UI.AnimatorHandle)),
-        _GT(typeof(UI.DragListener)),
-        _GT(typeof(UI.HandleAlpha)),
-        _GT(typeof(UI.HandleColor)),
-        _GT(typeof(UI.HandleGrey)),
-        _GT(typeof(UI.HandleImage)),
-        _GT(typeof(UI.HandleNum)),
-        _GT(typeof(UI.HandlePosition)),
-        _GT(typeof(UI.HandleProgressEx)),
-        _GT(typeof(UI.HandleRotate)),
-        _GT(typeof(UI.HandleScale)),
-        _GT(typeof(UI.HandleSequence)),
-        _GT(typeof(UI.HandleSize)),
-        _GT(typeof(UI.HandleState)),
-        _GT(typeof(UI.HandleVisiable)),
-        _GT(typeof(UI.SequenceHandle)),
-        _GT(typeof(UI.SequenceHandleEx)),
-        _GT(typeof(UI.SimpleHandle)),
-        _GT(typeof(UI.StateGroup)),
-        _GT(typeof(UI.StateHandle)),
+        _GT(typeof(IHandle)),
+        _GT(typeof(Handle)),
+        _GT(typeof(AnimatorHandle)),
+        _GT(typeof(DragListener)),
+        _GT(typeof(HandleAlpha)),
+        _GT(typeof(HandleColor)),
+        _GT(typeof(HandleGrey)),
+        _GT(typeof(HandleImage)),
+        _GT(typeof(HandleNum)),
+        _GT(typeof(HandlePosition)),
+        _GT(typeof(HandleProgressEx)),
+        _GT(typeof(HandleRotate)),
+        _GT(typeof(HandleScale)),
+        _GT(typeof(HandleSequence)),
+        _GT(typeof(HandleSize)),
+        _GT(typeof(HandleState)),
+        _GT(typeof(HandleVisiable)),
+        _GT(typeof(SequenceHandle)),
+        _GT(typeof(SequenceHandleEx)),
+        _GT(typeof(SimpleHandle)),
+        _GT(typeof(StateGroup)),
+        _GT(typeof(StateHandle)),
+        _GT(typeof(CenterOnChild)),
         
     };
 

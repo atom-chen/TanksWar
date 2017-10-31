@@ -148,6 +148,7 @@ public class GameManager : Manager
         }
         string dataPath = Util.DataPath;  //数据目录
         string url = AppConst.WebUrl;
+
         string message = string.Empty;
         string random = DateTime.Now.ToString("yyyymmddhhmmss");
         string listUrl = url + "files.txt?v=" + random;
@@ -283,10 +284,24 @@ public class GameManager : Manager
     {
         LuaManager.InitStart();
         LuaManager.DoFile("Game");         //加载游戏
+
+        //设置平台
+#if UNITY_EDITOR
+        Util.CallMethod("Game", "SetEditorrPlatform");
+#endif
+
+#if UNITY_IPHONE
+        Util.CallMethod("Game", "SetIphonePlatform");
+#endif
+
+#if UNITY_ANDROID
+        Util.CallMethod("Game", "SetAndroidPlatform");
+#endif
+
         Util.CallMethod("Game", "OnInitOK");     //初始化完成
 
         initialize = true;
-
+        
         ///////////////////////////////自带对象池示例////////////////////////////
         ////类对象池测试
         //var classObjPool = ObjPoolManager.CreatePool<TestObjectClass>(OnPoolGetElement, OnPoolPushElement);

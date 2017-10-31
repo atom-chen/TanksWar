@@ -29,7 +29,7 @@ function BasePanel:Ctor(go)
 
 	-----定义组件相关-----
 	self.m_comp = {}	----panel中的所有组件
-	self.m_comp.btnClose = UIButtonEx 	----没个界面默认的关闭按钮
+	self.m_comp.btnClose = ButtonEx 	----没个界面默认的关闭按钮
 	
 	-----标记相关-----
 	self.m_layer = 0
@@ -71,18 +71,18 @@ function BasePanel:Init()
 	self.m_isInit = true
 end
 
-function BasePanel:AddEvent(msgID, callback)
+function BasePanel:AddEvent(msgID, callback, tbl)
 	if (type(msgID) == "number") then
 		msgID = tostring(msgID)
 	end
-	Event.AddListener(msgID, callback);
+	Event.AddListener(msgID, callback, tbl);
 	self.msgIdList[#self.msgIdList + 1] = msgID
 end
 
 function BasePanel:RemoveEvent(msgID)
 	for i=1, #self.msgIdList do
 		if self.msgIdList[i] == msgID then
-			Event.RemoveListener(self.msgIdList[i])
+			Event.RemoveListener(self.msgIdList[i], self)
 			self.msgIdList[i] = nil
 			break
 		end
@@ -91,6 +91,7 @@ end
 
 function BasePanel:GetComponent(name)
 	if not name or name == "" then
+		logError("没名字 -- ")
 		return nil
 	end
 	if not self.m_go then
@@ -101,6 +102,7 @@ function BasePanel:GetComponent(name)
 end
 
 function BasePanel:GetOrder()
+	-- util.Log("BasePanel:GetOrder --- ")
 	return (self:GetComponent("Canvas")).sortingOrder
 end
 
@@ -179,7 +181,7 @@ function BasePanel:Close(immediate)
 	
 	local isAniCloseBefore = self.m_isAniClosing
 	if self.m_go.activeSelf == false then
-		logError("重复关闭")
+		util.LogError("重复关闭:"..self.m_name)
 		return
 	end
 	
@@ -297,9 +299,11 @@ end
 
 function BasePanel:UnLoad( )
 	for i=1, #self.msgIdList do
-		Event.RemoveListener(self.msgIdList[i])
+		Event.RemoveListener(self.msgIdList[i], self)
 	end
 	self.msgIdList = {}
+
+	destroy(self.m_go)
 end
 
 function BasePanel:OnInit()

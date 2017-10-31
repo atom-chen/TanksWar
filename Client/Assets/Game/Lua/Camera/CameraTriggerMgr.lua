@@ -1,5 +1,0 @@
--- CameraMgr.lua
--- Author : Dzq
--- Date : 2017-09-11
--- Last modification : 2017-09-11
--- Desc: 相机管理类

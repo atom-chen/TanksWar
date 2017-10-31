@@ -80,9 +80,12 @@ public class LuaManager : Manager
         {
             string rootPath = AppConst.FrameworkRoot;
             lua.AddSearchPath(rootPath + "/Lua");
+            lua.AddSearchPath(rootPath + "/ToLua/Lua");
             lua.AddSearchPath(rootPath + "/Lua/Common");
             lua.AddSearchPath(rootPath + "/Lua/Config");
-            lua.AddSearchPath(rootPath + "/ToLua/Lua");
+            lua.AddSearchPath(rootPath + "/Lua/3rd");
+            lua.AddSearchPath(rootPath + "/Lua/Modules");
+            lua.AddSearchPath(rootPath + "/Lua/cs-common");
         }
         else
         {
@@ -113,10 +116,10 @@ public class LuaManager : Manager
             loader.AddBundle("lua/lua_3rd_sproto.unity3d");
 
             //for game
-            loader.AddBundle("lua/lua_modules_ccmj_control.unity3d");
-            loader.AddBundle("lua/lua_modules_ccmj_view.unity3d");
-            loader.AddBundle("lua/lua_modules_ddz_controller.unity3d");
-            loader.AddBundle("lua/lua_modules_ddz_view.unity3d");
+            loader.AddBundle("lua/lua_modules_gymj_control.unity3d");
+            loader.AddBundle("lua/lua_modules_gymj_view.unity3d");
+            loader.AddBundle("lua/lua_modules_fymj_controller.unity3d");
+            loader.AddBundle("lua/lua_modules_fymj_view.unity3d");
             loader.AddBundle("lua/lua_modules_main_control.unity3d");
             loader.AddBundle("lua/lua_modules_main_view.unity3d");
             loader.AddBundle("lua/lua_modules_main_view_item.unity3d");

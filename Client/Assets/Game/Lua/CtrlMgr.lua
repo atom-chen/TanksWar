@@ -23,64 +23,76 @@ function CoInit(mdName)
 
 	modName = mdName
 
-	commonCtrl = _G["Common_Ctrl"]
-	curModCtrl = _G[modName.."_Ctrl"]
-
-
+	-- logWarn("ctrl mgr init -- "..mdName)
 	----加载资源
 	-- log("加载资源 ---- -- ")
-	local time = Time.time
 	local totleTime = Time.time
-	curLoadName = mdName.."_ResMgr"
-	panelMgr:LoadUIPrefab(mdName)
-	-- while not UIResTool.HasMod(mdName) do
-	-- 	coroutine.wait(1)
-	-- end
-	isLoaded_module_res = true
-	-- log("加载 [Module Res Mgr] 用时--"..(Time.time - time))
-	
-	coroutine.wait(1)
 
-	local time = Time.time
-	panelMgr:LoadUIPrefab("Common")
-	curLoadName = "Common_ResMgr"
-	-- while not UIResTool.HasMod("Common") do
-	-- 	coroutine.wait(1)
-	-- end
+	if mdName == Module.Main then 	----公共模块只加载一次
+		commonCtrl = _G["Common_Ctrl"]
+		local time = Time.time
+		curLoadName = "Common_ResMgr"
+		panelMgr:LoadUIPrefab("Common")
+		if not Platform.Editor then
+			while not UIResTool.HasMod("Common") do
+				coroutine.step(1)
+			end
+		end
 
-	coroutine.wait(1)
-	isLoaded_common_res = true
-	-- log("加载 [Common Res Mgr] 用时--"..(Time.time - time))
+		isLoaded_common_res = true
+		log("加载 [Common Res Mgr] 用时--"..(Time.time - time))
 
-	--加载通用内容--
-	for _,cName in pairs(commonCtrl) do
-		if Get(cName) == nil then
-			local time = Time.time
-			require ('Modules/Common/Control/'..tostring(cName))
-			local ctrl = _G[cName].New("Common")
-			ctrl:Init()
-			-- while not ctrl.m_isLoaded do	--加载一个界面要等
-			-- 	coroutine.wait(1)
-			-- end
-			AddCtrl(ctrl.m_id, ctrl)
-			-- log("加载 ["..cName.."] 用时--"..(Time.time - time))
+		--加载通用内容--
+		for _,cName in pairs(commonCtrl) do
+			if Get(cName) == nil then
+				-- local time = Time.time
+				require ('Modules.Common.Control.'..tostring(cName))
+				local ctrl = _G[cName].New("Common")
+				ctrl:Init()
+				-- if not Platform.Editor then
+				-- 	while not ctrl.m_isLoaded do	--加载一个界面要等
+				-- 		coroutine.step(1)
+				-- 	end
+				-- end
+				AddCtrl(ctrl.m_id, ctrl)
+				-- log("加载 ["..cName.."] 用时--"..(Time.time - time))
+			end
 		end
 	end
+	
+-----------------------------------------------------------------------
+	curModCtrl = _G[modName.."_Ctrl"]
+	-- logWarn("curModCtrl --- "..#curModCtrl)
+	local time = Time.time
+	curLoadName = mdName.."_ResMgr"
+	-- logWarn("LoadUIPrefab -- "..mdName)
+	panelMgr:LoadUIPrefab(mdName)
+	if not Platform.Editor then
+		while not UIResTool.HasMod(mdName) do
+			coroutine.step(1)
+		end
+	end
+	
+	isLoaded_module_res = true
+	log("加载 [Module Res Mgr] 用时--"..(Time.time - time))
 
+	
 	--加载模块对应资源
 	for _,cName in pairs(curModCtrl) do
-		local time = Time.time
-		require ('Modules/'..modName.."/Control/"..tostring(cName))
+		-- local time = Time.time
+		require ('Modules.'..modName..".Control."..tostring(cName))
 		local ctrl = _G[cName].New(mdName)
 		ctrl:Init()
-		-- while not ctrl.m_isLoaded do	--加载一个界面要等
-		-- 	coroutine.wait(1)
+		-- if not Platform.Editor then
+		-- 	while not ctrl.m_isLoaded do	--加载一个界面要等
+		-- 		coroutine.step(1)
+		-- 	end
 		-- end
 		AddCtrl(ctrl.m_id, ctrl)
 		-- log("加载 ["..cName.."] 用时--"..(Time.time - time))
 	end
 
-	-- log("加载结束 ----耗时 -- "..(Time.time - totleTime))
+	log("加载结束总耗时 -- "..(Time.time - totleTime))
 end
 
 function LoadedNum()
@@ -112,8 +124,9 @@ function Get(ctrlName)
 	return ctrlList[ctrlName];
 end
 
-function GetMainCtrl()
-	return ctrlList["MainCtrl"]
+function GetModuleCtrl()
+	-- log("module ctrl -- "..modName..'Ctrl')
+	return ctrlList[modName..'Ctrl']
 end
 
 --获取当前模块加载的ctrl个数
@@ -160,8 +173,24 @@ end
 --卸载模块--
 function UnLoad(modName)
 	for k,v in pairs(ctrlList) do
-		if v then
+		if v and v.m_modName == modName then
+			--顺便找到panel卸载
+			v.m_panel:UnLoad()	
+			UIMgr.RemovePanel(v.m_panelName)
+			v.m_panelName = nil
+
+			--卸载ctrl
 			v:UnLoad()
+			RemoveCtrl(v.m_id)
 		end
 	end
+
+	--卸载模块对应资源
+	for _,cName in pairs(curModCtrl) do
+		package.loaded['Modules.'..modName..".Control."..tostring(cName)] = nil
+		-- log('卸载脚本--'..'Modules.'..modName..".Control."..tostring(cName))
+	end
+
+	cur_module_num = 0
+	common_module_num = 0
 end

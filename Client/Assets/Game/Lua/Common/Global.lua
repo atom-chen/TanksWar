@@ -4,15 +4,16 @@
 -- Last modification : 2017-05-24
 -- Desc: 全局
 
-require "Config"
-require "Functions"
-require "Class"
-require "BaseCtrl"
-require "BasePanel"
-require "BaseItem"
-require "BasePlayer"
-require "Common/util"
-require "Lang"
+require "Common.Config"
+require "Common.Functions"
+require "Common.Class"
+require "Common.BaseCtrl"
+require "Common.BasePanel"
+require "Common.BaseItem"
+require "Common.BasePlayer"
+require "Common.BaseContainer"
+require "Common.util"
+require "Common.Lang"
 
 require "CtrlMgr"
 require "UIMgr"
@@ -20,19 +21,29 @@ require "SDKMgr"
 require "PlayerMgr"
 require "SceneMgr"
 
-require "ActivityCfg"
-require "GameCfg"
-require "RuleCfg"
-require "SettingCfg"
-require "ShareCfg"
-require "SceneCfg"
+ActivityCfg = require "Config.ActivityCfg"
+GameCfg = require "Config.GameCfg"
+RuleCfg = require "Config.RuleCfg"
+SettingCfg = require "Config.SettingCfg"
+ShareCfg = require "Config.ShareCfg"
+ShopCfg = require "Config.ShopCfg"
+ViewCfg = require "Config.ViewCfg"
+OpenCfg = require "Config.OpenModuleCfg"
+
+gyCfg= require "cs-common.gymahjong.config"
+fyCfg= require "cs-common.fymahjong.config"
 
 
 NetWork = require "NetWork"
 
-require "MsgDef"
+require "Common.MsgDef"
 
-Event = require 'events'
+--网络消息
+proto = require "cs-common.protocal"
+Bit = require "cs-common.bit"
+CommonUtil = require "cs-common.utils"
+
+Event = require 'Common.events'
 cjson = require "cjson"
 
 Util = Util;
@@ -53,6 +64,7 @@ WWWForm = UnityEngine.WWWForm;
 GameObject = UnityEngine.GameObject;
 Transform = UnityEngine.Transform;
 RectTransform = UnityEngine.RectTransform;
+SceneManager = UnityEngine.SceneManagement.SceneManager
 UIText = UnityEngine.UI.Text
 UIImage = UnityEngine.UI.Image
 UIButton = UnityEngine.UI.Button 
@@ -61,13 +73,16 @@ UIScrollRect = UnityEngine.UI.ScrollRect
 UISlider = UnityEngine.UI.Slider
 UIToggleGroup = UnityEngine.UI.ToggleGroup
 UIScrollbar = UnityEngine.UI.Scrollbar
-SceneManager = UnityEngine.SceneManagement.SceneManager
+
+
 
 --custom
-UITextEx = UI.TextEx
-UIImageEx = UI.ImageEx
-UIButtonEx = UI.StateHandle
-UIGroup = UI.UIGroup
+TextEx = TextEx
+ImageEx = ImageEx
+ButtonEx = StateHandle
+UIGroup = UIGroup
+CenterChild = CenterOnChild
+XXTEA = Xxtea.XXTEA
 
 LocalConfig = {}
 

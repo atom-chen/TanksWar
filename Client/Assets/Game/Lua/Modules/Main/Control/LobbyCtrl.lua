@@ -14,10 +14,24 @@ function LobbyCtrl:Ctor()
 end
 
 function LobbyCtrl:OnInit()
-
 end
 
 function LobbyCtrl:OnStart(data)
+
 	UIMgr.Open(Main_Panel.LobbyPanel)
+	Game.IsReconnect = false
+	local my = PlayerMgr.GetMyself()
+	if my then
+		local roomId = my:Get("roomId")
+		if roomId and roomId ~= 0 then
+			UIMgr.Open(Common_Panel.WaitPanel)
+			log("已加入房间 ："..roomId)
+			Game.IsReconnect = true
+			local joinCtrl = CtrlMgr.Get(Main_Ctrl.JoinCtrl)
+			joinCtrl:JoinRoom(roomId)
+		end
+	end
+
+	-- log("LobbyCtrl:OnStart------------"..type(data))
 end
 

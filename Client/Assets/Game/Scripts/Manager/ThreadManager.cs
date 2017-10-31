@@ -137,7 +137,7 @@ public class ThreadManager : Manager
         //float value = (float)e.ProgressPercentage / 100f;
 
         string value = string.Format("{0} kb/s", (e.BytesReceived / 1024d / sw.Elapsed.TotalSeconds).ToString("0.00"));
-        NotiData data = new NotiData(NotiConst.UPDATE_PROGRESS, value);
+        NotiData data = new NotiData(NotiConst.UPDATE_SPEED, value);
         if (m_SyncEvent != null) m_SyncEvent(data);
 
         if (e.ProgressPercentage == 100 && e.BytesReceived == e.TotalBytesToReceive)

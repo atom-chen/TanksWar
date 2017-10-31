@@ -11,7 +11,7 @@ local showTime = 1
 local co = nil
 
 function TipsPanel:Ctor()
-	self.m_comp.txtContext = UITextEx
+	self.m_comp.txtContext = TextEx
 	self.m_comp.goCenter = GameObject
 	self.m_openAniName = ""
 	self.m_closeAniName = ""
@@ -25,7 +25,7 @@ end
 function TipsPanel:OnOpen(param)
 	--log("TipsPanel OnOpen---->>>")
 	if type(param) ~= "string" then
-		logError("传入内容非字符串，无法显示")
+		util.LogError("传入内容非字符串，无法显示")
 		self:Close()
 		return
 	end

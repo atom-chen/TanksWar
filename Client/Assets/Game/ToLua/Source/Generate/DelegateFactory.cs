@@ -42,20 +42,23 @@ public static class DelegateFactory
 		dict.Add(typeof(System.Action<UnityEngine.GameObject>), System_Action_UnityEngine_GameObject);
 		dict.Add(typeof(System.Action<UnityEngine.EventSystems.PointerEventData>), System_Action_UnityEngine_EventSystems_PointerEventData);
 		dict.Add(typeof(System.Action<object>), System_Action_object);
-		dict.Add(typeof(System.Action<UI.UIScrollWrap,int>), System_Action_UI_UIScrollWrap_int);
-		dict.Add(typeof(System.Action<UI.UIScrollWrap>), System_Action_UI_UIScrollWrap);
-		dict.Add(typeof(System.Action<UI.Handle.WndType,object>), System_Action_UI_Handle_WndType_object);
-		dict.Add(typeof(System.Func<UI.Handle,float>), System_Func_UI_Handle_float);
-		dict.Add(typeof(System.Func<UI.Handle,int>), System_Func_UI_Handle_int);
-		dict.Add(typeof(System.Func<UI.Handle,UnityEngine.Vector3>), System_Func_UI_Handle_UnityEngine_Vector3);
-		dict.Add(typeof(System.Func<UI.Handle,UnityEngine.Color>), System_Func_UI_Handle_UnityEngine_Color);
+		dict.Add(typeof(System.Action<UIScrollWrap,int>), System_Action_UIScrollWrap_int);
+		dict.Add(typeof(System.Action<UIScrollWrap>), System_Action_UIScrollWrap);
+		dict.Add(typeof(System.Action<Handle.WndType,object>), System_Action_Handle_WndType_object);
+		dict.Add(typeof(System.Func<Handle,float>), System_Func_Handle_float);
+		dict.Add(typeof(System.Func<Handle,int>), System_Func_Handle_int);
+		dict.Add(typeof(System.Func<Handle,UnityEngine.Vector3>), System_Func_Handle_UnityEngine_Vector3);
+		dict.Add(typeof(System.Func<Handle,UnityEngine.Color>), System_Func_Handle_UnityEngine_Color);
 		dict.Add(typeof(System.Func<bool>), System_Func_bool);
-		dict.Add(typeof(System.Action<UI.StateGroup,int>), System_Action_UI_StateGroup_int);
-		dict.Add(typeof(System.Action<UI.StateHandle,int>), System_Action_UI_StateHandle_int);
-		dict.Add(typeof(System.Action<UI.Handle>), System_Action_UI_Handle);
-		dict.Add(typeof(System.Action<UI.StateHandle>), System_Action_UI_StateHandle);
+		dict.Add(typeof(System.Action<StateGroup,int>), System_Action_StateGroup_int);
+		dict.Add(typeof(System.Action<StateHandle,int>), System_Action_StateHandle_int);
+		dict.Add(typeof(System.Action<Handle>), System_Action_Handle);
+		dict.Add(typeof(System.Action<StateHandle>), System_Action_StateHandle);
 		dict.Add(typeof(System.Action<LuaInterface.LuaTable>), System_Action_LuaInterface_LuaTable);
-		dict.Add(typeof(System.Action<LuaInterface.LuaTable,UI.StateHandle>), System_Action_LuaInterface_LuaTable_UI_StateHandle);
+		dict.Add(typeof(System.Action<LuaInterface.LuaTable,StateHandle>), System_Action_LuaInterface_LuaTable_StateHandle);
+		dict.Add(typeof(System.Action<LuaInterface.LuaTable,StateHandle,int>), System_Action_LuaInterface_LuaTable_StateHandle_int);
+		dict.Add(typeof(System.Action<LuaInterface.LuaTable,UnityEngine.EventSystems.PointerEventData>), System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData);
+		dict.Add(typeof(CenterOnChild.OnCenterHandler), CenterOnChild_OnCenterHandler);
 	}
 
     [NoToLuaAttribute]
@@ -1358,12 +1361,12 @@ public static class DelegateFactory
 		}
 	}
 
-	class System_Action_UI_UIScrollWrap_int_Event : LuaDelegate
+	class System_Action_UIScrollWrap_int_Event : LuaDelegate
 	{
-		public System_Action_UI_UIScrollWrap_int_Event(LuaFunction func) : base(func) { }
-		public System_Action_UI_UIScrollWrap_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_UIScrollWrap_int_Event(LuaFunction func) : base(func) { }
+		public System_Action_UIScrollWrap_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UI.UIScrollWrap param0, int param1)
+		public void Call(UIScrollWrap param0, int param1)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -1372,7 +1375,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UI.UIScrollWrap param0, int param1)
+		public void CallWithSelf(UIScrollWrap param0, int param1)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1383,36 +1386,36 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Action_UI_UIScrollWrap_int(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Action_UIScrollWrap_int(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<UI.UIScrollWrap,int> fn = delegate(UI.UIScrollWrap param0, int param1) { };
+			System.Action<UIScrollWrap,int> fn = delegate(UIScrollWrap param0, int param1) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_UI_UIScrollWrap_int_Event target = new System_Action_UI_UIScrollWrap_int_Event(func);
-			System.Action<UI.UIScrollWrap,int> d = target.Call;
+			System_Action_UIScrollWrap_int_Event target = new System_Action_UIScrollWrap_int_Event(func);
+			System.Action<UIScrollWrap,int> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_UI_UIScrollWrap_int_Event target = new System_Action_UI_UIScrollWrap_int_Event(func, self);
-			System.Action<UI.UIScrollWrap,int> d = target.CallWithSelf;
+			System_Action_UIScrollWrap_int_Event target = new System_Action_UIScrollWrap_int_Event(func, self);
+			System.Action<UIScrollWrap,int> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class System_Action_UI_UIScrollWrap_Event : LuaDelegate
+	class System_Action_UIScrollWrap_Event : LuaDelegate
 	{
-		public System_Action_UI_UIScrollWrap_Event(LuaFunction func) : base(func) { }
-		public System_Action_UI_UIScrollWrap_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_UIScrollWrap_Event(LuaFunction func) : base(func) { }
+		public System_Action_UIScrollWrap_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UI.UIScrollWrap param0)
+		public void Call(UIScrollWrap param0)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -1420,7 +1423,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UI.UIScrollWrap param0)
+		public void CallWithSelf(UIScrollWrap param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1430,36 +1433,36 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Action_UI_UIScrollWrap(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Action_UIScrollWrap(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<UI.UIScrollWrap> fn = delegate(UI.UIScrollWrap param0) { };
+			System.Action<UIScrollWrap> fn = delegate(UIScrollWrap param0) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_UI_UIScrollWrap_Event target = new System_Action_UI_UIScrollWrap_Event(func);
-			System.Action<UI.UIScrollWrap> d = target.Call;
+			System_Action_UIScrollWrap_Event target = new System_Action_UIScrollWrap_Event(func);
+			System.Action<UIScrollWrap> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_UI_UIScrollWrap_Event target = new System_Action_UI_UIScrollWrap_Event(func, self);
-			System.Action<UI.UIScrollWrap> d = target.CallWithSelf;
+			System_Action_UIScrollWrap_Event target = new System_Action_UIScrollWrap_Event(func, self);
+			System.Action<UIScrollWrap> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class System_Action_UI_Handle_WndType_object_Event : LuaDelegate
+	class System_Action_Handle_WndType_object_Event : LuaDelegate
 	{
-		public System_Action_UI_Handle_WndType_object_Event(LuaFunction func) : base(func) { }
-		public System_Action_UI_Handle_WndType_object_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_Handle_WndType_object_Event(LuaFunction func) : base(func) { }
+		public System_Action_Handle_WndType_object_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UI.Handle.WndType param0, object param1)
+		public void Call(Handle.WndType param0, object param1)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -1468,7 +1471,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UI.Handle.WndType param0, object param1)
+		public void CallWithSelf(Handle.WndType param0, object param1)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1479,36 +1482,36 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Action_UI_Handle_WndType_object(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Action_Handle_WndType_object(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<UI.Handle.WndType,object> fn = delegate(UI.Handle.WndType param0, object param1) { };
+			System.Action<Handle.WndType,object> fn = delegate(Handle.WndType param0, object param1) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_UI_Handle_WndType_object_Event target = new System_Action_UI_Handle_WndType_object_Event(func);
-			System.Action<UI.Handle.WndType,object> d = target.Call;
+			System_Action_Handle_WndType_object_Event target = new System_Action_Handle_WndType_object_Event(func);
+			System.Action<Handle.WndType,object> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_UI_Handle_WndType_object_Event target = new System_Action_UI_Handle_WndType_object_Event(func, self);
-			System.Action<UI.Handle.WndType,object> d = target.CallWithSelf;
+			System_Action_Handle_WndType_object_Event target = new System_Action_Handle_WndType_object_Event(func, self);
+			System.Action<Handle.WndType,object> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class System_Func_UI_Handle_float_Event : LuaDelegate
+	class System_Func_Handle_float_Event : LuaDelegate
 	{
-		public System_Func_UI_Handle_float_Event(LuaFunction func) : base(func) { }
-		public System_Func_UI_Handle_float_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Func_Handle_float_Event(LuaFunction func) : base(func) { }
+		public System_Func_Handle_float_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public float Call(UI.Handle param0)
+		public float Call(Handle param0)
 		{
 			func.BeginPCall();
 			func.PushObject(param0);
@@ -1518,7 +1521,7 @@ public static class DelegateFactory
 			return ret;
 		}
 
-		public float CallWithSelf(UI.Handle param0)
+		public float CallWithSelf(Handle param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1530,36 +1533,36 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Func_UI_Handle_float(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Func_Handle_float(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Func<UI.Handle,float> fn = delegate(UI.Handle param0) { return 0; };
+			System.Func<Handle,float> fn = delegate(Handle param0) { return 0; };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Func_UI_Handle_float_Event target = new System_Func_UI_Handle_float_Event(func);
-			System.Func<UI.Handle,float> d = target.Call;
+			System_Func_Handle_float_Event target = new System_Func_Handle_float_Event(func);
+			System.Func<Handle,float> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Func_UI_Handle_float_Event target = new System_Func_UI_Handle_float_Event(func, self);
-			System.Func<UI.Handle,float> d = target.CallWithSelf;
+			System_Func_Handle_float_Event target = new System_Func_Handle_float_Event(func, self);
+			System.Func<Handle,float> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class System_Func_UI_Handle_int_Event : LuaDelegate
+	class System_Func_Handle_int_Event : LuaDelegate
 	{
-		public System_Func_UI_Handle_int_Event(LuaFunction func) : base(func) { }
-		public System_Func_UI_Handle_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Func_Handle_int_Event(LuaFunction func) : base(func) { }
+		public System_Func_Handle_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public int Call(UI.Handle param0)
+		public int Call(Handle param0)
 		{
 			func.BeginPCall();
 			func.PushObject(param0);
@@ -1569,7 +1572,7 @@ public static class DelegateFactory
 			return ret;
 		}
 
-		public int CallWithSelf(UI.Handle param0)
+		public int CallWithSelf(Handle param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1581,36 +1584,36 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Func_UI_Handle_int(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Func_Handle_int(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Func<UI.Handle,int> fn = delegate(UI.Handle param0) { return 0; };
+			System.Func<Handle,int> fn = delegate(Handle param0) { return 0; };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Func_UI_Handle_int_Event target = new System_Func_UI_Handle_int_Event(func);
-			System.Func<UI.Handle,int> d = target.Call;
+			System_Func_Handle_int_Event target = new System_Func_Handle_int_Event(func);
+			System.Func<Handle,int> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Func_UI_Handle_int_Event target = new System_Func_UI_Handle_int_Event(func, self);
-			System.Func<UI.Handle,int> d = target.CallWithSelf;
+			System_Func_Handle_int_Event target = new System_Func_Handle_int_Event(func, self);
+			System.Func<Handle,int> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class System_Func_UI_Handle_UnityEngine_Vector3_Event : LuaDelegate
+	class System_Func_Handle_UnityEngine_Vector3_Event : LuaDelegate
 	{
-		public System_Func_UI_Handle_UnityEngine_Vector3_Event(LuaFunction func) : base(func) { }
-		public System_Func_UI_Handle_UnityEngine_Vector3_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Func_Handle_UnityEngine_Vector3_Event(LuaFunction func) : base(func) { }
+		public System_Func_Handle_UnityEngine_Vector3_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public UnityEngine.Vector3 Call(UI.Handle param0)
+		public UnityEngine.Vector3 Call(Handle param0)
 		{
 			func.BeginPCall();
 			func.PushObject(param0);
@@ -1620,7 +1623,7 @@ public static class DelegateFactory
 			return ret;
 		}
 
-		public UnityEngine.Vector3 CallWithSelf(UI.Handle param0)
+		public UnityEngine.Vector3 CallWithSelf(Handle param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1632,36 +1635,36 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Func_UI_Handle_UnityEngine_Vector3(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Func_Handle_UnityEngine_Vector3(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Func<UI.Handle,UnityEngine.Vector3> fn = delegate(UI.Handle param0) { return default(UnityEngine.Vector3); };
+			System.Func<Handle,UnityEngine.Vector3> fn = delegate(Handle param0) { return default(UnityEngine.Vector3); };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Func_UI_Handle_UnityEngine_Vector3_Event target = new System_Func_UI_Handle_UnityEngine_Vector3_Event(func);
-			System.Func<UI.Handle,UnityEngine.Vector3> d = target.Call;
+			System_Func_Handle_UnityEngine_Vector3_Event target = new System_Func_Handle_UnityEngine_Vector3_Event(func);
+			System.Func<Handle,UnityEngine.Vector3> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Func_UI_Handle_UnityEngine_Vector3_Event target = new System_Func_UI_Handle_UnityEngine_Vector3_Event(func, self);
-			System.Func<UI.Handle,UnityEngine.Vector3> d = target.CallWithSelf;
+			System_Func_Handle_UnityEngine_Vector3_Event target = new System_Func_Handle_UnityEngine_Vector3_Event(func, self);
+			System.Func<Handle,UnityEngine.Vector3> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class System_Func_UI_Handle_UnityEngine_Color_Event : LuaDelegate
+	class System_Func_Handle_UnityEngine_Color_Event : LuaDelegate
 	{
-		public System_Func_UI_Handle_UnityEngine_Color_Event(LuaFunction func) : base(func) { }
-		public System_Func_UI_Handle_UnityEngine_Color_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Func_Handle_UnityEngine_Color_Event(LuaFunction func) : base(func) { }
+		public System_Func_Handle_UnityEngine_Color_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public UnityEngine.Color Call(UI.Handle param0)
+		public UnityEngine.Color Call(Handle param0)
 		{
 			func.BeginPCall();
 			func.PushObject(param0);
@@ -1671,7 +1674,7 @@ public static class DelegateFactory
 			return ret;
 		}
 
-		public UnityEngine.Color CallWithSelf(UI.Handle param0)
+		public UnityEngine.Color CallWithSelf(Handle param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1683,25 +1686,25 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Func_UI_Handle_UnityEngine_Color(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Func_Handle_UnityEngine_Color(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Func<UI.Handle,UnityEngine.Color> fn = delegate(UI.Handle param0) { return default(UnityEngine.Color); };
+			System.Func<Handle,UnityEngine.Color> fn = delegate(Handle param0) { return default(UnityEngine.Color); };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Func_UI_Handle_UnityEngine_Color_Event target = new System_Func_UI_Handle_UnityEngine_Color_Event(func);
-			System.Func<UI.Handle,UnityEngine.Color> d = target.Call;
+			System_Func_Handle_UnityEngine_Color_Event target = new System_Func_Handle_UnityEngine_Color_Event(func);
+			System.Func<Handle,UnityEngine.Color> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Func_UI_Handle_UnityEngine_Color_Event target = new System_Func_UI_Handle_UnityEngine_Color_Event(func, self);
-			System.Func<UI.Handle,UnityEngine.Color> d = target.CallWithSelf;
+			System_Func_Handle_UnityEngine_Color_Event target = new System_Func_Handle_UnityEngine_Color_Event(func, self);
+			System.Func<Handle,UnityEngine.Color> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
@@ -1756,12 +1759,12 @@ public static class DelegateFactory
 		}
 	}
 
-	class System_Action_UI_StateGroup_int_Event : LuaDelegate
+	class System_Action_StateGroup_int_Event : LuaDelegate
 	{
-		public System_Action_UI_StateGroup_int_Event(LuaFunction func) : base(func) { }
-		public System_Action_UI_StateGroup_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_StateGroup_int_Event(LuaFunction func) : base(func) { }
+		public System_Action_StateGroup_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UI.StateGroup param0, int param1)
+		public void Call(StateGroup param0, int param1)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -1770,56 +1773,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UI.StateGroup param0, int param1)
-		{
-			func.BeginPCall();
-			func.Push(self);
-			func.Push(param0);
-			func.Push(param1);
-			func.PCall();
-			func.EndPCall();
-		}
-	}
-
-	public static Delegate System_Action_UI_StateGroup_int(LuaFunction func, LuaTable self, bool flag)
-	{
-		if (func == null)
-		{
-			System.Action<UI.StateGroup,int> fn = delegate(UI.StateGroup param0, int param1) { };
-			return fn;
-		}
-
-		if(!flag)
-		{
-			System_Action_UI_StateGroup_int_Event target = new System_Action_UI_StateGroup_int_Event(func);
-			System.Action<UI.StateGroup,int> d = target.Call;
-			target.method = d.Method;
-			return d;
-		}
-		else
-		{
-			System_Action_UI_StateGroup_int_Event target = new System_Action_UI_StateGroup_int_Event(func, self);
-			System.Action<UI.StateGroup,int> d = target.CallWithSelf;
-			target.method = d.Method;
-			return d;
-		}
-	}
-
-	class System_Action_UI_StateHandle_int_Event : LuaDelegate
-	{
-		public System_Action_UI_StateHandle_int_Event(LuaFunction func) : base(func) { }
-		public System_Action_UI_StateHandle_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
-
-		public void Call(UI.StateHandle param0, int param1)
-		{
-			func.BeginPCall();
-			func.Push(param0);
-			func.Push(param1);
-			func.PCall();
-			func.EndPCall();
-		}
-
-		public void CallWithSelf(UI.StateHandle param0, int param1)
+		public void CallWithSelf(StateGroup param0, int param1)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1830,36 +1784,85 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Action_UI_StateHandle_int(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Action_StateGroup_int(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<UI.StateHandle,int> fn = delegate(UI.StateHandle param0, int param1) { };
+			System.Action<StateGroup,int> fn = delegate(StateGroup param0, int param1) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_UI_StateHandle_int_Event target = new System_Action_UI_StateHandle_int_Event(func);
-			System.Action<UI.StateHandle,int> d = target.Call;
+			System_Action_StateGroup_int_Event target = new System_Action_StateGroup_int_Event(func);
+			System.Action<StateGroup,int> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_UI_StateHandle_int_Event target = new System_Action_UI_StateHandle_int_Event(func, self);
-			System.Action<UI.StateHandle,int> d = target.CallWithSelf;
+			System_Action_StateGroup_int_Event target = new System_Action_StateGroup_int_Event(func, self);
+			System.Action<StateGroup,int> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class System_Action_UI_Handle_Event : LuaDelegate
+	class System_Action_StateHandle_int_Event : LuaDelegate
 	{
-		public System_Action_UI_Handle_Event(LuaFunction func) : base(func) { }
-		public System_Action_UI_Handle_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_StateHandle_int_Event(LuaFunction func) : base(func) { }
+		public System_Action_StateHandle_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UI.Handle param0)
+		public void Call(StateHandle param0, int param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(StateHandle param0, int param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate System_Action_StateHandle_int(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<StateHandle,int> fn = delegate(StateHandle param0, int param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_StateHandle_int_Event target = new System_Action_StateHandle_int_Event(func);
+			System.Action<StateHandle,int> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_StateHandle_int_Event target = new System_Action_StateHandle_int_Event(func, self);
+			System.Action<StateHandle,int> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class System_Action_Handle_Event : LuaDelegate
+	{
+		public System_Action_Handle_Event(LuaFunction func) : base(func) { }
+		public System_Action_Handle_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(Handle param0)
 		{
 			func.BeginPCall();
 			func.PushObject(param0);
@@ -1867,7 +1870,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UI.Handle param0)
+		public void CallWithSelf(Handle param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1877,36 +1880,36 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Action_UI_Handle(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Action_Handle(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<UI.Handle> fn = delegate(UI.Handle param0) { };
+			System.Action<Handle> fn = delegate(Handle param0) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_UI_Handle_Event target = new System_Action_UI_Handle_Event(func);
-			System.Action<UI.Handle> d = target.Call;
+			System_Action_Handle_Event target = new System_Action_Handle_Event(func);
+			System.Action<Handle> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_UI_Handle_Event target = new System_Action_UI_Handle_Event(func, self);
-			System.Action<UI.Handle> d = target.CallWithSelf;
+			System_Action_Handle_Event target = new System_Action_Handle_Event(func, self);
+			System.Action<Handle> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
 	}
 
-	class System_Action_UI_StateHandle_Event : LuaDelegate
+	class System_Action_StateHandle_Event : LuaDelegate
 	{
-		public System_Action_UI_StateHandle_Event(LuaFunction func) : base(func) { }
-		public System_Action_UI_StateHandle_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_StateHandle_Event(LuaFunction func) : base(func) { }
+		public System_Action_StateHandle_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(UI.StateHandle param0)
+		public void Call(StateHandle param0)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -1914,7 +1917,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(UI.StateHandle param0)
+		public void CallWithSelf(StateHandle param0)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -1924,25 +1927,25 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Action_UI_StateHandle(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Action_StateHandle(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<UI.StateHandle> fn = delegate(UI.StateHandle param0) { };
+			System.Action<StateHandle> fn = delegate(StateHandle param0) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_UI_StateHandle_Event target = new System_Action_UI_StateHandle_Event(func);
-			System.Action<UI.StateHandle> d = target.Call;
+			System_Action_StateHandle_Event target = new System_Action_StateHandle_Event(func);
+			System.Action<StateHandle> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_UI_StateHandle_Event target = new System_Action_UI_StateHandle_Event(func, self);
-			System.Action<UI.StateHandle> d = target.CallWithSelf;
+			System_Action_StateHandle_Event target = new System_Action_StateHandle_Event(func, self);
+			System.Action<StateHandle> d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}
@@ -1995,12 +1998,12 @@ public static class DelegateFactory
 		}
 	}
 
-	class System_Action_LuaInterface_LuaTable_UI_StateHandle_Event : LuaDelegate
+	class System_Action_LuaInterface_LuaTable_StateHandle_Event : LuaDelegate
 	{
-		public System_Action_LuaInterface_LuaTable_UI_StateHandle_Event(LuaFunction func) : base(func) { }
-		public System_Action_LuaInterface_LuaTable_UI_StateHandle_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+		public System_Action_LuaInterface_LuaTable_StateHandle_Event(LuaFunction func) : base(func) { }
+		public System_Action_LuaInterface_LuaTable_StateHandle_Event(LuaFunction func, LuaTable self) : base(func, self) { }
 
-		public void Call(LuaInterface.LuaTable param0, UI.StateHandle param1)
+		public void Call(LuaInterface.LuaTable param0, StateHandle param1)
 		{
 			func.BeginPCall();
 			func.Push(param0);
@@ -2009,7 +2012,7 @@ public static class DelegateFactory
 			func.EndPCall();
 		}
 
-		public void CallWithSelf(LuaInterface.LuaTable param0, UI.StateHandle param1)
+		public void CallWithSelf(LuaInterface.LuaTable param0, StateHandle param1)
 		{
 			func.BeginPCall();
 			func.Push(self);
@@ -2020,25 +2023,172 @@ public static class DelegateFactory
 		}
 	}
 
-	public static Delegate System_Action_LuaInterface_LuaTable_UI_StateHandle(LuaFunction func, LuaTable self, bool flag)
+	public static Delegate System_Action_LuaInterface_LuaTable_StateHandle(LuaFunction func, LuaTable self, bool flag)
 	{
 		if (func == null)
 		{
-			System.Action<LuaInterface.LuaTable,UI.StateHandle> fn = delegate(LuaInterface.LuaTable param0, UI.StateHandle param1) { };
+			System.Action<LuaInterface.LuaTable,StateHandle> fn = delegate(LuaInterface.LuaTable param0, StateHandle param1) { };
 			return fn;
 		}
 
 		if(!flag)
 		{
-			System_Action_LuaInterface_LuaTable_UI_StateHandle_Event target = new System_Action_LuaInterface_LuaTable_UI_StateHandle_Event(func);
-			System.Action<LuaInterface.LuaTable,UI.StateHandle> d = target.Call;
+			System_Action_LuaInterface_LuaTable_StateHandle_Event target = new System_Action_LuaInterface_LuaTable_StateHandle_Event(func);
+			System.Action<LuaInterface.LuaTable,StateHandle> d = target.Call;
 			target.method = d.Method;
 			return d;
 		}
 		else
 		{
-			System_Action_LuaInterface_LuaTable_UI_StateHandle_Event target = new System_Action_LuaInterface_LuaTable_UI_StateHandle_Event(func, self);
-			System.Action<LuaInterface.LuaTable,UI.StateHandle> d = target.CallWithSelf;
+			System_Action_LuaInterface_LuaTable_StateHandle_Event target = new System_Action_LuaInterface_LuaTable_StateHandle_Event(func, self);
+			System.Action<LuaInterface.LuaTable,StateHandle> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class System_Action_LuaInterface_LuaTable_StateHandle_int_Event : LuaDelegate
+	{
+		public System_Action_LuaInterface_LuaTable_StateHandle_int_Event(LuaFunction func) : base(func) { }
+		public System_Action_LuaInterface_LuaTable_StateHandle_int_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(LuaInterface.LuaTable param0, StateHandle param1, int param2)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(LuaInterface.LuaTable param0, StateHandle param1, int param2)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.Push(param1);
+			func.Push(param2);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate System_Action_LuaInterface_LuaTable_StateHandle_int(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<LuaInterface.LuaTable,StateHandle,int> fn = delegate(LuaInterface.LuaTable param0, StateHandle param1, int param2) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_LuaInterface_LuaTable_StateHandle_int_Event target = new System_Action_LuaInterface_LuaTable_StateHandle_int_Event(func);
+			System.Action<LuaInterface.LuaTable,StateHandle,int> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_LuaInterface_LuaTable_StateHandle_int_Event target = new System_Action_LuaInterface_LuaTable_StateHandle_int_Event(func, self);
+			System.Action<LuaInterface.LuaTable,StateHandle,int> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData_Event : LuaDelegate
+	{
+		public System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData_Event(LuaFunction func) : base(func) { }
+		public System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(LuaInterface.LuaTable param0, UnityEngine.EventSystems.PointerEventData param1)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(LuaInterface.LuaTable param0, UnityEngine.EventSystems.PointerEventData param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PushObject(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<LuaInterface.LuaTable,UnityEngine.EventSystems.PointerEventData> fn = delegate(LuaInterface.LuaTable param0, UnityEngine.EventSystems.PointerEventData param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData_Event target = new System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData_Event(func);
+			System.Action<LuaInterface.LuaTable,UnityEngine.EventSystems.PointerEventData> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData_Event target = new System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData_Event(func, self);
+			System.Action<LuaInterface.LuaTable,UnityEngine.EventSystems.PointerEventData> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	class CenterOnChild_OnCenterHandler_Event : LuaDelegate
+	{
+		public CenterOnChild_OnCenterHandler_Event(LuaFunction func) : base(func) { }
+		public CenterOnChild_OnCenterHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.GameObject param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.GameObject param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public static Delegate CenterOnChild_OnCenterHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			CenterOnChild.OnCenterHandler fn = delegate(UnityEngine.GameObject param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			CenterOnChild_OnCenterHandler_Event target = new CenterOnChild_OnCenterHandler_Event(func);
+			CenterOnChild.OnCenterHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			CenterOnChild_OnCenterHandler_Event target = new CenterOnChild_OnCenterHandler_Event(func, self);
+			CenterOnChild.OnCenterHandler d = target.CallWithSelf;
 			target.method = d.Method;
 			return d;
 		}

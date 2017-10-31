@@ -10,19 +10,20 @@ local panelList = {};	--控制器列表--
 local modName = ""
 local topPanel = false
 local closingTopPanel = false
+
 function CoInit(mdName)
 
 	--加载通用内容--
 	local common_panel = _G['Common_Panel']
 	for _,pName in pairs(common_panel) do
-		require ('Modules/Common/View/'..pName)
+		require ('Modules.Common.View.'..pName)
 	end
 
 	--加载对应模块内容--
 	modName = mdName
 	local mod_panel = _G[modName..'_Panel']
 	for _,pName in pairs(mod_panel) do
-		require ('Modules/'..modName.."/View/"..pName)
+		require ('Modules.'..modName..".View."..pName)
 	end
 
 	-- log("UIMgr.Init----->>>");
@@ -67,11 +68,9 @@ function Get(panelName)
 	return panelList[panelName];
 end
 
-function GetAll()
-	return panelList
-end
 --打开panel--
 function Open(panelName, param, immediate)
+	-- util.LogError('panelName -- '..panelName)
 	local panel = Get(panelName)
 	if panel == nil then
 		logError("没有找到panel："..panelName)
@@ -108,12 +107,13 @@ function Close(panelName, immediate)
 end
 
 function CloseAll()
+	-- logWarn("topPanel.m_name -- "..topPanel.m_name)
 	if topPanel then
 		topPanel:SetTop(false)
 		topPanel = nil
 	end
 	
-	for _, panel in panelList do
+	for _, panel in pairs(panelList) do
 		if panel:IsOpen() then
 			panel:Close(true)
 		end
@@ -136,7 +136,11 @@ end
 
 --卸载模块--
 function UnLoad(modName)
-
+	local mod_panel = _G[modName..'_Panel']
+	for _,pName in pairs(mod_panel) do
+		package.loaded['Modules.'..modName..".View."..pName] = nil
+		-- log('卸载脚本--'..'Modules.'..modName..".View."..pName)
+	end
 end
 
 function CheckOpenTopAndAutoOrder(panel)

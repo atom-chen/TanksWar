@@ -27,6 +27,41 @@ public static class LuaBinder
 		UILoadingWrap.Register(L);
 		UIResToolWrap.Register(L);
 		UIResMgrWrap.Register(L);
+		UVToolsWrap.Register(L);
+		MonoTableWrap.Register(L);
+		UIGroupWrap.Register(L);
+		ImageExWrap.Register(L);
+		TextExWrap.Register(L);
+		UIArtFontWrap.Register(L);
+		UIProgressExWrap.Register(L);
+		UIScrollTipsWrap.Register(L);
+		DragControlWrap.Register(L);
+		DropControlWrap.Register(L);
+		CurveMoveWrap.Register(L);
+		UIScrollWrapWrap.Register(L);
+		IHandleWrap.Register(L);
+		HandleWrap.Register(L);
+		AnimatorHandleWrap.Register(L);
+		DragListenerWrap.Register(L);
+		HandleAlphaWrap.Register(L);
+		HandleColorWrap.Register(L);
+		HandleGreyWrap.Register(L);
+		HandleImageWrap.Register(L);
+		HandleNumWrap.Register(L);
+		HandlePositionWrap.Register(L);
+		HandleProgressExWrap.Register(L);
+		HandleRotateWrap.Register(L);
+		HandleScaleWrap.Register(L);
+		HandleSequenceWrap.Register(L);
+		HandleSizeWrap.Register(L);
+		HandleStateWrap.Register(L);
+		HandleVisiableWrap.Register(L);
+		SequenceHandleWrap.Register(L);
+		SequenceHandleExWrap.Register(L);
+		SimpleHandleWrap.Register(L);
+		StateGroupWrap.Register(L);
+		StateHandleWrap.Register(L);
+		CenterOnChildWrap.Register(L);
 		ViewWrap.Register(L);
 		BaseWrap.Register(L);
 		ManagerWrap.Register(L);
@@ -112,8 +147,11 @@ public static class LuaBinder
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("EventSystems");
+		UnityEngine_EventSystems_PointerEventDataWrap.Register(L);
 		UnityEngine_EventSystems_UIBehaviourWrap.Register(L);
 		UnityEngine_EventSystems_BaseRaycasterWrap.Register(L);
+		UnityEngine_EventSystems_BaseEventDataWrap.Register(L);
+		UnityEngine_EventSystems_AbstractEventDataWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("Events");
 		L.RegFunction("UnityAction", UnityEngine_Events_UnityAction);
@@ -140,6 +178,9 @@ public static class LuaBinder
 		L.RegFunction("ReapplyDrivenProperties", UnityEngine_RectTransform_ReapplyDrivenProperties);
 		L.EndModule();
 		L.EndModule();
+		L.BeginModule("Xxtea");
+		Xxtea_XXTEAWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("cn");
 		L.BeginModule("sharesdk");
 		L.BeginModule("unity3d");
@@ -147,41 +188,6 @@ public static class LuaBinder
 		cn_sharesdk_unity3d_ResponseStateWrap.Register(L);
 		L.EndModule();
 		L.EndModule();
-		L.EndModule();
-		L.BeginModule("UI");
-		UI_MonoTableWrap.Register(L);
-		UI_UIGroupWrap.Register(L);
-		UI_ImageExWrap.Register(L);
-		UI_TextExWrap.Register(L);
-		UI_UIArtFontWrap.Register(L);
-		UI_UIProgressExWrap.Register(L);
-		UI_UIScrollTipsWrap.Register(L);
-		UI_DragControlWrap.Register(L);
-		UI_DropControlWrap.Register(L);
-		UI_CurveMoveWrap.Register(L);
-		UI_UIScrollWrapWrap.Register(L);
-		UI_IHandleWrap.Register(L);
-		UI_HandleWrap.Register(L);
-		UI_AnimatorHandleWrap.Register(L);
-		UI_DragListenerWrap.Register(L);
-		UI_HandleAlphaWrap.Register(L);
-		UI_HandleColorWrap.Register(L);
-		UI_HandleGreyWrap.Register(L);
-		UI_HandleImageWrap.Register(L);
-		UI_HandleNumWrap.Register(L);
-		UI_HandlePositionWrap.Register(L);
-		UI_HandleProgressExWrap.Register(L);
-		UI_HandleRotateWrap.Register(L);
-		UI_HandleScaleWrap.Register(L);
-		UI_HandleSequenceWrap.Register(L);
-		UI_HandleSizeWrap.Register(L);
-		UI_HandleStateWrap.Register(L);
-		UI_HandleVisiableWrap.Register(L);
-		UI_SequenceHandleWrap.Register(L);
-		UI_SequenceHandleExWrap.Register(L);
-		UI_SimpleHandleWrap.Register(L);
-		UI_StateGroupWrap.Register(L);
-		UI_StateHandleWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);
@@ -195,23 +201,28 @@ public static class LuaBinder
 		L.RegFunction("Action_UnityEngine_GameObject", System_Action_UnityEngine_GameObject);
 		L.RegFunction("Action_UnityEngine_EventSystems_PointerEventData", System_Action_UnityEngine_EventSystems_PointerEventData);
 		L.RegFunction("Action_object", System_Action_object);
-		L.RegFunction("Action_UI_UIScrollWrap_int", System_Action_UI_UIScrollWrap_int);
-		L.RegFunction("Action_UI_UIScrollWrap", System_Action_UI_UIScrollWrap);
-		L.RegFunction("Action_UI_Handle_WndType_object", System_Action_UI_Handle_WndType_object);
-		L.RegFunction("Func_UI_Handle_float", System_Func_UI_Handle_float);
-		L.RegFunction("Func_UI_Handle_int", System_Func_UI_Handle_int);
-		L.RegFunction("Func_UI_Handle_UnityEngine_Vector3", System_Func_UI_Handle_UnityEngine_Vector3);
-		L.RegFunction("Func_UI_Handle_UnityEngine_Color", System_Func_UI_Handle_UnityEngine_Color);
+		L.RegFunction("Action_UIScrollWrap_int", System_Action_UIScrollWrap_int);
+		L.RegFunction("Action_UIScrollWrap", System_Action_UIScrollWrap);
+		L.RegFunction("Action_Handle_WndType_object", System_Action_Handle_WndType_object);
+		L.RegFunction("Func_Handle_float", System_Func_Handle_float);
+		L.RegFunction("Func_Handle_int", System_Func_Handle_int);
+		L.RegFunction("Func_Handle_UnityEngine_Vector3", System_Func_Handle_UnityEngine_Vector3);
+		L.RegFunction("Func_Handle_UnityEngine_Color", System_Func_Handle_UnityEngine_Color);
 		L.RegFunction("Func_bool", System_Func_bool);
-		L.RegFunction("Action_UI_StateGroup_int", System_Action_UI_StateGroup_int);
-		L.RegFunction("Action_UI_StateHandle_int", System_Action_UI_StateHandle_int);
-		L.RegFunction("Action_UI_Handle", System_Action_UI_Handle);
-		L.RegFunction("Action_UI_StateHandle", System_Action_UI_StateHandle);
+		L.RegFunction("Action_StateGroup_int", System_Action_StateGroup_int);
+		L.RegFunction("Action_StateHandle_int", System_Action_StateHandle_int);
+		L.RegFunction("Action_Handle", System_Action_Handle);
+		L.RegFunction("Action_StateHandle", System_Action_StateHandle);
 		L.RegFunction("Action_LuaInterface_LuaTable", System_Action_LuaInterface_LuaTable);
-		L.RegFunction("Action_LuaInterface_LuaTable_UI_StateHandle", System_Action_LuaInterface_LuaTable_UI_StateHandle);
+		L.RegFunction("Action_LuaInterface_LuaTable_StateHandle", System_Action_LuaInterface_LuaTable_StateHandle);
+		L.RegFunction("Action_LuaInterface_LuaTable_StateHandle_int", System_Action_LuaInterface_LuaTable_StateHandle_int);
+		L.RegFunction("Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData", System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData);
 		L.BeginModule("Threading");
 		L.RegFunction("ThreadStart", System_Threading_ThreadStart);
 		L.EndModule();
+		L.EndModule();
+		L.BeginModule("CenterOnChild");
+		L.RegFunction("OnCenterHandler", CenterOnChild_OnCenterHandler);
 		L.EndModule();
 		L.EndModule();
 	}
@@ -865,7 +876,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_UI_UIScrollWrap_int(IntPtr L)
+	static int System_Action_UIScrollWrap_int(IntPtr L)
 	{
 		try
 		{
@@ -874,13 +885,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.UIScrollWrap,int>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UIScrollWrap,int>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.UIScrollWrap,int>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UIScrollWrap,int>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -892,7 +903,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_UI_UIScrollWrap(IntPtr L)
+	static int System_Action_UIScrollWrap(IntPtr L)
 	{
 		try
 		{
@@ -901,13 +912,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.UIScrollWrap>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UIScrollWrap>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.UIScrollWrap>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UIScrollWrap>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -919,7 +930,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_UI_Handle_WndType_object(IntPtr L)
+	static int System_Action_Handle_WndType_object(IntPtr L)
 	{
 		try
 		{
@@ -928,13 +939,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.Handle.WndType,object>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<Handle.WndType,object>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.Handle.WndType,object>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<Handle.WndType,object>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -946,7 +957,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Func_UI_Handle_float(IntPtr L)
+	static int System_Func_Handle_float(IntPtr L)
 	{
 		try
 		{
@@ -955,13 +966,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<UI.Handle,float>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<Handle,float>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<UI.Handle,float>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<Handle,float>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -973,7 +984,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Func_UI_Handle_int(IntPtr L)
+	static int System_Func_Handle_int(IntPtr L)
 	{
 		try
 		{
@@ -982,13 +993,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<UI.Handle,int>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<Handle,int>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<UI.Handle,int>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<Handle,int>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1000,7 +1011,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Func_UI_Handle_UnityEngine_Vector3(IntPtr L)
+	static int System_Func_Handle_UnityEngine_Vector3(IntPtr L)
 	{
 		try
 		{
@@ -1009,13 +1020,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<UI.Handle,UnityEngine.Vector3>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<Handle,UnityEngine.Vector3>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<UI.Handle,UnityEngine.Vector3>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<Handle,UnityEngine.Vector3>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1027,7 +1038,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Func_UI_Handle_UnityEngine_Color(IntPtr L)
+	static int System_Func_Handle_UnityEngine_Color(IntPtr L)
 	{
 		try
 		{
@@ -1036,13 +1047,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<UI.Handle,UnityEngine.Color>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<Handle,UnityEngine.Color>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<UI.Handle,UnityEngine.Color>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Func<Handle,UnityEngine.Color>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1081,7 +1092,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_UI_StateGroup_int(IntPtr L)
+	static int System_Action_StateGroup_int(IntPtr L)
 	{
 		try
 		{
@@ -1090,13 +1101,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.StateGroup,int>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<StateGroup,int>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.StateGroup,int>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<StateGroup,int>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1108,7 +1119,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_UI_StateHandle_int(IntPtr L)
+	static int System_Action_StateHandle_int(IntPtr L)
 	{
 		try
 		{
@@ -1117,13 +1128,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.StateHandle,int>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<StateHandle,int>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.StateHandle,int>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<StateHandle,int>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1135,7 +1146,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_UI_Handle(IntPtr L)
+	static int System_Action_Handle(IntPtr L)
 	{
 		try
 		{
@@ -1144,13 +1155,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.Handle>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<Handle>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.Handle>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<Handle>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1162,7 +1173,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_UI_StateHandle(IntPtr L)
+	static int System_Action_StateHandle(IntPtr L)
 	{
 		try
 		{
@@ -1171,13 +1182,13 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.StateHandle>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<StateHandle>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<UI.StateHandle>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<StateHandle>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1216,7 +1227,7 @@ public static class LuaBinder
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int System_Action_LuaInterface_LuaTable_UI_StateHandle(IntPtr L)
+	static int System_Action_LuaInterface_LuaTable_StateHandle(IntPtr L)
 	{
 		try
 		{
@@ -1225,13 +1236,67 @@ public static class LuaBinder
 
 			if (count == 1)
 			{
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<LuaInterface.LuaTable,UI.StateHandle>), func);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<LuaInterface.LuaTable,StateHandle>), func);
 				ToLua.Push(L, arg1);
 			}
 			else
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
-				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<LuaInterface.LuaTable,UI.StateHandle>), func, self);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<LuaInterface.LuaTable,StateHandle>), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_LuaInterface_LuaTable_StateHandle_int(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<LuaInterface.LuaTable,StateHandle,int>), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<LuaInterface.LuaTable,StateHandle,int>), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_LuaInterface_LuaTable_UnityEngine_EventSystems_PointerEventData(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<LuaInterface.LuaTable,UnityEngine.EventSystems.PointerEventData>), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Action<LuaInterface.LuaTable,UnityEngine.EventSystems.PointerEventData>), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;
@@ -1259,6 +1324,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(System.Threading.ThreadStart), func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CenterOnChild_OnCenterHandler(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(CenterOnChild.OnCenterHandler), func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateFactory.CreateDelegate(typeof(CenterOnChild.OnCenterHandler), func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

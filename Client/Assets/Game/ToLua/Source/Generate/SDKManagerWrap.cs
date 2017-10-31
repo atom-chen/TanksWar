@@ -7,13 +7,34 @@ public class SDKManagerWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(SDKManager), typeof(UnityEngine.MonoBehaviour));
+		L.RegFunction("IsClientValid", IsClientValid);
 		L.RegFunction("Authorize", Authorize);
 		L.RegFunction("CallMethod", CallMethod);
+		L.RegFunction("ShareWeChatFriend", ShareWeChatFriend);
+		L.RegFunction("ShareWeChatMoments", ShareWeChatMoments);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("instance", get_instance, set_instance);
 		L.RegVar("ssdk", get_ssdk, set_ssdk);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IsClientValid(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			SDKManager obj = (SDKManager)ToLua.CheckObject(L, 1, typeof(SDKManager));
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			bool o = obj.IsClientValid(arg0);
+			LuaDLL.lua_pushboolean(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -60,6 +81,48 @@ public class SDKManagerWrap
 			object[] o = obj.CallMethod(arg0, arg1);
 			ToLua.Push(L, o);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareWeChatFriend(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 6);
+			SDKManager obj = (SDKManager)ToLua.CheckObject(L, 1, typeof(SDKManager));
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			string arg2 = ToLua.CheckString(L, 4);
+			string arg3 = ToLua.CheckString(L, 5);
+			string arg4 = ToLua.CheckString(L, 6);
+			obj.ShareWeChatFriend(arg0, arg1, arg2, arg3, arg4);
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ShareWeChatMoments(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 6);
+			SDKManager obj = (SDKManager)ToLua.CheckObject(L, 1, typeof(SDKManager));
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			string arg2 = ToLua.CheckString(L, 4);
+			string arg3 = ToLua.CheckString(L, 5);
+			string arg4 = ToLua.CheckString(L, 6);
+			obj.ShareWeChatMoments(arg0, arg1, arg2, arg3, arg4);
+			return 0;
 		}
 		catch(Exception e)
 		{

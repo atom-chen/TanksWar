@@ -9,10 +9,10 @@ MainPanel = Class(BasePanel);
 function MainPanel:Ctor()
 	----定义组件 都存在self.m_comp中
 	
-	self.m_comp.desc = UITextEx
-	self.m_comp.icon = UIImageEx
-	self.m_comp.btnWeChat = UIButtonEx
-	self.m_comp.btnLogin = UIButtonEx
+	self.m_comp.desc = TextEx
+	self.m_comp.icon = ImageEx
+	self.m_comp.btnWeChat = ButtonEx
+	self.m_comp.btnLogin = ButtonEx
 	--log("MainPanel Ctor---->>>")
 end
 

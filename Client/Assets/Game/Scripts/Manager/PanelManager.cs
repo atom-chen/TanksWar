@@ -128,6 +128,10 @@ public class PanelManager : Manager
                     Debug.LogError("abName : " + abName + "  assetName : " + assetName + " 没有UIResMgr脚本");
                     return;
                 }
+
+                if (modName == "Common" || modName == "Main")
+                    uiResMgr.transform.SetParent(m_canvasRoot, false);
+
                 UIResTool.Add(uiResMgr, modName);
                 return;
             }
@@ -182,6 +186,9 @@ public class PanelManager : Manager
                 Debug.LogError("modName : " + modName + "  assetName : " + assetName + " 没有UIResMgr脚本");
                 yield break;
             }
+            if (modName == "Common" || modName == "Main")
+                uiResMgr.transform.SetParent(m_canvasRoot, false);
+            uiResMgr.gameObject.SetActive(false);
             UIResTool.Add(uiResMgr, modName);
         }
         yield break;

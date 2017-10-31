@@ -5,48 +5,46 @@ using UnityEngine.EventSystems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-namespace UI
+
+public class BowListItem : MonoBehaviour
 {
-    public class BowListItem : MonoBehaviour
+    public ImageEx m_mask;
+    private Action<object> m_setDataAction;
+    private Action<bool> m_setSelectedAction;
+    private object m_data;
+
+    public void SetSetDataAction(Action<object> setDataAction)
     {
-        public ImageEx m_mask;
-        private Action<object> m_setDataAction;
-        private Action<bool> m_setSelectedAction;
-        private object m_data;
+        m_setDataAction = setDataAction;
+    }
 
-        public void SetSetDataAction(Action<object> setDataAction)
+    public void SetSetSelectedAction(Action<bool> setSelectedAction)
+    {
+        m_setSelectedAction = setSelectedAction;
+    }
+
+    public void SetData(object data)
+    {
+        m_data = data;
+        if (m_setDataAction != null)
         {
-            m_setDataAction = setDataAction;
+            m_setDataAction.Invoke(data);
         }
+    }
 
-        public void SetSetSelectedAction(Action<bool> setSelectedAction)
+    public void Reflesh()
+    {
+        if (m_setDataAction != null)
         {
-            m_setSelectedAction = setSelectedAction;
+            m_setDataAction.Invoke(m_data);
         }
+    }
 
-        public void SetData(object data)
+    public void SetSelected(bool isSel)
+    {
+        if (m_setSelectedAction != null)
         {
-            m_data = data;
-            if (m_setDataAction != null)
-            {
-                m_setDataAction.Invoke(data);
-            }
-        }
-
-        public void Reflesh()
-        {
-            if (m_setDataAction != null)
-            {
-                m_setDataAction.Invoke(m_data);
-            }
-        }
-
-        public void SetSelected(bool isSel)
-        {
-            if (m_setSelectedAction != null)
-            {
-                m_setSelectedAction.Invoke(isSel);
-            }
+            m_setSelectedAction.Invoke(isSel);
         }
     }
 }

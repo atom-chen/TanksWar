@@ -38,6 +38,18 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
         }
     }
 
+    class LogInfo
+    {
+        public string logContent;
+        public LogType logType;
+
+        public LogInfo(string logContent, LogType logType)
+        {
+            this.logContent = logContent;
+            this.logType = logType;
+        }
+    }
+
     #region Fields
     static List<PageInfo> s_pages = new List<PageInfo>();
     int curPage = 0;
@@ -49,11 +61,28 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
     float frameTimeCounter = 0f;
     string lastLog = "";
     string errorLog = "";
+    List<LogInfo> normalLogList = new List<LogInfo>();
     string gmCmd = "";
     string scriptName = "";
     int fontSizeTemp = 24;
+    GUISkin m_Skin;
+    static readonly Dictionary<LogType, Color> logTypeColors = new Dictionary<LogType, Color>
+        {
+            { LogType.Assert, Color.white },
+            { LogType.Error, Color.red },
+            { LogType.Exception, Color.red },
+            { LogType.Log, Color.white },
+            { LogType.Warning, Color.yellow },
+        };
+
     public string gmCmdResult = "";
+
+#if UNITY_EDITOR
     public bool IsDrawDebug = true;
+#else
+    public bool IsDrawDebug = false;
+#endif
+
 
     #endregion
 
@@ -65,13 +94,27 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
     #endregion
 
     #region Mono Frame
+
     void Start()
     {
+        m_Skin = Resources.Load<GUISkin>("myGUISkin");
 
     }
 
     void OnGUI()
     {
+
+        if (Input.anyKeyDown)
+        {
+            Event e = Event.current;
+            if (e.isKey)
+            {
+                KeyCode keyCode = e.keyCode;
+                if ((int)keyCode != 0)
+                    Util.CallMethod("Game", "OnMessage", "100005", (int)keyCode);
+            }
+        }
+
         if (!IsDrawDebug)
             return;
 
@@ -106,15 +149,12 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
             s_pages[curPage].Draw();
         }
 
-
-
-
     }
-    #endregion
+#endregion
 
 
 
-    #region Private Methods
+#region Private Methods
 
     //一直显示的东西
     void DrawAlways()
@@ -153,7 +193,6 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
 
         //提示框，显示最后一条log
         GUI.Label(new Rect(20 * s, (height - 50) * s, (width - 20) * s, 50 * s), lastLog);
-
         int oldLabelFontSize = GUI.skin.label.fontSize;
         GUI.skin.textField.fontSize = fontSizeTemp;
         GUI.SetNextControlName("gmCmd");
@@ -161,33 +200,13 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
         GUI.skin.label.fontSize = oldLabelFontSize;
         if (GUI.Button(new Rect(610 * s, 0 * s, 90 * s, 30 * s), "GM"))
         {
-            //NetMgr.instance.GMHandler.SendProcessGMCmd(gmCmd);
+            Util.CallMethod("util", "OnGM", gmCmd);
         }
-        if (Event.current.isKey && GUI.GetNameOfFocusedControl() == "gmCmd")
-        {
-            switch (Event.current.keyCode)
-            {
-                case KeyCode.Return:
-                    //NetMgr.instance.GMHandler.SendProcessGMCmd(gmCmd);
-                    break;
-                case KeyCode.UpArrow:
-                    //gmCmd = NetMgr.instance.GMHandler.GetCmdInHistory(true);
-                    break;
-                case KeyCode.DownArrow:
-                    //gmCmd = NetMgr.instance.GMHandler.GetCmdInHistory(false);
-                    break;
-            }
-        }
-        if (gmCmdResult != "")
-        {
-            GUI.Label(new Rect(400 * s, 32 * s, 200 * s, 30 * s), gmCmdResult);
-        }
+  
         if (GUI.Button(new Rect(710 * s, 0 * s, 90 * s, 30 * s), "Help"))
         {
             errorLog += @"
-增加道具:addItem itemId 数量
-打开测试模式：opentestmode
-充值钻石：recharge 钻石数量
+强制解散房间:forceDepart
 ";
             curPage = 0;//切换到日志那一页
         }
@@ -200,6 +219,9 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
 
     void SystemLogCallback(string condition, string stackTrace, LogType type)
     {
+        LogInfo logInfo = new LogInfo(condition, type);
+        normalLogList.Add(logInfo);
+
         if (LogType.Log == type)
         {
             lastLog = condition;
@@ -213,20 +235,51 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
             lastLog = string.Format("Error:{1}", stackTrace, condition);
             if (errorLog.Length > 50000)
                 errorLog = errorLog.Substring(errorLog.Length - 10000, 10000);
-            errorLog += stackTrace + condition;
+            errorLog += stackTrace + condition + "\n";
         }
     }
 
-    Vector2 logScroll = Vector2.zero;
+    Vector2 logScrollLog = Vector2.zero;
     void DrawLog()
     {
         float height = 640f;
         float width = Screen.width * height / Screen.height;
         float s = Screen.height / height;
 
+        GUI.skin = m_Skin;
 
         GUILayout.BeginArea(new Rect(20 * s, 100 * s, (width - 40) * s, (height - 200) * s));
-        logScroll = GUILayout.BeginScrollView(logScroll);
+        logScrollLog = GUILayout.BeginScrollView(logScrollLog);
+        string prevLog = "";
+        foreach (var log in normalLogList)
+        {
+            if (log.logContent == prevLog)
+                continue;
+            prevLog = log.logContent;
+            GUI.contentColor = logTypeColors[log.logType];
+            GUILayout.Label(log.logContent);
+        }
+        GUI.contentColor = Color.white;
+
+        GUILayout.EndScrollView();
+        GUILayout.EndArea();
+        if (GUI.Button(new Rect(500 * s, 550 * s, 90 * s, 30 * s), "清理"))
+        {
+            normalLogList.Clear();
+        }
+    }
+
+    Vector2 logScrollError = Vector2.zero;
+    void DrawError()
+    {
+
+        float height = 640f;
+        float width = Screen.width * height / Screen.height;
+        float s = Screen.height / height;
+
+
+        GUILayout.BeginArea(new Rect(20 * s, 100 * s, (width - 40) * s, (height - 200) * s));
+        logScrollError = GUILayout.BeginScrollView(logScrollError);
         int oldLabelFontSize = GUI.skin.label.fontSize;
         GUI.skin.label.fontSize = (int)(14 * s);
         //Color PreviousColor = GUI.backgroundColor;
@@ -241,7 +294,6 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
             errorLog = "";
         }
     }
-
     //刷脚本
     bool isBtnDown = false;
     void DrawDebug()
@@ -364,11 +416,12 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
 
     }
 
-    #endregion
+#endregion
 
     public void Init()
     {
         //注册页面
+        s_pages.Add(new PageInfo(s_pages.Count, "报错", DrawError));
         s_pages.Add(new PageInfo(s_pages.Count, "日志", DrawLog));
         s_pages.Add(new PageInfo(s_pages.Count, "性能", DrawPerformance));
         s_pages.Add(new PageInfo(s_pages.Count, "调试", DrawDebug));

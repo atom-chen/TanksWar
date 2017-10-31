@@ -24,14 +24,14 @@ MsgPanel = Class(BasePanel);
 
 function MsgPanel:Ctor()
 	self.m_comp.objTitle = GameObject
-	self.m_comp.txtTitle = UITextEx
-	self.m_comp.txtContent = UITextEx
-	self.m_comp.btnOK = UIButtonEx
-	self.m_comp.btnOKTxt = UITextEx
-	self.m_comp.btnCancel = UIButtonEx
-	self.m_comp.btnCancelTxt = UITextEx
-	self.m_comp.btnConfirm = UIButtonEx
-	self.m_comp.btnConfirmTxt = UITextEx
+	self.m_comp.txtTitle = TextEx
+	self.m_comp.txtContent = TextEx
+	self.m_comp.btnOK = ButtonEx
+	self.m_comp.btnOKTxt = TextEx
+	self.m_comp.btnCancel = ButtonEx
+	self.m_comp.btnCancelTxt = TextEx
+	self.m_comp.btnConfirm = ButtonEx
+	self.m_comp.btnConfirmTxt = TextEx
 
 	self.callTable = nil
 	self.callFuncOK = nil
@@ -92,9 +92,9 @@ function MsgPanel:OnOkClick()
 end
 
 function MsgPanel:OnCancelClick()
-	if self.callTable then
+	if self.callTable and self.callFuncCancel then
 		self.callFuncCancel(self.callTable, self.param)	
-	else
+	elseif self.callFuncCancel then
 		self.callFuncCancel(self.param)	
 	end
 	self:Close()

@@ -9,8 +9,8 @@ LobbyItem = Class(BaseItem);
 
 
 function LobbyItem:Ctor()
-	self.m_comp.btnGame = UIButtonEx
-	self.m_comp.imglock = UIImageEx
+	self.m_comp.btnGame = ButtonEx
+	self.m_comp.imglock = ImageEx
 
 end
 
@@ -22,16 +22,17 @@ function LobbyItem:OnInit(param)
     self.gameType = param.id
     self.m_comp.imglock.gameObject:SetActive(param.lock==1)
     local btnimage = self.m_comp.btnGame:GetComponent("ImageEx")
-    local  imageName = "ui_Main_"..param.icon
+    local  imageName = "ui_Main_Lobby_"..param.icon
+    -- log(btnimage.transform.)
     btnimage:Set(imageName)
-  
+     
 	--事件注册
     self.m_comp.btnGame:AddLuaClick(self.OnClickItem, self)
     
 end
 
 function  LobbyItem:OnClickItem()
-
-     UIMgr.Open("CreateRoomPanel",self.gameType)
+     -- log("  ----   "..self.gameType)
+     UIMgr.Open(Main_Panel.CreatePanel, self.gameType)
     
 end

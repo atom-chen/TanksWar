@@ -1,30 +1,32 @@
 -- SceneMgr.lua
 -- Author : Dzq
--- Date : 2017-09-06
--- Last modification : 2017-09-06
--- Desc: Scene管理类
+-- Date : 2017-09-26
+-- Last modification : 2017-09-26
+-- Desc: Scene管理类 负责切换场景资源处理
+
 
 module(..., package.seeall)
 
-local modName = ""
-function CoInit(mdName)
-
-	-- log("SceneMgr.Init----->>>");
+function ChangeScene(sceneName)
+	log("开始切换场景--"..sceneName)
+	UIMgr.Open(Common_Panel.WaitPanel)
+	coroutine.start(CoChange, sceneName)
 end
 
-function ChangeScene(sceneId)
-	local info = SceneCfg.Get(sceneId)
-	log("info --- "..info.sceneName)
-	SceneManager.LoadScene(info.sceneName)
-end
+function CoChange(sceneName)
+	
+	if sceneName == "" then
+		-- log("无场景切换")
+		return
+	end
 
---更新
-function Update()
+	Event.Brocast(Msg.ChangeSceneStart, sceneName)
 
-end
-
-
---卸载模块--
-function UnLoad(modName)
-
+	local op = SceneManager.LoadSceneAsync(sceneName)
+	while not op.isDone do
+		coroutine.step(1)
+	end
+	UIMgr.CloseAll()
+	log("切换场景完成")
+	Event.Brocast(Msg.ChangeSceneEnd, sceneName)
 end

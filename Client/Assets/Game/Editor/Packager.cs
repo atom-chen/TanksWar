@@ -13,13 +13,13 @@ using UnityEditor.Callbacks;
 public class Packager {
     public static string platform = string.Empty;
     static List<string> paths = new List<string>();
-    static List<string> files = new List<string>();
+    static List<string> m_files = new List<string>();
     static List<AssetBundleBuild> maps = new List<AssetBundleBuild>();
 
     static string KeystoreName = "user.keystore";
-    static string KeyaliasName = "cards";
-    static string KeystorePassword = "123456";
-    static string KeyaliasPassword = "123456";
+    static string KeyaliasName = "ahpg";
+    static string KeystorePassword = "6FK)e]KCRkmnw(VJY9";
+    static string KeyaliasPassword = "6FK)e]KCRkmnw(VJY9";
     static int version = 100;
     ///-----------------------------------------------------------
     static string[] exts = { ".txt", ".xml", ".lua", ".assetbundle", ".json" };
@@ -63,40 +63,106 @@ public class Packager {
     /// 生成绑定素材
     /// </summary>
     public static void BuildAssetResource(BuildTarget target) {
-        if (Directory.Exists(Util.DataPath)) {
+        if (Directory.Exists(Util.DataPath))
+        {
             Directory.Delete(Util.DataPath, true);
         }
         string streamPath = Application.streamingAssetsPath;
-        if (Directory.Exists(streamPath)) {
+        if (Directory.Exists(streamPath))
+        {
             Directory.Delete(streamPath, true);
         }
         Directory.CreateDirectory(streamPath);
         AssetDatabase.Refresh();
 
         maps.Clear();
-        if (AppConst.LuaBundleMode) {
+        if (AppConst.LuaBundleMode)
+        {
             HandleLuaBundle();
-        } else {
+        }
+        else
+        {
             HandleLuaFile();
         }
-    
+
         //HandleGameBundle();
         string path = AppDataPath + "/" + AppConst.AssetDir + "/";
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
         string resPath = "Assets/" + AppConst.AssetDir;
         //主要处理lua文件
-        if (maps.Count>0)
+        if (maps.Count > 0)
             BuildPipeline.BuildAssetBundles(resPath, maps.ToArray(), BuildAssetBundleOptions.None, target);
-        
+
         //打包已有bundlename的资源
         BuildPipeline.BuildAssetBundles(resPath, BuildAssetBundleOptions.None, target);
 
+        BuildFile();
+    }
+
+    [MenuItem("Game/Update Lua No Build", false, 33)]
+    public static void UpdateResourceNoBuild()
+    {
+        //先复制lua文件到StreamingAssets文件夹
+
+        string streamingPath = "Assets/" + AppConst.AssetDir + "/lua/";
+        string testResPath = "Assets/" + AppConst.AppName + "/Lua/";
+        m_files.Clear();
+        Recursive(testResPath);
+        foreach (string f in m_files)
+        {
+            if (f.EndsWith(".meta") || f.Contains(".DS_Store") || f.Contains(".git") || f.Contains(".gitignore")) continue;
+
+            string fileName = Path.GetFileName(f);
+
+            string relativePath = f.Replace(testResPath, string.Empty);
+            string relativeFolder = relativePath.Replace(fileName, string.Empty);
+
+            string tpath = streamingPath + relativeFolder;
+            if (!Directory.Exists(tpath)) Directory.CreateDirectory(tpath);
+            string destfile = tpath + fileName;
+            File.Copy(f, destfile, true);
+        }
+        AssetDatabase.Refresh();
+
+        BuildFile();
+    }
+
+    static void BuildFile()
+    {
         BuildFileIndex();
 
         string streamDir = Application.dataPath + "/" + AppConst.LuaTempDir;
         if (Directory.Exists(streamDir)) Directory.Delete(streamDir, true);
         AssetDatabase.Refresh();
+
+        if (AppConst.UpdateResource)
+        {
+            string testResPath = "Assets/" + AppConst.AssetDir + "/";
+            string testPath = Application.dataPath + "/" + AppConst.TestResourceFolder;
+            if (!Directory.Exists(testPath))
+            {
+                Directory.CreateDirectory(testPath);
+            }
+
+            m_files.Clear();
+            Recursive(testResPath);
+            foreach (string f in m_files)
+            {
+                if (f.EndsWith(".meta") || f.Contains(".DS_Store") || f.Contains(".git") || f.Contains(".gitignore")) continue;
+
+                string fileName = Path.GetFileName(f);
+
+                string relativePath = f.Replace(testResPath, string.Empty);
+                string relativeFolder = relativePath.Replace(fileName, string.Empty);
+
+                string tpath = testPath + relativeFolder;
+                if (!Directory.Exists(tpath)) Directory.CreateDirectory(tpath);
+                string destfile = tpath + fileName;
+                File.Copy(f, destfile, true);
+            }
+            AssetDatabase.Refresh();
+        }
     }
 
     static void AddBuildMap(string bundleName, string pattern, string path, bool bAddAssetBundle = false) {
@@ -142,24 +208,33 @@ public class Packager {
 
         string[] srcDirs = { CustomSettings.luaDir, CustomSettings.FrameworkPath + "/ToLua/Lua" };
         for (int i = 0; i < srcDirs.Length; i++) {
-            if (AppConst.LuaByteMode) {
+#if UNITY_IPHONE
+            ToLuaMenu.CopyLuaBytesFiles(srcDirs[i], streamDir);
+#else
+            if (AppConst.LuaByteMode)
+            {
                 string sourceDir = srcDirs[i];
                 string[] files = Directory.GetFiles(sourceDir, "*.lua", SearchOption.AllDirectories);
                 int len = sourceDir.Length;
 
-                if (sourceDir[len - 1] == '/' || sourceDir[len - 1] == '\\') {
+                if (sourceDir[len - 1] == '/' || sourceDir[len - 1] == '\\')
+                {
                     --len;
                 }
-                for (int j = 0; j < files.Length; j++) {
+                for (int j = 0; j < files.Length; j++)
+                {
                     string str = files[j].Remove(0, len);
                     string dest = streamDir + str + ".bytes";
                     string dir = Path.GetDirectoryName(dest);
                     Directory.CreateDirectory(dir);
                     EncodeLuaFile(files[j], dest);
-                }    
-            } else {
+                }
+            }
+            else
+            {
                 ToLuaMenu.CopyLuaBytesFiles(srcDirs[i], streamDir);
             }
+#endif
         }
         string[] dirs = Directory.GetDirectories(streamDir, "*", SearchOption.AllDirectories);
         for (int i = 0; i < dirs.Length; i++) {
@@ -175,10 +250,10 @@ public class Packager {
         //-------------------------------处理非Lua文件----------------------------------
         string luaPath = AppDataPath + "/StreamingAssets/lua/";
         for (int i = 0; i < srcDirs.Length; i++) {
-            paths.Clear(); files.Clear();
+            paths.Clear(); m_files.Clear();
             string luaDataPath = srcDirs[i].ToLower();
             Recursive(luaDataPath);
-            foreach (string f in files) {
+            foreach (string f in m_files) {
                 if (f.EndsWith(".meta") || f.EndsWith(".lua")) continue;
                 string newfile = f.Replace(luaDataPath, "");
                 string path = Path.GetDirectoryName(luaPath + newfile);
@@ -206,11 +281,11 @@ public class Packager {
                               AppDataPath + "/Game/Tolua/Lua/" };
 
         for (int i = 0; i < luaPaths.Length; i++) {
-            paths.Clear(); files.Clear();
+            paths.Clear(); m_files.Clear();
             string luaDataPath = luaPaths[i].ToLower();
             Recursive(luaDataPath);
             int n = 0;
-            foreach (string f in files) {
+            foreach (string f in m_files) {
                 if (f.EndsWith(".meta")) continue;
                 string newfile = f.Replace(luaDataPath, "");
                 string newpath = luaPath + newfile;
@@ -226,7 +301,7 @@ public class Packager {
                     File.Copy(f, newpath, true);
                 }
                 //Util.Log(newpath);
-                UpdateProgress(n++, files.Count, newpath);
+                UpdateProgress(n++, m_files.Count, newpath);
             } 
         }
         EditorUtility.ClearProgressBar();
@@ -239,15 +314,15 @@ public class Packager {
         string newFilePath = resPath + "/files.txt";
         if (File.Exists(newFilePath)) File.Delete(newFilePath);
 
-        paths.Clear(); files.Clear();
+        paths.Clear(); m_files.Clear();
         Recursive(resPath);
 
         FileStream fs = new FileStream(newFilePath, FileMode.CreateNew);
         StreamWriter sw = new StreamWriter(fs);
-        for (int i = 0; i < files.Count; i++) {
-            string file = files[i];
+        for (int i = 0; i < m_files.Count; i++) {
+            string file = m_files[i];
             string ext = Path.GetExtension(file);
-            if (file.EndsWith(".meta") || file.Contains(".DS_Store")) continue;
+            if (file.EndsWith(".meta") || file.Contains(".DS_Store") || file.Contains(".git") || file.Contains(".gitignore")) continue;
 
             string md5 = Util.md5file(file);
             string value = file.Replace(resPath, string.Empty);
@@ -272,7 +347,7 @@ public class Packager {
         foreach (string filename in names) {
             string ext = Path.GetExtension(filename);
             if (ext.Equals(".meta")) continue;
-            files.Add(filename.Replace('\\', '/'));
+            m_files.Add(filename.Replace('\\', '/'));
         }
         foreach (string dir in dirs) {
             paths.Add(dir.Replace('\\', '/'));
@@ -345,14 +420,65 @@ public class Packager {
         EditorSceneManager.OpenScene("Assets/Game/ui_editor.unity");
     }
 
+    [MenuItem("Game/Open Module Scene/阜阳麻将", false, 23)]
+    public static void OpenFYMJ()
+    {
+        Scene scene = EditorSceneManager.GetActiveScene();
+        if (scene.isDirty)
+            UnityEngine.Debug.LogError("当前场景未保存");
+
+        if (scene.name == "FYMJ")
+            return;
+        EditorSceneManager.OpenScene("Assets/Game/Scene/FYMJ/FYMJ.unity");
+    }
+
+
+    [MenuItem("Game/Open Module Scene/涡阳麻将", false, 24)]
+    public static void OpenGYMJ()
+    {
+        Scene scene = EditorSceneManager.GetActiveScene();
+        if (scene.isDirty)
+            UnityEngine.Debug.LogError("当前场景未保存");
+
+        if (scene.name == "GYMJ")
+            return;
+        EditorSceneManager.OpenScene("Assets/Game/Scene/GYMJ/GYMJ.unity");
+    }
+
     [MenuItem("Game/Build/打包", false, 32)]
     public static void OnBuild()
     {
-        if (!AppConst.PrefabBundleMod)
+        string path = Build(null);
+        if (!string.IsNullOrEmpty(path))
+            Application.OpenURL(path);
+    }
+
+    [MenuItem("Game/Build/打无资源包", false, 33)]
+    public static void OnBuildNoResource()
+    {
+        string resPath = AppDataPath + "/StreamingAssets/";
+        ///----------------------创建文件列表-----------------------
+        string newFilePath = resPath + "/files.txt";
+        if (!File.Exists(newFilePath))
         {
-            Debug.LogError("打包前需先将[PrefabBundleMod]设置为true");
+            Debug.LogError("要先build资源");
             return;
         }
+
+        paths.Clear(); m_files.Clear();
+        Recursive(resPath);
+
+        for (int i = 0; i < m_files.Count; i++)
+        {
+            string file = m_files[i];
+            if (file.EndsWith("files.txt") || file.EndsWith(".meta") || file.Contains(".DS_Store") || file.Contains(".git") || file.Contains(".gitignore")) continue;
+            FileStream fs = new FileStream(file, FileMode.Truncate);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.WriteLine("");
+            sw.Close(); fs.Close();
+        }
+        AssetDatabase.Refresh();
+
         string path = Build(null);
         if (!string.IsNullOrEmpty(path))
             Application.OpenURL(path);
@@ -442,20 +568,20 @@ public class Packager {
     {
         string locationPathName = Application.dataPath.Substring(0, Application.dataPath.Length - 7);
         locationPathName = locationPathName.Replace("\\", "/");
-        string tempx86 = "/x86";
+        //string tempx86 = "/x86";
         string tempx86_64 = "/x86_64";
-        string x86Folder = Application.dataPath + "/Plugins" + tempx86;
+        //string x86Folder = Application.dataPath + "/Plugins" + tempx86;
         string x86_64Folder = Application.dataPath + "/Plugins" + tempx86_64;
 
 
         if (bRemove)
         {
-            if (!Directory.Exists(x86Folder) || !Directory.Exists(x86_64Folder))
+            if (!Directory.Exists(x86_64Folder))
             {
                 Debug.LogError("Plugins下没找到x86或x86_64目录");
                 return false;
             }
-            Directory.Move(x86Folder, locationPathName + tempx86);
+            //Directory.Move(x86Folder, locationPathName + tempx86);
             Directory.Move(x86_64Folder, locationPathName + tempx86_64);
 
             string[] dirs = Directory.GetDirectories("Assets/Game/Resources/");
@@ -475,7 +601,7 @@ public class Packager {
         }
         else
         {
-            Directory.Move(locationPathName + tempx86, Application.dataPath + "/Plugins" + tempx86);
+            //Directory.Move(locationPathName + tempx86, Application.dataPath + "/Plugins" + tempx86);
             Directory.Move(locationPathName + tempx86_64, Application.dataPath + "/Plugins" + tempx86_64);
 
             string resPath = locationPathName + "/Resources/";

@@ -10,10 +10,10 @@ require 'Modules/Main/View/Item/LoginItem2'
 LoginPanel = Class(BasePanel);
 
 function LoginPanel:Ctor()
-	self.m_comp.btnGuest = UIButtonEx
-	self.m_comp.btnChat = UIButtonEx
-	self.m_comp.btnDeal = UIButtonEx
-	self.m_comp.togDeal = UIButtonEx
+	self.m_comp.btnGuest = ButtonEx
+	self.m_comp.btnChat = ButtonEx
+	self.m_comp.btnDeal = ButtonEx
+	self.m_comp.togDeal = ButtonEx
 end
 
 function LoginPanel:OnInit()

@@ -25,22 +25,24 @@ function BaseCtrl:Init()
 		logError('继承的panel没有给prefab名')
 		return
 	end
-    panelMgr:CreatePanel(self.m_modName, self.m_panelName, self.OnCreate, self);
+	if not self.m_panel then
+    	panelMgr:CreatePanel(self.m_modName, self.m_panelName, self.OnCreate, self);
+	end
     self:OnInit()
 end
 
-function BaseCtrl:AddEvent(msgID, callback)
+function BaseCtrl:AddEvent(msgID, callback, tbl)
 	if (type(msgID) == "number") then
 		msgID = tostring(msgID)
 	end
-	Event.AddListener(msgID, callback);
+	Event.AddListener(msgID, callback, tbl);
 	self.msgIdList[#self.msgIdList + 1] = msgID
 end
 
 function BaseCtrl:RemoveEvent(msgID)
 	for i=1, #self.msgIdList do
 		if self.msgIdList[i] == msgID then
-			Event.RemoveListener(self.msgIdList[i])
+			Event.RemoveListener(self.msgIdList[i], self)
 			self.msgIdList[i] = nil
 			break
 		end
@@ -86,7 +88,7 @@ end
 
 function BaseCtrl:UnLoad( )
 	for i=1, #self.msgIdList do
-		Event.RemoveListener(self.msgIdList[i])
+		Event.RemoveListener(self.msgIdList[i], self)
 	end
 	self.msgIdList = {}
 end

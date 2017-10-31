@@ -650,27 +650,11 @@ public class UtilWrap
 	{
 		try
 		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 1 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform)))
-			{
-				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
-				UnityEngine.Transform o = Util.GetRoot(arg0);
-				ToLua.Push(L, o);
-				return 1;
-			}
-			else if (count == 2 && TypeChecker.CheckTypes(L, 1, typeof(UnityEngine.Transform), typeof(string)))
-			{
-				UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.ToObject(L, 1);
-				string arg1 = ToLua.ToString(L, 2);
-				UnityEngine.GameObject o = Util.GetRoot(arg0, arg1);
-				ToLua.Push(L, o);
-				return 1;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: Util.GetRoot");
-			}
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.Transform arg0 = (UnityEngine.Transform)ToLua.CheckUnityObject(L, 1, typeof(UnityEngine.Transform));
+			UnityEngine.Transform o = Util.GetRoot(arg0);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch(Exception e)
 		{

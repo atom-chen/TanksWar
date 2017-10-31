@@ -6,7 +6,7 @@
 LoginItem2 = Class(BaseItem);
 
 function LoginItem2:Ctor()
-	self.m_comp.text = UITextEx
+	self.m_comp.text = TextEx
 end
 
 function LoginItem2:OnInit(param)

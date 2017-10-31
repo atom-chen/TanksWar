@@ -17,6 +17,7 @@ public class UILoadingWrap
 		L.RegVar("m_progressBar", get_m_progressBar, set_m_progressBar);
 		L.RegVar("m_percent", get_m_percent, set_m_percent);
 		L.RegVar("m_desc", get_m_desc, set_m_desc);
+		L.RegVar("m_speed", get_m_speed, set_m_speed);
 		L.RegVar("Instance", get_Instance, set_Instance);
 		L.EndClass();
 	}
@@ -77,11 +78,12 @@ public class UILoadingWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
+			ToLua.CheckArgsCount(L, 4);
 			UILoading obj = (UILoading)ToLua.CheckObject(L, 1, typeof(UILoading));
 			string arg0 = ToLua.CheckString(L, 2);
 			string arg1 = ToLua.CheckString(L, 3);
-			obj.UpdateProgress(arg0, arg1);
+			string arg2 = ToLua.CheckString(L, 4);
+			obj.UpdateProgress(arg0, arg1, arg2);
 			return 0;
 		}
 		catch(Exception e)
@@ -133,7 +135,7 @@ public class UILoadingWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UILoading obj = (UILoading)o;
-			UI.ImageEx ret = obj.m_progressBar;
+			ImageEx ret = obj.m_progressBar;
 			ToLua.Push(L, ret);
 			return 1;
 		}
@@ -152,7 +154,7 @@ public class UILoadingWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UILoading obj = (UILoading)o;
-			UI.TextEx ret = obj.m_percent;
+			TextEx ret = obj.m_percent;
 			ToLua.Push(L, ret);
 			return 1;
 		}
@@ -171,13 +173,32 @@ public class UILoadingWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UILoading obj = (UILoading)o;
-			UI.TextEx ret = obj.m_desc;
+			TextEx ret = obj.m_desc;
 			ToLua.Push(L, ret);
 			return 1;
 		}
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index m_desc on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_m_speed(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILoading obj = (UILoading)o;
+			TextEx ret = obj.m_speed;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index m_speed on a nil value" : e.Message);
 		}
 	}
 
@@ -204,7 +225,7 @@ public class UILoadingWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UILoading obj = (UILoading)o;
-			UI.ImageEx arg0 = (UI.ImageEx)ToLua.CheckUnityObject(L, 2, typeof(UI.ImageEx));
+			ImageEx arg0 = (ImageEx)ToLua.CheckUnityObject(L, 2, typeof(ImageEx));
 			obj.m_progressBar = arg0;
 			return 0;
 		}
@@ -223,7 +244,7 @@ public class UILoadingWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UILoading obj = (UILoading)o;
-			UI.TextEx arg0 = (UI.TextEx)ToLua.CheckUnityObject(L, 2, typeof(UI.TextEx));
+			TextEx arg0 = (TextEx)ToLua.CheckUnityObject(L, 2, typeof(TextEx));
 			obj.m_percent = arg0;
 			return 0;
 		}
@@ -242,13 +263,32 @@ public class UILoadingWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UILoading obj = (UILoading)o;
-			UI.TextEx arg0 = (UI.TextEx)ToLua.CheckUnityObject(L, 2, typeof(UI.TextEx));
+			TextEx arg0 = (TextEx)ToLua.CheckUnityObject(L, 2, typeof(TextEx));
 			obj.m_desc = arg0;
 			return 0;
 		}
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index m_desc on a nil value" : e.Message);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_m_speed(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UILoading obj = (UILoading)o;
+			TextEx arg0 = (TextEx)ToLua.CheckUnityObject(L, 2, typeof(TextEx));
+			obj.m_speed = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o == null ? "attempt to index m_speed on a nil value" : e.Message);
 		}
 	}
 

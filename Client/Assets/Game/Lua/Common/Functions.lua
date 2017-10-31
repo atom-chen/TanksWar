@@ -48,3 +48,4 @@ function findPanel(str)
 	end
 	return obj:GetComponent("BaseLua");
 end
+

@@ -8,6 +8,23 @@
 Module = {
 	Common = "Common",
 	Main = "Main",
+	FYMJ = "FYMJ",
+	GYMJ = "GYMJ",
+}
+
+----模块脚本
+ModuleScript = {
+	Common = {"Card", "ChiContainer", "HandContainer", "PutContainer", "TableContainer"},
+	Main = {"Player"},
+	GYMJ = {"RoomMgr", "PlayerOther",},
+	FYMJ = {"RoomMgr", "PlayerOther",},
+}
+
+----模块场景
+ModuleScene = {
+	Main = "",
+	GYMJ = "GYMJ",
+	FYMJ = "FYMJ",
 }
 
 ----通用界面相关
@@ -27,17 +44,69 @@ Common_Panel = {
 
 ----主界面相关配置
 Main_Ctrl = {
-	MainCtrl = "MainCtrl",
+	MainCtrl			 = 		 "MainCtrl",
+	LoginCtrl			 = 		 "LoginCtrl",
+	LobbyCtrl			 = 		 "LobbyCtrl",
+	SettingCtrl			 = 		 "SettingCtrl",
+	CreateCtrl		 	 = 		 "CreateCtrl",
+	JoinCtrl		 	 = 		 "JoinCtrl",
+    HelpCtrl			 = 		 "HelpCtrl",
+    CertificateCtrl		 = 		 "CertificateCtrl",
+    InviteCtrl	 		 = 		 "InviteCtrl",
+    ReferrerCtrl		 = 		 "ReferrerCtrl",
+    ActivityCtrl		 = 		 "ActivityCtrl",
+    ShareCtrl			 = 		 "ShareCtrl",
+    ShopCtrl			 = 		 "ShopCtrl",
+}
+
+Main_Panel = {
+	LoginPanel			 =		 "LoginPanel",
+	MainPanel			 =		 "MainPanel",
+	LobbyPanel			 =		 "LobbyPanel",
+	SettingPanel		 =		 "SettingPanel",
+	CreatePanel			 =		 "CreatePanel",
+	JoinPanel			 =		 "JoinPanel",
+	HelpPanel			 =		 "HelpPanel",
+	CertificatePanel	 =		 "CertificatePanel",
+	InvitePanel			 =		 "InvitePanel",
+	ReferrerPanel		 =		 "ReferrerPanel",
+	ActivityPanel		 =		 "ActivityPanel",
+	SharePanel			 =		 "SharePanel",
+    ShopPanel			 =		 "ShopPanel",
+}
+
+--------------------------------------------------------------------------
+----涡阳麻将相关配置
+GYMJ_Ctrl = {
+	GYMJCtrl = "GYMJCtrl",
+	PromptCtrl = "PromptCtrl",
+	MessageCtrl = "MessageCtrl",
 	LoginCtrl = "LoginCtrl",
 	LobbyCtrl = "LobbyCtrl",
 }
 
-Main_Panel = {
+GYMJ_Panel = {
+	PromptPanel = "PromptPanel",	
+	MessagePanel = "MessagePanel",
 	LoginPanel = "LoginPanel",
-	MainPanel = "MainPanel",
 	LobbyPanel = "LobbyPanel",
 }
 
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+----阜阳麻将相关配置
+FYMJ_Ctrl = {
+	FYMJCtrl = "FYMJCtrl",
+	TableCtrl = "TableCtrl",
+}
+
+FYMJ_Panel = {
+	FYMJPanel = "FYMJPanel",
+	TablePanel = "TablePanel",
+}
+
+--------------------------------------------------------------------------
 
 --协议类型--
 ProtocalType = {
@@ -47,9 +116,122 @@ ProtocalType = {
 	SPROTO = 3,
 }
 
+--平台类型--
+Platform = {
+	Android = false,
+	Iphone = false,
+	Editor = false,
+}
+
+--玩家座位
+PlayerSit = {
+	None = 0,	--无
+	Bottom = 1,	--下
+	Right = 2,	--右
+	Up = 3,		--上
+	Left = 4,	--左
+}
+
+--牌状态
+CardState = {
+	Normal = 0, --常规
+	Select = 1, --选中
+	Lock = 2,	--禁用
+}
+
+--游戏状态
+PlayState = {
+	Ready = 0,
+	Playing = 1,
+	End = 2,
+}
+
+OperationType = {
+	MO = "mo",
+	CHU = "chu",
+	CHI = "chi",
+	PENG = "peng",
+	AN = "an",
+	JIE = "jie",
+	GONG = "gong",
+	HU = "hu",
+	GUO = "guo",
+	TING = "ting",
+}
+
+--cardsContainer type
+ContainerType = {
+	NONE = 0,
+	HAND = 1,
+	PUT = 2,
+	CHI = 3,
+	TABLE = 3,
+}
+
+--cardShowType
+CardShowType = {
+	NONE = 0,
+	CHI = 1,
+	PENG = 2,
+	ANGANG = 3,
+	MINGGANG = 4,
+}
+
+PlatformType = {
+	Unknown = 0,
+	SinaWeibo = 1,			--Sina Weibo         
+	TencentWeibo = 2,		--Tencent Weibo          
+	DouBan = 5,				--Dou Ban           
+	QZone = 6, 				--QZone           
+	Renren = 7,				--Ren Ren           
+	Kaixin = 8,				--Kai Xin          
+	Pengyou = 9,			--Friends          
+	Facebook = 10,			--Facebook         
+	Twitter = 11,			--Twitter         
+	Evernote = 12,			--Evernote        
+	Foursquare = 13,		--Foursquare      
+	GooglePlus = 14,		--Google+       
+	Instagram = 15,			--Instagram      
+	LinkedIn = 16,			--LinkedIn       
+	Tumblr = 17,			--Tumblr         
+	Mail = 18, 				--Mail          
+	SMS = 19,				--SMS           
+	Print = 20, 			--Print       
+	Copy = 21,				--Copy             
+	WeChat = 22,		    --WeChat Friends    
+	WeChatMoments = 23,	    --WeChat WechatMoments   
+	QQ = 24,				--QQ              
+	Instapaper = 25,		--Instapaper       
+	Pocket = 26,			--Pocket           
+	YouDaoNote = 27, 		--You Dao Note           
+	Pinterest = 30, 		--Pinterest    
+	Flickr = 34,			--Flickr          
+	Dropbox = 35,			--Dropbox          
+	VKontakte = 36,			--VKontakte       
+	WeChatFavorites = 37,	--WeChat Favorited        
+	YiXinSession = 38, 		--YiXin Session   
+	YiXinTimeline = 39,		--YiXin Timeline   
+	YiXinFav = 40,			--YiXin Favorited  
+	MingDao = 41,          	--明道
+	Line = 42,             	--Line
+	WhatsApp = 43,         	--Whats App
+	KakaoTalk = 44,         --KakaoTalk
+	KakaoStory = 45,        --KakaoStory 
+	FacebookMessenger = 46, --FacebookMessenger
+	Bluetooth = 48,         --Bluetooth
+	Alipay = 50,            --Alipay
+	AlipayMoments = 51,     --AlipayMoments
+	Dingding = 52,			--DingTalk 钉钉
+	Youtube = 53,			--youtube
+	MeiPai = 54,			--美拍
+
+}
+
 AUTO_ORDER_MIN = 100
 AUTO_ORDER_MAX = 300
 
-TimeOutSec = 3
+GYMJ_Cards_Num = 108
+
+TimeOutSec = 5
 
 IsClient = true
