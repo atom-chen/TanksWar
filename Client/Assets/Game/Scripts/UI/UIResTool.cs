@@ -34,7 +34,7 @@ public class UIResTool {
     {
         if (m_resMgrs.ContainsKey(modName))
         {
-            Debug.LogError("重复加载了UIResMgr 模块 ： " + modName);
+            Debug.Log("重复加载了UIResMgr 模块 ： " + modName);
             return;
         }
 

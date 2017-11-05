@@ -64,7 +64,7 @@ function CheckTableForPrint(table)
 	for k,v in pairs(table) do
 		local vType = type(v)
 		if vType == "table" then
-			t2[k] =CheckTableForPrint(v)
+			t2[k] = CheckTableForPrint(v)
 		elseif vType == "userdata" then
 			t2[k] =tostring(v)
 		else

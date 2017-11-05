@@ -8,42 +8,29 @@ function JoinCtrl:Ctor()
 end
 
 function JoinCtrl:OnInit()
-	self:AddEvent(proto.joinRoom, self.OnJoinRoom, self)
 end
 
-function JoinCtrl:OnStart(data)
-	UIMgr.Open(Main_Panel.JoinPanel)
-end
 
 function JoinCtrl:JoinRoom(roomId)
-
-	-- coroutine.start(function ( ... )
-	-- 	local coLoad = coroutine.start(Game.CoLoadModule, Module.FYMJ)
-	-- 	coroutine.waitCo(coLoad)
-	-- 	Game.OnLoadFinish()
-	-- end)
-	
 	-- return
 	if not roomId then
 		util.LogError("roomid 为空--"..tostring(roomId))
 		return
 	end
 
-	NetWork.SendMsg(proto.joinRoom, {roomId = roomId})
-end
+	coroutine.start(function()
+	    local res = NetWork.Request(proto.joinRoom, {roomId = roomId, clean = 1})
+	    if res.code == 0 then
+	        local recvData = res.data
+	        -- log("recvData --- -- "..tostring(recvData))
+	        coroutine.start(function ()
+	        	local coLoad = coroutine.start(Game.CoLoadModule, Module.FYMJ)
+	        	coroutine.waitCo(coLoad)
+	        	Game.OnLoadFinish(recvData)
+	        end)
+	    else
+	        UIMgr.Open(Common_Panel.TipsPanel, res.msg)
+	    end
+	end)
 
-function JoinCtrl:OnJoinRoom(tbl)
-	if tbl.code == 0 then
-		local recvData = tbl.data
-		-- log("recvData --- -- "..tostring(recvData))
-		coroutine.start(function ()
-			local coLoad = coroutine.start(Game.CoLoadModule, Module.FYMJ)
-			coroutine.waitCo(coLoad)
-			Game.OnLoadFinish(recvData)
-		end)
-		return
-	else
-		UIMgr.Open(Common_Panel.TipsPanel, tbl.msg)
-		return
-	end
 end

@@ -16,6 +16,8 @@ _M.cardsInfo = false
 _M.curOpt = {}
 
 local this = _M
+
+--初始化模块游戏
 function _M.Init(roomInfo)
 	log("RoomMgr init ----- ")
 
@@ -25,11 +27,13 @@ function _M.Init(roomInfo)
 	this.m_info = roomInfo
 
 	Event.AddListener(tostring(proto.fy_inRoomSE), this.OnPlayerInRoom, this) --玩家进入
-	Event.AddListener(tostring(proto.fy_closeRoomSE), this.OnCloseRoom, this) --都同意解散
+	Event.AddListener(tostring(proto.fy_closeRoomSE), this.OnExitRoom, this) --都同意解散
 	Event.AddListener(tostring(proto.fy_gameInfoSE), this.OnStartPlay, this) --都做好准备开局
 	Event.AddListener(tostring(proto.fy_endGameSE), this.OnEndGame, this) --都做好准备开局
 
 	Event.Brocast(Msg.RoomInfoUpdate, this.m_info)
+
+	PlayerMgr.OnEnterRoom()
 
 	local ctrl = CtrlMgr.Get(FYMJ_Ctrl.TableCtrl)
 	ctrl:LoadEnd()
@@ -82,6 +86,7 @@ end
 
 function this:OnEndGame(tbl)
 	log("this.OnEndGame---")
+	UIMgr.Open(Common_Panel.TipsPanel, "本局结束，显示结算界面")
 end
 
 function this.InitTableView()
@@ -125,7 +130,7 @@ function this.InitCards(cardsInfo)
 					showType = CardShowType.PENG,
 					otherId = 3,
 				}
-				cardsData.chiCards[#cards.chiCards+1] = c
+				cardsData.chiCards[#cardsData.chiCards+1] = c
 			end
 		end
 
@@ -138,7 +143,7 @@ function this.InitCards(cardsInfo)
 					showType = CardShowType.CHI,
 					otherId = 3,
 				}
-				cards.chiCards[#cards.chiCards+1] = c
+				cardsData.chiCards[#cardsData.chiCards+1] = c
 			end
 		end
 
@@ -152,7 +157,7 @@ function this.InitCards(cardsInfo)
 					showType = CardShowType.ANGANG,
 					otherId = 3,
 				}
-				cardsData.chiCards[#cards.chiCards+1] = c
+				cardsData.chiCards[#cardsData.chiCards+1] = c
 			end
 		end
 
@@ -166,7 +171,7 @@ function this.InitCards(cardsInfo)
 					showType = CardShowType.GONGGANG,
 					otherId = 3,
 				}
-				cardsData.chiCards[#cards.chiCards+1] = c
+				cardsData.chiCards[#cardsData.chiCards+1] = c
 			end
 		end
 		--接杠
@@ -179,7 +184,7 @@ function this.InitCards(cardsInfo)
 					showType = CardShowType.GONGGANG,
 					otherId = 3,
 				}
-				cardsData.chiCards[#cards.chiCards+1] = c
+				cardsData.chiCards[#cardsData.chiCards+1] = c
 			end
 		end
 		
@@ -216,10 +221,6 @@ function this:OnPlayerInRoom(tbl)
 	ctrl:AddPlayer(otherPlayer)
 end
 
-function this:OnCloseRoom(tbl)
-	log("关闭房间消息 roomId-"..tbl.roomId)
-end
-
 function this:OnStartPlay(tbl)
 	-- util.Log("StartPlay ----- ")
 	_M.curState = PlayState.Playing
@@ -227,21 +228,27 @@ function this:OnStartPlay(tbl)
 	this.InitTableView()
 	this.InitCards(tbl)
 
+	local ctrl = CtrlMgr.Get(FYMJ_Ctrl.TableCtrl)
+
 	local pList = PlayerMgr.GetAll()
 	for id, v in pairs(pList) do
 		local handCon = v:GetContainer(ContainerType.HAND)
-		handCon:OnShowCards(true)
+		if true then	--判断是否断线重连 非断线重连 走这里
+			tbl.lastCardNum = fyCfg.cardTotalNum	--非断线要有发牌动画 这里应该是所有牌
+			-- ctrl:SetCardNum(fyCfg.cardTotalNum)
+			handCon:OnShowCards(true)
+		else
+
+		end
 	end
 
 
-	local ctrl = CtrlMgr.Get(FYMJ_Ctrl.TableCtrl)
 	ctrl:StartPlay()
 	Event.Brocast(Msg.ChangeState, _M.curState)
 	Event.Brocast(Msg.RoomInfoUpdate, tbl)
 
 	if next(this.curOpt) then
-
-		log("广播操作消息 --- "..cjson.encode(this.curOpt))
+		-- log("广播操作消息 --- "..cjson.encode(this.curOpt))
 		Event.Brocast(tostring(proto.fy_operateSE), this.curOpt)
 	end
 
@@ -258,19 +265,30 @@ end
 function this.OnExitRoom()
 
 	local pList = PlayerMgr.GetAll()
-	for k, v in pairs(pList) do
+	for _, v in pairs(pList) do
 		v:LeaveRoom()
 		if not v:IsMyself() then	--非自己清除
 			PlayerMgr.RemovePlayer(v)
 		end
 	end
 
+	PlayerMgr.OnLeaveRoom()
+
 	coroutine.start(function ()
 		local coLoad = coroutine.start(Game.CoLoadModule, Module.Main)
 		coroutine.waitCo(coLoad)
-		Game.OnLoadFinish()
-		Event.Brocast(Msg.EnterRoom)
+		local data = {}
+		data.isBackLobby = true
+		Game.OnLoadFinish(data)
+		-- Event.Brocast(Msg.EnterRoom)
 	end)
+
+
+	Event.RemoveListener(tostring(proto.fy_inRoomSE), this.OnPlayerInRoom) --玩家进入
+	Event.RemoveListener(tostring(proto.fy_closeRoomSE), this.OnExitRoom) --都同意解散
+	Event.RemoveListener(tostring(proto.fy_gameInfoSE), this.OnStartPlay) --都做好准备开局
+	Event.RemoveListener(tostring(proto.fy_endGameSE), this.OnEndGame) --都做好准备开局
+
 end
 
 _G["RoomMgr"] = _M

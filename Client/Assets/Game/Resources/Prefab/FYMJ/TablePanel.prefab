@@ -294,6 +294,7 @@ GameObject:
   - component: {fileID: 33046044705691410}
   - component: {fileID: 23506182513387392}
   - component: {fileID: 114869240594624044}
+  - component: {fileID: 114291722104403308}
   m_Layer: 5
   m_Name: card
   m_TagString: Untagged
@@ -1376,6 +1377,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224640223342461888}
+  - component: {fileID: 114388222524488512}
   m_Layer: 5
   m_Name: p
   m_TagString: Untagged
@@ -1399,7 +1401,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1747111329633874
 GameObject:
   m_ObjectHideFlags: 1
@@ -1840,6 +1842,7 @@ GameObject:
   - component: {fileID: 222220482255803584}
   - component: {fileID: 114978846716946614}
   - component: {fileID: 114051413694483778}
+  - component: {fileID: 114509281236338592}
   m_Layer: 5
   m_Name: card
   m_TagString: Untagged
@@ -1885,13 +1888,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1179586709842638}
-  m_LocalRotation: {x: -0.7660445, y: -0, z: -0, w: 0.64278764}
+  m_LocalRotation: {x: -0.76604444, y: 0, z: 0, w: 0.6427877}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224640223342461888}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -100, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -127.7, y: 64.9, z: 0}
 --- !u!23 &23506182513387392
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -1988,7 +1991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 0}
+  m_Color: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 0.466}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2437,6 +2440,47 @@ MonoBehaviour:
       m_isDurationInvalid: 0
       m_id: 0
       m_go: {fileID: 1739858041753292}
+      m_b1: 0
+      m_s1: 
+      m_sprite1: {fileID: 0}
+      m_fBegin: 0
+      m_fEnd: 1
+      m_iBegin: 0
+      m_iEnd: 1
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: 0, y: 0, z: 0}
+      m_vEnd: {x: 0, y: 0, z: 0}
+      m_type: 1
+    - m_delay: 0
+      ingore: 0
+      m_duration: 0.1
+      m_endCount: -1
+      m_isRealtime: 0
+      m_rate: 1
+      m_playType: 0
+      m_animationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 2
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_isUseNowStart: 1
+      m_isDurationInvalid: 0
+      m_id: 0
+      m_go: {fileID: 1727305691200534}
       m_b1: 1
       m_s1: 
       m_sprite1: {fileID: 0}
@@ -2444,11 +2488,11 @@ MonoBehaviour:
       m_fEnd: 1
       m_iBegin: 0
       m_iEnd: 1
-      m_cBegin: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 0.516}
-      m_cEnd: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 0}
-      m_vBegin: {x: 0, y: 0, z: 0}
-      m_vEnd: {x: 0, y: 0, z: 0}
-      m_type: 5
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: -0, y: 0, z: 0}
+      m_vEnd: {x: -0, y: 0, z: 0}
+      m_type: 3
     name: "\u5E38\u89C4"
     isDuration: 1
     isEnterSound: 0
@@ -2539,6 +2583,47 @@ MonoBehaviour:
       m_isDurationInvalid: 0
       m_id: 0
       m_go: {fileID: 1739858041753292}
+      m_b1: 0
+      m_s1: 
+      m_sprite1: {fileID: 0}
+      m_fBegin: 0
+      m_fEnd: 1
+      m_iBegin: 0
+      m_iEnd: 1
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: 0, y: 0, z: 0}
+      m_vEnd: {x: 0, y: 0, z: 0}
+      m_type: 1
+    - m_delay: 0
+      ingore: 0
+      m_duration: 0.1
+      m_endCount: -1
+      m_isRealtime: 0
+      m_rate: 1
+      m_playType: 0
+      m_animationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 2
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_isUseNowStart: 1
+      m_isDurationInvalid: 0
+      m_id: 0
+      m_go: {fileID: 1727305691200534}
       m_b1: 1
       m_s1: 
       m_sprite1: {fileID: 0}
@@ -2546,11 +2631,11 @@ MonoBehaviour:
       m_fEnd: 1
       m_iBegin: 0
       m_iEnd: 1
-      m_cBegin: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 0.516}
-      m_cEnd: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 0}
-      m_vBegin: {x: 0, y: 0, z: 0}
-      m_vEnd: {x: 0, y: 0, z: 0}
-      m_type: 5
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: -0, y: 0, z: 0}
+      m_vEnd: {x: -0, y: 0, z: 0}
+      m_type: 3
     name: "\u9009\u4E2D"
     isDuration: 1
     isEnterSound: 0
@@ -2636,18 +2721,239 @@ MonoBehaviour:
       m_fEnd: 1
       m_iBegin: 0
       m_iEnd: 1
-      m_cBegin: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 0.516}
-      m_cEnd: {r: 0.3897059, g: 0.3897059, b: 0.3897059, a: 0.516}
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
       m_vBegin: {x: 0, y: 0, z: 0}
       m_vEnd: {x: 0, y: 0, z: 0}
-      m_type: 5
+      m_type: 1
+    - m_delay: 0
+      ingore: 0
+      m_duration: 0.1
+      m_endCount: -1
+      m_isRealtime: 0
+      m_rate: 1
+      m_playType: 0
+      m_animationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 2
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_isUseNowStart: 1
+      m_isDurationInvalid: 0
+      m_id: 0
+      m_go: {fileID: 1727305691200534}
+      m_b1: 1
+      m_s1: 
+      m_sprite1: {fileID: 0}
+      m_fBegin: 0
+      m_fEnd: 1
+      m_iBegin: 0
+      m_iEnd: 1
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: -0, y: 0, z: 0}
+      m_vEnd: {x: -0, y: 0, z: 0}
+      m_type: 3
     name: "\u7981\u7528"
     isDuration: 0
     isEnterSound: 0
     enterSoundId: 0
     isExitSound: 0
     exitSoundId: 0
-  m_curState: 0
+  - publicHandles: []
+    privateHandles:
+    - m_delay: 0
+      ingore: 0
+      m_duration: 0.1
+      m_endCount: -1
+      m_isRealtime: 0
+      m_rate: 1
+      m_playType: 0
+      m_animationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 2
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_isUseNowStart: 1
+      m_isDurationInvalid: 0
+      m_id: 0
+      m_go: {fileID: 1727305691200534}
+      m_b1: 1
+      m_s1: 
+      m_sprite1: {fileID: 0}
+      m_fBegin: 0
+      m_fEnd: 1
+      m_iBegin: 0
+      m_iEnd: 1
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: 0, y: 0, z: 0}
+      m_vEnd: {x: 0, y: 0, z: 0}
+      m_type: 2
+    - m_delay: 0
+      ingore: 0
+      m_duration: 0.1
+      m_endCount: -1
+      m_isRealtime: 0
+      m_rate: 1
+      m_playType: 0
+      m_animationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 2
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_isUseNowStart: 1
+      m_isDurationInvalid: 0
+      m_id: 0
+      m_go: {fileID: 1739858041753292}
+      m_b1: 0
+      m_s1: 
+      m_sprite1: {fileID: 0}
+      m_fBegin: 0
+      m_fEnd: 1
+      m_iBegin: 0
+      m_iEnd: 1
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: 0, y: 0, z: 0}
+      m_vEnd: {x: 0, y: 0, z: 0}
+      m_type: 1
+    - m_delay: 0
+      ingore: 0
+      m_duration: 0.1
+      m_endCount: -1
+      m_isRealtime: 0
+      m_rate: 1
+      m_playType: 0
+      m_animationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 2
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_isUseNowStart: 1
+      m_isDurationInvalid: 0
+      m_id: 0
+      m_go: {fileID: 1727305691200534}
+      m_b1: 1
+      m_s1: 
+      m_sprite1: {fileID: 0}
+      m_fBegin: 0
+      m_fEnd: 1
+      m_iBegin: 0
+      m_iEnd: 1
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: -0, y: 0, z: 0}
+      m_vEnd: {x: 90, y: 0, z: 0}
+      m_type: 3
+    name: "\u4EAE\u724C"
+    isDuration: 0
+    isEnterSound: 0
+    enterSoundId: 0
+    isExitSound: 0
+    exitSoundId: 0
+  - publicHandles: []
+    privateHandles:
+    - m_delay: 0
+      ingore: 0
+      m_duration: 0.5
+      m_endCount: -1
+      m_isRealtime: 0
+      m_rate: 1
+      m_playType: 0
+      m_animationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 2
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 1
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 0
+          tangentMode: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_isUseNowStart: 1
+      m_isDurationInvalid: 0
+      m_id: 0
+      m_go: {fileID: 1727305691200534}
+      m_b1: 1
+      m_s1: 
+      m_sprite1: {fileID: 0}
+      m_fBegin: 0
+      m_fEnd: 1
+      m_iBegin: 0
+      m_iEnd: 1
+      m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+      m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+      m_vBegin: {x: 0, y: 0, z: 0}
+      m_vEnd: {x: 0, y: 0, z: 0}
+      m_type: 10
+    name: "\u53D1\u724C"
+    isDuration: 1
+    isEnterSound: 0
+    enterSoundId: 0
+    isExitSound: 0
+    exitSoundId: 0
+  m_curState: 3
   m_duration: 0.1
   m_isRealtime: 0
   m_pressHoldTime: 0.4
@@ -3554,6 +3860,106 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_grey: 0
+--- !u!114 &114291722104403308
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1179586709842638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f797352fdc29ac048afd805564ef26dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_handles:
+  - m_delay: 0
+    ingore: 0
+    m_duration: 0.5
+    m_endCount: -1
+    m_isRealtime: 0
+    m_rate: 1
+    m_playType: 0
+    m_animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_isUseNowStart: 0
+    m_isDurationInvalid: 0
+    m_id: 1
+    m_go: {fileID: 1179586709842638}
+    m_b1: 1
+    m_s1: 
+    m_sprite1: {fileID: 0}
+    m_fBegin: 0
+    m_fEnd: 1
+    m_iBegin: 0
+    m_iEnd: 1
+    m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+    m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+    m_vBegin: {x: -160, y: 60, z: 10}
+    m_vEnd: {x: -100, y: 0, z: 0}
+    m_type: 3
+  - m_delay: 0
+    ingore: 0
+    m_duration: 0.5
+    m_endCount: -1
+    m_isRealtime: 0
+    m_rate: 1
+    m_playType: 0
+    m_animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0.88067955
+        value: 0.3121887
+        inSlope: 1.1615455
+        outSlope: 1.1615455
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_isUseNowStart: 0
+    m_isDurationInvalid: 0
+    m_id: 0
+    m_go: {fileID: 1179586709842638}
+    m_b1: 1
+    m_s1: 
+    m_sprite1: {fileID: 0}
+    m_fBegin: 0
+    m_fEnd: 1
+    m_iBegin: 0
+    m_iEnd: 1
+    m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+    m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+    m_vBegin: {x: 0, y: 0.028, z: 0}
+    m_vEnd: {x: 0, y: 0, z: 0}
+    m_type: 2
 --- !u!114 &114307418959154662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3900,6 +4306,100 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_grey: 0
+--- !u!114 &114388222524488512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1727305691200534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f797352fdc29ac048afd805564ef26dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_handles:
+  - m_delay: 0
+    ingore: 0
+    m_duration: 0.5
+    m_endCount: -1
+    m_isRealtime: 0
+    m_rate: 1
+    m_playType: 0
+    m_animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_isUseNowStart: 0
+    m_isDurationInvalid: 0
+    m_id: 0
+    m_go: {fileID: 1727305691200534}
+    m_b1: 1
+    m_s1: 
+    m_sprite1: {fileID: 0}
+    m_fBegin: 0
+    m_fEnd: 1
+    m_iBegin: 0
+    m_iEnd: 1
+    m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+    m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+    m_vBegin: {x: -90, y: 0, z: 0}
+    m_vEnd: {x: 0, y: 0, z: 0}
+    m_type: 3
+  - m_delay: 0.05
+    ingore: 0
+    m_duration: 0.5
+    m_endCount: -1
+    m_isRealtime: 0
+    m_rate: 1
+    m_playType: 0
+    m_animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 2
+        outSlope: 2
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_isUseNowStart: 0
+    m_isDurationInvalid: 0
+    m_id: 1
+    m_go: {fileID: 1727305691200534}
+    m_b1: 1
+    m_s1: 
+    m_sprite1: {fileID: 0}
+    m_fBegin: 0
+    m_fEnd: 1
+    m_iBegin: 0
+    m_iEnd: 1
+    m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+    m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+    m_vBegin: {x: -90, y: 0, z: 0}
+    m_vEnd: {x: -0, y: 0, z: 0}
+    m_type: 3
 --- !u!114 &114388624472901786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4726,6 +5226,66 @@ MonoBehaviour:
   m_isRealtime: 0
   m_pressHoldTime: 0.4
   m_ctrlType: 1
+--- !u!114 &114509281236338592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981947148065324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe4cfc93adaf4045b855fea98808286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playOnEnable: 1
+  m_resetOnEnable: 1
+  m_handle:
+    m_delay: 0
+    ingore: 0
+    m_duration: 0.5
+    m_endCount: -1
+    m_isRealtime: 0
+    m_rate: 1
+    m_playType: 0
+    m_animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_isUseNowStart: 0
+    m_isDurationInvalid: 0
+    m_id: 0
+    m_go: {fileID: 1179586709842638}
+    m_b1: 1
+    m_s1: 
+    m_sprite1: {fileID: 0}
+    m_fBegin: 0
+    m_fEnd: 1
+    m_iBegin: 0
+    m_iEnd: 1
+    m_cBegin: {r: 1, g: 1, b: 1, a: 1}
+    m_cEnd: {r: 1, g: 1, b: 1, a: 1}
+    m_vBegin: {x: 0, y: 0, z: 0}
+    m_vEnd: {x: 0, y: 0, z: 0}
+    m_type: 10
+  m_onEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114513341101201538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10324,7 +10884,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1727305691200534}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.007853894, y: 0, z: 0, w: 0.9999692}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

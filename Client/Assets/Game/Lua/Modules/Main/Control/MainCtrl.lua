@@ -13,10 +13,15 @@ function MainCtrl:Ctor()
 	--log("MainCtrl Ctor---->>>")
 end
 
-function MainCtrl:StartModule()
+function MainCtrl:StartModule(tbl)
 	-- log("start module -------------------->> "..self.m_modName)
-	local loginCtrl = CtrlMgr.Get(Main_Ctrl.LoginCtrl)
-	loginCtrl:OnStart()
+	local ctrl = nil
+	if tbl and tbl.isBackLobby then
+		ctrl = CtrlMgr.Get(Main_Ctrl.LobbyCtrl)
+	else
+		ctrl = CtrlMgr.Get(Main_Ctrl.LoginCtrl)
+	end
+	ctrl:OnStart()
 end
 
 function MainCtrl:OnShowLoginPanel()

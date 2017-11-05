@@ -9,22 +9,23 @@ TableCtrl = Class(BaseCtrl);
 function TableCtrl:Ctor()
 	self.m_id = "TableCtrl"
 	self.m_panelName = "TablePanel"
-	log("TableCtrl Ctor---->>>")
+	-- log("TableCtrl Ctor---->>>")
 
 	self.playerList = {}
 	self.m_roomInfo = false
 end
 
 function TableCtrl:OnInit()
-	logWarn("TableCtrl:OnInit")	
+	-- logWarn("TableCtrl:OnInit")	
 
 	self:AddEvent(Msg.PlayerInfoUpdate, self.UpdatePlayerInfo, self)
 	self:AddEvent(Msg.RemovePlayer, self.OnPlayerLeave, self)
 	self:AddEvent(Msg.RoomInfoUpdate, self.UpdateRoomInfo, self)
+	self:AddEvent(Msg.ActionMo, self.OnActionMo, self)
 end
 
 function TableCtrl:LoadEnd()
-	logWarn("TableCtrl:LoadEnd")
+	-- logWarn("TableCtrl:LoadEnd")
 	self.m_panel:Open()
 	local my = PlayerMgr.GetMyself()
 	self.m_panel:SetPlayerInfo(my)
@@ -61,8 +62,7 @@ function TableCtrl:OnExit()
     coroutine.start(function()
         local res = NetWork.Request(protoId)
         if res.code == 0 then
-            log("退出----")
-            RoomMgr.OnExitRoom()
+            logWarn("退出----")
         else
             UIMgr.Open(Common_Panel.TipsPanel, res.msg)
         end
@@ -81,11 +81,21 @@ end
 function TableCtrl:UpdateRoomInfo(roomInfo)
 	self.m_roomInfo = roomInfo
 	self.m_panel:SetRoomInfo(roomInfo)
-	log("update room info -- "..cjson.encode(self.m_roomInfo))
+	-- log("update room info -- "..cjson.encode(self.m_roomInfo))
+end
+
+function TableCtrl:SetCardNum(num)
+	self.m_roomInfo.lastCardNum = num
+	self.m_panel:SetRoomInfo(self.m_roomInfo)
+end
+
+function TableCtrl:OnActionMo(player)
+	local tableContainer = RoomMgr.GetTableContainer()
+	tableContainer:HideCardByIdx(1)
+	self:OnSubCardNum()
 end
 
 function TableCtrl:OnSubCardNum()
-	log("OnSubCardNum-- "..cjson.encode(self.m_roomInfo))
 	self.m_roomInfo.lastCardNum = self.m_roomInfo.lastCardNum - 1
 	self.m_panel:SetRoomInfo(self.m_roomInfo)
 end

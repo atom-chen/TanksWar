@@ -1,13 +1,13 @@
 local _M = {
 	round = { 4, 8, 12 },
 	-- 房主开房局数所需要要的钻石
-	ownerDiamond = {
+	ownerCard = {
 		[4] = 0,
 		[8] = 0,
 		[12] = 0
 	},
 	-- AA开房所需要的钻石数
-	aaDiamond = {
+	aaCard = {
 		[4] = 0,
 		[8] = 0,
 		[12] = 0
@@ -17,6 +17,8 @@ local _M = {
 		{name = "庄家翻倍",	key = "fanbei",	options = {{ name = "翻倍", val = 1}, { name = "不翻倍", val = 2}}},
 	}
 }
+
+_M.cardTotalNum = 136
 
 
 return _M

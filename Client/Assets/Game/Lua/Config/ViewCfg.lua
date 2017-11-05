@@ -20,49 +20,7 @@ _M[PlayerSit.Bottom] = {
 	chiPos = Vector3.New(-0.92, 0, -0.9),
 	chiAngle = Vector3.New(0, 90, 0),
 	chiScale = Vector3.New(1.8, 1.8, 1.8),
-	chiSplit = -0.12,
-	chiUpHight = 0.024,
-	chiDistant = 0.0342,
-}
-
-_M[PlayerSit.Up] = {
-	handPos = Vector3.New(0.39, 0.015, -0.77),
-	handAngle = Vector3.New(-90, -90, 0),
-	handScale = Vector3.New(1.8, 1.8, 1.8),
-	handDistant = 0.034,
-
-	putPos = Vector3.New(-0.01, 0, -0.47),
-	putAngle = Vector3.New(0, -90, 0),
-	putScale = Vector3.New(1.8, 1.8, 1.8),
-	putDistant = 0.0342,
-	putHight = -0.047,
-	putRowNum = 6,
-
-	chiPos = Vector3.New(0.38, 0, 0.15),
-	chiAngle = Vector3.New(0, -90, 0),
-	chiScale = Vector3.New(1.8, 1.8, 1.8),
-	chiSplit = -0.12,
-	chiUpHight = 0.024,
-	chiDistant = 0.0342,
-}
-
-_M[PlayerSit.Left] = {
-	handPos = Vector3.New(0.14, 0.015, 0.35),
-	handAngle = Vector3.New(-90, 180, 0),
-	handScale = Vector3.New(1.8, 1.8, 1.8),
-	handDistant = 0.034,
-
-	putPos = Vector3.New(-0.12, 0, -0.09),
-	putAngle = Vector3.New(0, 180, 0),
-	putScale = Vector3.New(1.8, 1.8, 1.8),
-	putDistant = 0.0342,
-	putHight = -0.047,
-	putRowNum = 6,
-
-	chiPos = Vector3.New(-0.71, 0, 0.32),
-	chiAngle = Vector3.New(0, 180, 0),
-	chiScale = Vector3.New(1.8, 1.8, 1.8),
-	chiSplit = -0.12,
+	chiSplit = -0.06,
 	chiUpHight = 0.024,
 	chiDistant = 0.0342,
 }
@@ -83,7 +41,49 @@ _M[PlayerSit.Right] = {
 	chiPos = Vector3.New(0.26, 0, -0.96),
 	chiAngle = Vector3.New(0, 0, 0),
 	chiScale = Vector3.New(1.8, 1.8, 1.8),
-	chiSplit = -0.12,
+	chiSplit = -0.06,
+	chiUpHight = 0.024,
+	chiDistant = 0.0342,
+}
+
+_M[PlayerSit.Up] = {
+	handPos = Vector3.New(0.39, 0.015, -0.77),
+	handAngle = Vector3.New(-90, -90, 0),
+	handScale = Vector3.New(1.8, 1.8, 1.8),
+	handDistant = 0.034,
+
+	putPos = Vector3.New(-0.01, 0, -0.47),
+	putAngle = Vector3.New(0, -90, 0),
+	putScale = Vector3.New(1.8, 1.8, 1.8),
+	putDistant = 0.0342,
+	putHight = -0.047,
+	putRowNum = 6,
+
+	chiPos = Vector3.New(0.38, 0, 0.15),
+	chiAngle = Vector3.New(0, -90, 0),
+	chiScale = Vector3.New(1.8, 1.8, 1.8),
+	chiSplit = -0.06,
+	chiUpHight = 0.024,
+	chiDistant = 0.0342,
+}
+
+_M[PlayerSit.Left] = {
+	handPos = Vector3.New(0.14, 0.015, 0.35),
+	handAngle = Vector3.New(-90, 180, 0),
+	handScale = Vector3.New(1.8, 1.8, 1.8),
+	handDistant = 0.034,
+
+	putPos = Vector3.New(-0.12, 0, -0.09),
+	putAngle = Vector3.New(0, 180, 0),
+	putScale = Vector3.New(1.8, 1.8, 1.8),
+	putDistant = 0.0342,
+	putHight = -0.047,
+	putRowNum = 6,
+
+	chiPos = Vector3.New(-0.71, 0, 0.32),
+	chiAngle = Vector3.New(0, 180, 0),
+	chiScale = Vector3.New(1.8, 1.8, 1.8),
+	chiSplit = -0.06,
 	chiUpHight = 0.024,
 	chiDistant = 0.0342,
 }
@@ -125,5 +125,7 @@ _M.tableCards = {
 		num = 14,
 	},
 }
+
+_M.DealCardTime = 0.8
 
 return _M

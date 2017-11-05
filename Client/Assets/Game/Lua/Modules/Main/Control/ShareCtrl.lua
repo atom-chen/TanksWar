@@ -10,7 +10,3 @@ end
 function ShareCtrl:OnInit()
      
 end
-
-function ShareCtrl:OnStart(data)
-	UIMgr.Open(Main_Panel.SharePanel)
-end

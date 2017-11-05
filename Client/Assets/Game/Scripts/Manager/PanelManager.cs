@@ -51,7 +51,7 @@ public class PanelManager : Manager
     {
         string assetName = panelName;
         string abName = modName.ToLower() + "_prefab" + AppConst.ExtName;
-        if (m_panels.ContainsKey(assetName)) return;
+        if (m_panels.ContainsKey(assetName) && m_panels[assetName]) return;
 
 #if ASYNC_MODE
         if (!AppConst.PrefabBundleMod)

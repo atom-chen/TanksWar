@@ -134,6 +134,10 @@ function RemovePanel(panelName)
 	panelList[panelName] = nil;
 end
 
+function OnLoadFinish(mdName)
+	modName = mdName
+end
+
 --卸载模块--
 function UnLoad(modName)
 	local mod_panel = _G[modName..'_Panel']
@@ -153,11 +157,13 @@ function CheckOpenTopAndAutoOrder(panel)
 	if panel.m_autoOrder then
 		local order = AUTO_ORDER_MIN
 		local tempPanel
+
 		for _,p in pairs(panelList) do
 			tempPanel = p
 			if (not (tempPanel:IsOpen())) or (tempPanel == panel) or (not tempPanel.m_autoOrder) then
 				
 			else
+				-- log("tempPanel -- "..tostring(tempPanel.m_name))
 				local orderHight = tempPanel:GetOrder() + 10
 				if orderHight > order then
 					order = orderHight

@@ -17,7 +17,6 @@ function LoginCtrl:Ctor()
 end
 
 function LoginCtrl:OnInit()
-	self:AddEvent(proto.login, self.OnLoginCallback, self)
 	self:AddEvent(Msg.Connect, self.OnConnect, self)
 end
 
@@ -120,33 +119,6 @@ function LoginCtrl:OnLogin()
 	end
 end
 
-function LoginCtrl:OnLoginCallback(tbl)
-
-	UIMgr.Close(Common_Panel.WaitPanel)
-
-	if tbl.code ~= 0 then
-		UIMgr.Open(Common_Panel.Tips, tbl.msg)
-		return
-	end
-
-	local data = tbl.data
-
-	if data.guestId then
-		LocalConfig.guestId = data.guestId
-		util.SaveFile(g_Config.configFileName, LocalConfig)
-	end
-
-	PlayerMgr.AddMainPlayer(data.userId, data)
-	local lobbyCtrl = CtrlMgr.Get(Main_Ctrl.LobbyCtrl)
-	lobbyCtrl:OnStart()
-
-	--自动登录时没有打开登录界面
-	local panel = UIMgr.Get(Main_Panel.LoginPanel)
-	if panel:IsOpen() then
-		panel:Close()
-	end
-end
-
 function LoginCtrl:GetRandomGuestID()
 		
 	math.randomseed(tostring(os.time()):reverse():sub(1, 6))
@@ -160,6 +132,34 @@ end
 
 function LoginCtrl:OnConnect()
 	log("OnConnect OK --->")
-	NetWork.SendMsg(proto.login, {token = LocalConfig.token})
+	coroutine.start(function()
+		local sendData = {token = LocalConfig.token}
+	    local res = NetWork.Request(proto.login, sendData)
+	    if res.code == 0 then
+
+	        local data = res.data
+	        if data.guestId then
+	        	LocalConfig.guestId = data.guestId
+	        	util.SaveFile(g_Config.configFileName, LocalConfig)
+	        end
+
+	        PlayerMgr.AddMainPlayer(data.userId, data)
+	        local lobbyCtrl = CtrlMgr.Get(Main_Ctrl.LobbyCtrl)
+	        lobbyCtrl:OnStart()
+
+	        --自动登录时没有打开登录界面
+	        local panel = UIMgr.Get(Main_Panel.LoginPanel)
+	        if panel:IsOpen() then
+	        	panel:Close()
+	        end
+		elseif res.code == 1 then
+			logWarn("登录失败--"..res.msg)
+			UIMgr.Open(Main_Panel.LoginPanel)
+	    else
+	        UIMgr.Open(Common_Panel.TipsPanel, res.msg)
+	    end
+
+	    UIMgr.Close(Common_Panel.WaitPanel)
+	end)
 end
 

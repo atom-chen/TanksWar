@@ -10,7 +10,3 @@ end
 function InviteCtrl:OnInit()
      
 end
-
-function InviteCtrl:OnStart(data)
-	UIMgr.Open(Main_Panel.InvitePanel)
-end

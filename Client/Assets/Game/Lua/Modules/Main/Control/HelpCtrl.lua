@@ -10,7 +10,3 @@ end
 function HelpCtrl:OnInit()
      
 end
-
-function HelpCtrl:OnStart(data)
-	UIMgr.Open(Main_Panel.HelpPanel)
-end

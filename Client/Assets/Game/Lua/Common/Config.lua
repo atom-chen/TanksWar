@@ -3,7 +3,7 @@ g_Config = {
 	----配置
 
 	--是否不联网
-	single = true,
+	single = false,
 	--配置文件名
 	configFileName = "LocalConfig",
 	--是否显示debugUI

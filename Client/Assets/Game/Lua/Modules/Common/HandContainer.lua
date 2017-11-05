@@ -12,9 +12,12 @@ function HandContainer:Ctor()
 	self.m_dragCard = false 		--用于拖动显示的牌
 	self.m_dragPos = false
 	self.m_cardPos = false
+
+	self.m_showCo = false
 end
 	
 function HandContainer:OnInit(cards)
+	self.m_showCo = false
 
 	self.m_vCfg = ViewCfg[self.m_owner:GetSit()]
 	
@@ -35,13 +38,36 @@ function HandContainer:OnInit(cards)
 end
 
 function HandContainer:OnShowCards(bAni)
+	if bAni then
+		for i=1, #self.m_cardsItem do
+			if self:IsMyHandsCard() then	--自己的手牌有多一层 
+				self.m_cardsItem[i]:SetChildRot(Vector3.New(-90,0,0))
+			else
+				self.m_cardsItem[i]:SetRot(Vector3.New(-90,0,0))
+			end
+			self.m_cardsItem[i]:SetActive(false)
+		end
+		self.m_showCo = coroutine.start(self.CoShowCards, self)
+	else
+		for i=1, #self.m_cardsItem do
+			self.m_cardsItem[i]:SetActive(true)
+		end	
+	end
+	
+end
+
+function HandContainer:CoShowCards()
+	
 	for i=1, #self.m_cardsItem do
 		self.m_cardsItem[i]:SetActive(true)
-		-- if bAni then
-			-- self.m_cardsItem:SetRot(Vector3.New(-90,0,0))
-			-- self.m_cardsItem:SetState()
-		-- end
+		self.m_cardsItem[i]:PlayDealAni()
+		if i%4 == 0 then
+			coroutine.wait(ViewCfg.DealCardTime)
+		end
+		Event.Brocast(Msg.ActionMo, self.m_owner)
 	end
+
+	self.m_showCo = false
 end
 
 function HandContainer:OnClick(card)
@@ -78,7 +104,7 @@ function HandContainer:ChuCard(card)
 	local opt = self.m_owner:GetCurOpt()
 	card:SetState(CardState.Normal)
 
-	local hasOp = self.m_owner:HasOprate(OperationType.CHU)
+	local hasOp = self.m_owner:HasOprate(Operation.CHU.name)
 	
 	if not hasOp then	--没有出牌权限
 		log("当前没有出牌权限 ---")
@@ -90,6 +116,7 @@ end
 
 -- 刷新
 function HandContainer:OnFresh()
+
 	local startPos = Vector3.zero
 
 	--自己手牌特殊设置
@@ -99,6 +126,8 @@ function HandContainer:OnFresh()
 		self.m_dragCard:SetPos(startPos)
 		self.m_dragCard:SetScale(Vector3.one)
 		self.m_dragCard:SetRect(self.m_vCfg.handSizeDelta)
+
+		self:SortItem()
 	end
 
 	local offsetX
@@ -124,12 +153,20 @@ function HandContainer:OnRemoveCard(removeCards)
 	end
 
 	self:Fresh()
-	log("删除牌 整理牌---- ")
+	-- log("删除牌 整理牌---- ")
 end
 
 
 function HandContainer:OnAddCard(cardItem)
 	self:Fresh()
+end
+
+
+function HandContainer:OnResetState()
+	for _,v in pairs(self.m_cardsItem) do
+		v:ResetState()
+	end
+	
 end
 
 function HandContainer:OnAddCardGroup(cardData, cardItemGroup)

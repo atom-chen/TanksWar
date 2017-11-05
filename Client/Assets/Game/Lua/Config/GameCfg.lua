@@ -8,11 +8,10 @@ _M.Cfg =
 
 function _M.GetById(ID)
    for k,v in pairs(_M.Cfg) do
-	   if v.id == ID then
+	   if v.id==ID then
           return v
 	   end
    end
-
    return nil
 end
 

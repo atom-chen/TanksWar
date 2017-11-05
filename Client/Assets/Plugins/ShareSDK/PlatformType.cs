@@ -60,30 +60,24 @@ namespace cn.sharesdk.unity3d
 		AlipayMoments = 51,     //AlipayMoments
 		Dingding = 52,			//DingTalk 钉钉
 		Youtube = 53,			//youtube
-		MeiPai = 54,            //美拍
+		MeiPai = 54,			//美拍
 
 
-#if UNITY_ANDROID
+        #if UNITY_ANDROID
 		KakaoPlatform = 44,    
 		EvernoteInternational = 12,
 		WechatPlatform = 22,  
 		QQPlatform = 24,
 		YixinPlatform = 38,
-#elif UNITY_IPHONE
+		#elif UNITY_IPHONE	
 		YixinPlatform = 994,    //Yixin series
 		KakaoPlatform = 995,    //Kakao series
 		EvernoteInternational = 996,//Evernote InternationaL Edition
 		WechatPlatform = 997,   //Wechat Series
 		QQPlatform = 998,		//QQ Series  
-#else
-        KakaoPlatform = 44,
-        EvernoteInternational = 12,
-        WechatPlatform = 22,
-        QQPlatform = 24,
-        YixinPlatform = 38,
-#endif
+		#endif
 
-    }
+	}
 
 }
 

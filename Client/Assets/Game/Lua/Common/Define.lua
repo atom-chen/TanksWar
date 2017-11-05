@@ -137,6 +137,8 @@ CardState = {
 	Normal = 0, --常规
 	Select = 1, --选中
 	Lock = 2,	--禁用
+	Show = 3,	--亮牌
+	Deal = 4,	--发牌
 }
 
 --游戏状态
@@ -146,17 +148,17 @@ PlayState = {
 	End = 2,
 }
 
-OperationType = {
-	MO = "mo",
-	CHU = "chu",
-	CHI = "chi",
-	PENG = "peng",
-	AN = "an",
-	JIE = "jie",
-	GONG = "gong",
-	HU = "hu",
-	GUO = "guo",
-	TING = "ting",
+Operation = {
+	MO	 	= { name = "mo",	 time = 0.8, },
+	CHU	 	= { name = "chu",	 time = 0, },
+	CHI	 	= { name = "chi",	 time = 0.8, },
+	PENG	= { name = "peng",	 time = 0.8, },
+	AN	 	= { name = "an",	 time = 0.8, },
+	JIE	 	= { name = "jie",	 time = 0.8, },
+	GONG	= { name = "gong",	 time = 0.8, },
+	HU	 	= { name = "hu",	 time = 0, },
+	GUO	 	= { name = "guo",	 time = 0.8, },
+	TING	= { name = "ting",	 time = 0.8, },
 }
 
 --cardsContainer type

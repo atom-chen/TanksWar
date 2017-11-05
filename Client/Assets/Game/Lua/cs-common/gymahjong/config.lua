@@ -1,13 +1,13 @@
 local _M = {
 	round = { 4, 8, 12 },
 	-- 房主开房局数所需要要的钻石
-	ownerDiamond = {
+	ownerCard = {
 		[4] = 4,
 		[8] = 6,
 		[12] = 8
 	},
 	-- AA开房所需要的钻石数
-	aaDiamond = {
+	aaCard = {
 		[4] = 1,
 		[8] = 2,
 		[12] = 3

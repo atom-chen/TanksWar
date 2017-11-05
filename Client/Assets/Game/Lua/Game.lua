@@ -13,6 +13,7 @@ Game.CurMod = "None"
 Game.XXTEAKey = "UpAvieKT2!DASI&6vux*P$KEiYNtTu6d"
 Game.GameFlag = "0003"
 Game.IsReconnect = false 	--记录是否断线重连
+Game.isLoadMain = false
 
 local this = Game
 local coLoad = nil
@@ -30,7 +31,11 @@ end
 
 --加载游戏模块--
 function Game.CoLoadModule(modName)
+
+	logWarn("CoLoadModule -- "..modName.."| curMod--"..Game.CurMod)
+
 	if Game.CurMod ~= "None" then
+		logWarn("game UnLoadModule --- ")
 		Game.UnLoadModule()
 	end
 
@@ -38,11 +43,16 @@ function Game.CoLoadModule(modName)
 	gameMgr.SetCurMod(modName)
     SceneMgr.CoChange(ModuleScene[modName])
 
+	----返回大厅时 资源就不要重复加载了
+	if Game.CurMod == Module.Main and Game.isLoadMain then
+		return
+	end
+
     UIMgr.CoInit(modName)
     CtrlMgr.CoInit(modName)
     PlayerMgr.CoInit(modName)
     --加载模块内脚本
-    log('ModuleScript['..modName..'] -- '..#ModuleScript[modName])
+    -- log('ModuleScript['..modName..'] -- '..#ModuleScript[modName])
     for i=1,#ModuleScript[modName] do
     	local script = ModuleScript[modName][i]
     	-- log('脚本- module --'..script)
@@ -50,7 +60,7 @@ function Game.CoLoadModule(modName)
     	-- _G[script] = require ('Modules.'..modName..'.'..script)
     end
     --加载通用脚本
-    log('ModuleScript[Common] -- '..#ModuleScript[Module.Common])
+    -- log('ModuleScript[Common] -- '..#ModuleScript[Module.Common])
     for i=1,#ModuleScript[Module.Common] do
     	local script = ModuleScript[Module.Common][i]
     	-- log('脚本- common --'..script)
@@ -62,9 +72,6 @@ end
 
 --卸载游戏模块--
 function Game.UnLoadModule()
-
-	Game.CurMod = "None"
-	gameMgr.SetCurMod(Game.CurMod)
 
 	----大厅内资源就不要卸载了
 	if Game.CurMod == Module.Main or Game.CurMod == "None" then
@@ -116,11 +123,15 @@ function Game.OnLoadFinish(tbl)
 	LocalConfig = util.LoadFile(g_Config.configFileName) or {}
 	-- LocalConfig = {}
 
+	CtrlMgr.OnLoadFinish(Game.CurMod)
+	UIMgr.OnLoadFinish(Game.CurMod)
+	PlayerMgr.OnLoadFinish(Game.CurMod)
+
 	local moduleCtrl = CtrlMgr.GetModuleCtrl()
 	if moduleCtrl then
 		moduleCtrl:StartModule(tbl)
 	else
-		logError("没有找到 Module Ctrl  ")
+		util.LogError("没有找到 Module Ctrl  ")
 	end
 end
 
@@ -133,6 +144,7 @@ function Game.Update()
 	--log("Game.Update ---------- ")
 	UIMgr.Update()
 	Network.Update()
+	PlayerMgr.Update()
 end
 
 --销毁--

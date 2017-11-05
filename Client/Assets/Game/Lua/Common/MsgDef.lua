@@ -15,6 +15,8 @@ Msg = {
 	RemovePlayer		= '100010',	--玩家退出
 	ChangeState			= '100011',	--游戏状态变化
 	RoomInfoUpdate		= '100012',	--房间内信息变化
+	ActionMo			= '100013',	--摸牌消息
+	OnOperate			= '100014',	--显示操作
 }
 
 

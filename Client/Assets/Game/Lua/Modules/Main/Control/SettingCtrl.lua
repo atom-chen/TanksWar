@@ -16,7 +16,3 @@ end
 
 function SettingCtrl:OnInit()
 end
-
-function SettingCtrl:OnStart()
-
-end

@@ -24,6 +24,8 @@ return {
 	joinRoom = 12,
 	-- 推送玩家信息
 	userInfoSE = 13,
+	-- 设置下用于发牌的底牌
+	setNextLineCard = 14,
 
 	----------- 涡阳麻将 ------------
 	gy_createRoom = 101,

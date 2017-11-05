@@ -50,7 +50,7 @@ end
 
 function BasePanel:Init()
 	if self.m_isInit == true then
-		logError("重复初始化:"..self.m_name)
+		util.LogError("重复初始化:"..self.m_name)
 	end
 	
 	self:SetActive(true)
@@ -76,13 +76,16 @@ function BasePanel:AddEvent(msgID, callback, tbl)
 		msgID = tostring(msgID)
 	end
 	Event.AddListener(msgID, callback, tbl);
-	self.msgIdList[#self.msgIdList + 1] = msgID
+	local data = {}
+	data.msgID = msgID
+	data.callback = callback
+	self.msgIdList[#self.msgIdList + 1] = data
 end
 
 function BasePanel:RemoveEvent(msgID)
 	for i=1, #self.msgIdList do
-		if self.msgIdList[i] == msgID then
-			Event.RemoveListener(self.msgIdList[i], self)
+		if self.msgIdList[i].msgID == id then
+			Event.RemoveListener(self.msgIdList[i].msgID, self.msgIdList[i].callback)
 			self.msgIdList[i] = nil
 			break
 		end
@@ -102,7 +105,7 @@ function BasePanel:GetComponent(name)
 end
 
 function BasePanel:GetOrder()
-	-- util.Log("BasePanel:GetOrder --- ")
+	-- util.Log("GetOrder --- "..self.m_name)
 	return (self:GetComponent("Canvas")).sortingOrder
 end
 
@@ -173,9 +176,10 @@ function BasePanel:Fresh(param)
 end
 
 function BasePanel:Close(immediate)
+	-- util.Log("Close -- "..self.m_name)
 	immediate = immediate or false
 	if self.m_isAniPlaying and immediate == false then
-		logError("播放关闭动画中")
+		util.LogError("播放关闭动画中")
 		return
 	end
 	
@@ -242,6 +246,9 @@ function BasePanel:PlayAni(name, checkHierarchy)
 end
 
 function BasePanel:IsOpen()
+	if tostring(self.m_go) == "null" then
+		return false
+	end
 	return self.m_isInit and self.m_go.activeSelf
 end
 
@@ -297,15 +304,6 @@ function BasePanel:Update()
 	end
 end
 
-function BasePanel:UnLoad( )
-	for i=1, #self.msgIdList do
-		Event.RemoveListener(self.msgIdList[i], self)
-	end
-	self.msgIdList = {}
-
-	destroy(self.m_go)
-end
-
 function BasePanel:OnInit()
 	--logWarn("Balse panel OnInit---->>>")
 end
@@ -329,6 +327,51 @@ end
 
 function BasePanel:OnUpdate()
 	--logWarn("Balse panel OnUpdate---->>>")
+end
+
+function BasePanel:UnLoad( )
+	for i=1, #self.msgIdList do
+		Event.RemoveListener(self.msgIdList[i].msgID, self.msgIdList[i].callback)
+	end
+
+	destroy(self.m_go)
+
+	self.msgIdList = {}
+
+	self.m_param = false
+	self.m_id = "base"
+	self.m_name = "base"
+	self.m_ctrl = false
+
+	-----panel必带组件相关------
+	
+	self.m_transform = false
+	self.m_ani = false
+	self.m_raycaster = false
+	
+	-----层级相关-----
+    self.m_canTop = true --加入置顶判断中，像摇杆和聊天提示这种界面不需要加入判断
+    self.m_disableRaycasterIfNotTop = true --如果不是最顶层的界面，禁用GraphicRaycaster,注意如果界面打开多了，那么这个组件会极大影响性能，勾上这个选项后就不会了
+    self.m_autoOrder = true --动态层级，如果为false那么层级就是Canvas上的层级了。动态层级从50~200，ui_hight层不支持动态层级
+	self.m_checkTop = {}
+
+	-----定义组件相关-----
+	self.m_comp = {}	----panel中的所有组件
+	self.m_comp.btnClose = false 	----没个界面默认的关闭按钮
+	
+	-----标记相关-----
+	self.m_layer = 0
+	self.m_isTop = false
+	self.m_isAniPlaying = false
+	self.m_isInit = false
+	self.m_beginOpenTime = 0
+	self.m_beginCloseTime = 0
+	self.m_openAniName = "ui_ani_open_1"
+	self.m_closeAniName = "ui_ani_close_1"
+	self.m_isAniOpening = false --是否正在播放开启效果
+    self.m_isAniClosing = false --是否正在播放关闭效果
+		
+	self.m_go = false
 end
 
 function BasePanel:OnDestroy()

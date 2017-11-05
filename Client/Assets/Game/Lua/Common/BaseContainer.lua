@@ -15,6 +15,7 @@ function BaseContainer:Ctor(go)
 	self.m_tran = self.m_go.transform
 	self.m_cards = false
 	self.m_cardsItem = {}
+	self.m_cardsItemGroup = {}
 	self.m_cached = false
 	self.m_owner = false
 	self.m_vCfg = false
@@ -184,6 +185,7 @@ end
 -- 删除一个数组里的牌 各一种
 -- 删除指定的一张牌
 -- 删除指定的一种牌 
+-- bKind 可传number 删除牌个数
 function BaseContainer:RemoveCardsEx(cardData, bKind)
 	local tempRemove = {}
 
@@ -198,20 +200,28 @@ function BaseContainer:RemoveCardsEx(cardData, bKind)
 					if not bKind then
 						break
 					end
+
+					if type(bKind) == "number" and #tempRemove >= bKind then
+						break
+					end
 				end
 			end
 		end
 	elseif type(cardData) == "number" then	--移除指定牌
 		for i=1, #self.m_cardsItem do
-			if self.m_cardsItem[i] == cardData then
+			if self.m_cardsItem[i]:GetCard() == cardData then
 				tempRemove[#tempRemove+1] = self.m_cardsItem[i]
 				if not bKind then
+					break
+				end
+
+				if type(bKind) == "number" and #tempRemove >= bKind then
 					break
 				end
 			end
 		end
 	end
-	log("tempRemove num -- "..#tempRemove)
+	-- log("tempRemove num -- "..#tempRemove)
 
 	for i=1, #tempRemove do
 		self:RemoveNum(tempRemove[i]:GetCard())
@@ -265,19 +275,60 @@ end
 -- 	otherId = 1234
 -- }
 function BaseContainer:AddCardGroup(cardData)
-	local cardItemGroup = {}
+	local itemGroup = {}
 	log("addCardGroup -- cards num - "..#cardData.cards.." showType - "..cardData.showType.." cardOtherId - "..cardData.otherId)
-
+	itemGroup.itemGroup = {}
 	for i=1, #cardData.cards do
 		-- log("AddCard -- "..cardData.cards[i])
 		local cardItem = self:AddCard(cardData.cards[i])
 		-- log("cardItem name -- "..cardItem:GetCardName().." go name --"..cardItem:GetGameObject().name)
-		cardItemGroup[#cardItemGroup+1] = cardItem
+		itemGroup.itemGroup[#itemGroup.itemGroup+1] = cardItem
+	end
+	itemGroup.showType = cardData.showType
+	itemGroup.otherId = cardData.otherId
+
+	self:OnAddCardGroup(cardData, itemGroup.itemGroup)
+	self.m_cardsItemGroup[#self.m_cardsItemGroup+1] = itemGroup
+	return itemGroup
+end
+
+--删除一组牌
+-- data 为num 删除的一组牌的和为num
+-- data 为table 计算出table里面值的和 删除与其相等的一组牌
+function BaseContainer:RemoveCardGroup(cardShowType, data)
+	local totalNum = data
+	if type(data) == "table" then
+		totalNum = 0
+		for _,v in pairs(data) do
+			totalNum = totalNum + v
+		end
+	end
+	local findGroup = false
+	for i=1, #self.m_cardsItemGroup do
+		if self.m_cardsItemGroup[i].showType == cardShowType then
+			local group = self.m_cardsItemGroup[i].itemGroup
+			local tempNum = 0
+			for j=1, #group do
+				tempNum = tempNum + group[j]:GetCard()
+			end
+
+			if tempNum == totalNum then
+				findGroup = self.m_cardsItemGroup[i]
+				table.remove(self.m_cardsItemGroup, i)
+				break
+			end
+		end
 	end
 
-	self:OnAddCardGroup(cardData, cardItemGroup)
+	if not findGroup then
+		util.LogError("没找到这组牌--"..cardShowType.." data -- "..tostring(data))
+		return
+	end
 
-	return cardItemGroup
+	for k, v in pairs(findGroup.itemGroup) do
+		self:RemoveCard(v)
+	end
+
 end
 
 function BaseContainer:SetOwner(player)
@@ -309,6 +360,10 @@ function BaseContainer:IsMyHandsCard()
 	return false
 end
 
+function BaseContainer:ResetState()
+	self:OnResetState()
+end
+
 function BaseContainer:GetType()
 	return self.m_type
 end
@@ -325,6 +380,11 @@ function BaseContainer:Fresh()
 	end
 
 	return self:OnFresh()
+end
+
+function BaseContainer:SortItem()
+	local fun = function(a, b) return b:GetCard() > a:GetCard() end
+	table.sort(self.m_cardsItem, fun)
 end
 
 function BaseContainer:OnInit()
@@ -347,6 +407,10 @@ function BaseContainer:OnUpdate()
 end
 
 function BaseContainer:OnFresh()
+end
+
+function BaseContainer:OnResetState()
+	
 end
 
 function BaseContainer:UnLoad()

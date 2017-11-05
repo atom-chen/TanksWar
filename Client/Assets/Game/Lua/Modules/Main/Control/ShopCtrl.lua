@@ -10,7 +10,3 @@ end
 function ShopCtrl:OnInit()
      
 end
-
-function ShopCtrl:OnStart(data)
-	UIMgr.Open(Main_Panel.ShopPanel)
-end

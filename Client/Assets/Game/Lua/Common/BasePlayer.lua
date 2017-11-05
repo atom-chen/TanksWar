@@ -13,6 +13,7 @@ function BasePlayer:Ctor()
 	self.m_putRoot = false
 	self.m_chiRoot = false
 	self.m_container = {}
+
 	self.msgIdList = {}
 end
 
@@ -35,29 +36,11 @@ end
 --进入房间的初始化操作
 function BasePlayer:EnterRoom()
 
-	self:AddEvent(tostring(proto.fy_readySE), self.Ready, self)
-	self:AddEvent(tostring(proto.fy_leaveSE), self.Leave, self)
-	self:AddEvent(tostring(proto.fy_offlineSE), self.Offline, self)
-	self:AddEvent(tostring(proto.fy_onlineSE), self.OnLine, self)
-	self:AddEvent(tostring(proto.fy_actionSE), self.Action, self)
-	self:AddEvent(tostring(proto.fy_operateSE), self.Operate, self)
-	self:AddEvent(tostring(proto.fy_chatSE), self.Chat, self)
-	self:AddEvent(tostring(proto.fy_respondDepartSE), self.RespondDeaprt, self)
-
 	self:OnEnterRoom()
 end
 
 --离开房间的清除操作
 function BasePlayer:LeaveRoom()
-
-	self:RemoveEvent(tostring(proto.fy_readySE))
-	self:RemoveEvent(tostring(proto.fy_leaveSE))
-	self:RemoveEvent(tostring(proto.fy_offlineSE))
-	self:RemoveEvent(tostring(proto.fy_onlineSE))
-	self:RemoveEvent(tostring(proto.fy_actionSE))
-	self:RemoveEvent(tostring(proto.fy_operateSE))
-	self:RemoveEvent(tostring(proto.fy_chatSE))
-	self:RemoveEvent(tostring(proto.fy_respondDepartSE))
 
 	self:OnLeaveRoom()
 end
@@ -90,7 +73,7 @@ function BasePlayer:GetGold( )
 end
 
 function BasePlayer:GetDiamond( )
-	return self.m_info.diamond
+	return self.m_info.card
 end
 
 function BasePlayer:GetInfo()
@@ -232,79 +215,19 @@ function BasePlayer:AddEvent(msgID, callback, tbl)
 		msgID = tostring(msgID)
 	end
 	Event.AddListener(msgID, callback, tbl);
-	self.msgIdList[#self.msgIdList + 1] = msgID
+	local data = {}
+	data.msgID = msgID
+	data.callback = callback
+	self.msgIdList[#self.msgIdList + 1] = data
 end
 
-function BasePlayer:RemoveEvent(msgID)
+function BasePlayer:RemoveEvent(id)
 	for i=1, #self.msgIdList do
-		if self.msgIdList[i] == msgID then
-			Event.RemoveListener(self.msgIdList[i], self)
+		if self.msgIdList[i].msgID == id then
+			Event.RemoveListener(self.msgIdList[i].msgID, self.msgIdList[i].callback)
 			self.msgIdList[i] = nil
 			break
 		end
-	end
-end
-
-function BasePlayer:Ready(tbl)
-	if tbl.userId == self:GetID() then
-		self:OnReady(tbl)
-	end
-	Event.Brocast(Msg.PlayerInfoUpdate,self)
-end
-function BasePlayer:Leave(tbl)
-	if tbl.userId == self:GetID() then
-		self:OnLeave(tbl)
-	end
-	Event.Brocast(Msg.PlayerInfoUpdate,self)
-end
-function BasePlayer:Offline(tbl)
-	log("Offline "..cjson.encode(tbl)..' name -- '..self:GetName())
-	if tbl.userId == self:GetID() then
-		self:OnOffline(tbl)
-	end
-	Event.Brocast(Msg.PlayerInfoUpdate,self)
-end
-function BasePlayer:OnLine(tbl)
-	if tbl.userId == self:GetID() then
-		self:OnOnLine(tbl)
-	end
-	Event.Brocast(Msg.PlayerInfoUpdate,self)
-end
-function BasePlayer:Action(tbl)
-	if tbl.userId == self:GetID() then
-		self:OnAction(tbl)
-		if OperationType.CHU == tbl.opt then
-			self:OnActionChu(tbl)
-		elseif OperationType.MO == tbl.opt then
-			self:OnActionMo(tbl)
-		elseif OperationType.CHI == tbl.opt then
-			self:OnActionChi(tbl)
-		elseif OperationType.PENG == tbl.opt then
-			self:OnActionPeng(tbl)
-		elseif OperationType.AN == tbl.opt then
-			self:OnActionAn(tbl)
-		elseif OperationType.JIE == tbl.opt then
-			self:OnActionJie(tbl)
-		elseif OperationType.GONG == tbl.opt then
-			self:OnActionGong(tbl)
-		end
-	end
-
-	local tableCtrl = CtrlMgr.Get(_G[Game.CurMod.."_Ctrl"].TableCtrl)
-	tableCtrl:OnSubCardNum()
-end
-function BasePlayer:Operate(tbl)
-	self:OnOperate(tbl)
-end
-
-function BasePlayer:Chat(tbl)
-	if tbl.userId == self:GetID() then
-		self:OnChat(tbl)
-	end
-end
-function BasePlayer:RespondDeaprt(tbl)
-	if tbl.userId == self:GetID() then
-		self:OnRespondDeaprt(tbl)
 	end
 end
 -----------------------------------------------------------------------------------------------------------
@@ -344,7 +267,7 @@ end
 function BasePlayer:UnLoad()
 	Event.Brocast(Msg.RemovePlayer, self)
 	for i=1, #self.msgIdList do
-		Event.RemoveListener(self.msgIdList[i], self)
+		Event.RemoveListener(self.msgIdList[i].msgID, self.msgIdList[i].callback)
 	end
 	self.msgIdList = {}
 end

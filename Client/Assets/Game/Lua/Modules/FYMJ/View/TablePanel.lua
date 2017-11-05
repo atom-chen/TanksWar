@@ -41,6 +41,8 @@ function TablePanel:Ctor()
 	self.m_optBtns = {}
 	self.m_infoViewList = {}
 	self.m_infoStateList = {}
+
+	-- logWarn("TablePanel:Ctor ---- ")
 end
 
 function TablePanel:OnInit()
@@ -60,14 +62,14 @@ function TablePanel:OnInit()
 	self.m_comp.btnChi:AddLuaClickEx(self.OnClickAction, self)
 	self.m_comp.btnGuo:AddLuaClickEx(self.OnClickAction, self)
 
-	self.m_optBtns[OperationType.HU] = self.m_comp.btnHu
-	self.m_optBtns[OperationType.TING] = self.m_comp.btnTing
-	self.m_optBtns[OperationType.PENG] = self.m_comp.btnPeng
-	self.m_optBtns[OperationType.CHI] = self.m_comp.btnChi
-	self.m_optBtns[OperationType.GUO] = self.m_comp.btnGuo
-	self.m_optBtns[OperationType.GONG] = self.m_comp.btnGang
-	self.m_optBtns[OperationType.AN] = self.m_comp.btnGang
-	self.m_optBtns[OperationType.JIE] = self.m_comp.btnGang
+	self.m_optBtns[Operation.HU.name] 	= self.m_comp.btnHu
+	self.m_optBtns[Operation.TING.name] = self.m_comp.btnTing
+	self.m_optBtns[Operation.PENG.name] = self.m_comp.btnPeng
+	self.m_optBtns[Operation.CHI.name] 	= self.m_comp.btnChi
+	self.m_optBtns[Operation.GUO.name] 	= self.m_comp.btnGuo
+	self.m_optBtns[Operation.GONG.name] = self.m_comp.btnGang
+	self.m_optBtns[Operation.AN.name] 	= self.m_comp.btnGang
+	self.m_optBtns[Operation.JIE.name] 	= self.m_comp.btnGang
 
 
 	self.m_comp.infoView:SetActive(false)
@@ -75,8 +77,11 @@ function TablePanel:OnInit()
 	self.m_comp.selfCards:SetActive(false)
 
     self:AddEvent(Msg.ChangeState, self.OnStateChange, self) --游戏状态改变
+    self:AddEvent(Msg.OnOperate, self.ShowOpt, self) --操作权限
 
 	self.m_myself = PlayerMgr.GetMyself()
+
+	-- logWarn("TablePanel:OnInit ---- ")
 end
 
 function TablePanel:OnSettingClick()
@@ -113,6 +118,7 @@ end
 function TablePanel:OnClickAction(btn)
 	for k,v in pairs(self.m_optBtns) do
 		if v == btn then
+			--这里暗杠接杠明杠时处理有问题 待处理
 			self.m_myself:OnSendAction(k)
 			break
 		end
@@ -124,9 +130,9 @@ end
 function TablePanel:ShowOpt(optData)
 	self:HideAllOpt()
 	self.m_comp.optRoot:SetActive(true)
-
+	-- log("接收操作消息 --- "..cjson.encode(optData))
 	for i=1, #optData do
-		log("有操作--"..optData[i].opt)
+		-- log("有操作--"..optData[i].opt)
 		if self.m_optBtns[optData[i].opt] then
 			self.m_optBtns[optData[i].opt].gameObject:SetActive(true)
 		end

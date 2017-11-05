@@ -20,7 +20,6 @@ function BaseCtrl:Ctor(modName)
 end
 
 function BaseCtrl:Init()
-	--logWarn("baseCtrl.Init--->>");
 	if self.m_panelName == 'base' then
 		logError('继承的panel没有给prefab名')
 		return
@@ -36,13 +35,16 @@ function BaseCtrl:AddEvent(msgID, callback, tbl)
 		msgID = tostring(msgID)
 	end
 	Event.AddListener(msgID, callback, tbl);
-	self.msgIdList[#self.msgIdList + 1] = msgID
+	local data = {}
+	data.msgID = msgID
+	data.callback = callback
+	self.msgIdList[#self.msgIdList + 1] = data
 end
 
 function BaseCtrl:RemoveEvent(msgID)
 	for i=1, #self.msgIdList do
-		if self.msgIdList[i] == msgID then
-			Event.RemoveListener(self.msgIdList[i], self)
+		if self.msgIdList[i].msgID == msgID then
+			Event.RemoveListener(self.msgIdList[i].msgID, self.msgIdList[i].callback)
 			self.msgIdList[i] = nil
 			break
 		end
@@ -88,7 +90,16 @@ end
 
 function BaseCtrl:UnLoad( )
 	for i=1, #self.msgIdList do
-		Event.RemoveListener(self.msgIdList[i], self)
+		Event.RemoveListener(self.msgIdList[i].msgID, self.msgIdList[i].callback)
 	end
+
+	self.m_id = "BaseCtrl"		--ctrl名
+	self.m_modName = modName		--模块名 创建panle用
+	self.m_panelName = "base"	--预置体名 创建panel用
+	self.m_panel = false
+	self.m_luaBehaviour = false
+	self.m_data = false
+	self.m_isLoaded = false
 	self.msgIdList = {}
+	logWarn("un load ctrl -- "..self.m_panelName)
 end

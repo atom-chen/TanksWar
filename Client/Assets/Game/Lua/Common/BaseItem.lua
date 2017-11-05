@@ -34,13 +34,16 @@ function BaseItem:AddEvent(msgID, callback, tbl)
 		msgID = tostring(msgID)
 	end
 	Event.AddListener(msgID, callback, tbl);
-	self.msgIdList[#self.msgIdList + 1] = msgID
+	local data = {}
+	data.msgID = msgID
+	data.callback = callback
+	self.msgIdList[#self.msgIdList + 1] = data
 end
 
 function BaseItem:RemoveEvent(msgID)
 	for i=1, #self.msgIdList do
-		if self.msgIdList[i] == msgID then
-			Event.RemoveListener(self.msgIdList[i], self)
+		if self.msgIdList[i].msgID == msgID then
+			Event.RemoveListener(self.msgIdList[i].msgID, self.msgIdList[i].callback)
 			self.msgIdList[i] = nil
 			break
 		end
@@ -50,7 +53,7 @@ end
 
 function BaseCtrl:UnLoad( )
 	for i=1, #self.msgIdList do
-		Event.RemoveListener(self.msgIdList[i], self)
+		Event.RemoveListener(self.msgIdList[i].msgID, self.msgIdList[i].callback)
 	end
 	self.msgIdList = {}
 end

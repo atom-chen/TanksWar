@@ -28,7 +28,12 @@ function CoInit(mdName)
 	-- log("加载资源 ---- -- ")
 	local totleTime = Time.time
 
-	if mdName == Module.Main then 	----公共模块只加载一次
+	log("modName -- "..modName.."  Game.isLoadMain -- "..tostring(Game.isLoadMain))
+	if modName == Module.Main and Game.isLoadMain then 	----大厅只加载一次
+		return
+	end
+
+	if not Game.isLoadMain then		----公共模块只加载一次
 		commonCtrl = _G["Common_Ctrl"]
 		local time = Time.time
 		curLoadName = "Common_ResMgr"
@@ -40,7 +45,7 @@ function CoInit(mdName)
 		end
 
 		isLoaded_common_res = true
-		log("加载 [Common Res Mgr] 用时--"..(Time.time - time))
+		-- log("加载 [Common Res Mgr] 用时--"..(Time.time - time))
 
 		--加载通用内容--
 		for _,cName in pairs(commonCtrl) do
@@ -58,30 +63,31 @@ function CoInit(mdName)
 				-- log("加载 ["..cName.."] 用时--"..(Time.time - time))
 			end
 		end
+		Game.isLoadMain = true
 	end
 	
 -----------------------------------------------------------------------
 	curModCtrl = _G[modName.."_Ctrl"]
 	-- logWarn("curModCtrl --- "..#curModCtrl)
 	local time = Time.time
-	curLoadName = mdName.."_ResMgr"
-	-- logWarn("LoadUIPrefab -- "..mdName)
-	panelMgr:LoadUIPrefab(mdName)
+	curLoadName = modName.."_ResMgr"
+	-- logWarn("LoadUIPrefab -- "..modName)
+	panelMgr:LoadUIPrefab(modName)
 	if not Platform.Editor then
-		while not UIResTool.HasMod(mdName) do
+		while not UIResTool.HasMod(modName) do
 			coroutine.step(1)
 		end
 	end
 	
 	isLoaded_module_res = true
-	log("加载 [Module Res Mgr] 用时--"..(Time.time - time))
+	-- log("加载 [Module Res Mgr] 用时--"..(Time.time - time))
 
 	
 	--加载模块对应资源
 	for _,cName in pairs(curModCtrl) do
 		-- local time = Time.time
 		require ('Modules.'..modName..".Control."..tostring(cName))
-		local ctrl = _G[cName].New(mdName)
+		local ctrl = _G[cName].New(modName)
 		ctrl:Init()
 		-- if not Platform.Editor then
 		-- 	while not ctrl.m_isLoaded do	--加载一个界面要等
@@ -125,7 +131,6 @@ function Get(ctrlName)
 end
 
 function GetModuleCtrl()
-	-- log("module ctrl -- "..modName..'Ctrl')
 	return ctrlList[modName..'Ctrl']
 end
 
@@ -170,15 +175,22 @@ function Close()
 	log('CtrlManager.Close---->>>');
 end
 
+function OnLoadFinish(mdName)
+	modName = mdName
+end
+
 --卸载模块--
 function UnLoad(modName)
+	logWarn("UnLoad Ctrl mgr ------"..modName)
 	for k,v in pairs(ctrlList) do
 		if v and v.m_modName == modName then
 			--顺便找到panel卸载
+			if v.m_panel:IsOpen() then
+				v.m_panel:Close()
+			end
 			v.m_panel:UnLoad()	
 			UIMgr.RemovePanel(v.m_panelName)
 			v.m_panelName = nil
-
 			--卸载ctrl
 			v:UnLoad()
 			RemoveCtrl(v.m_id)
@@ -193,4 +205,5 @@ function UnLoad(modName)
 
 	cur_module_num = 0
 	common_module_num = 0
+
 end

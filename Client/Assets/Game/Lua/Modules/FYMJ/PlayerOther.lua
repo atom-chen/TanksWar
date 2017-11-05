@@ -54,17 +54,17 @@ function PlayerOther:OnOnLine(tbl)
 end
 
 function PlayerOther:OnAction(tbl)
-	log("OnAction--name-"..self:GetName().." opt-"..tbl.opt)
+	-- log("OnAction--name-"..self:GetName().." opt-"..tbl.opt)
 end
 
 function PlayerOther:OnActionChu(tbl)
-	log(self:GetName().." OnActionChu--")
+	-- log(self:GetName().." OnActionChu--")
 	self.m_container[ContainerType.PUT]:AddCard(tbl.cid)
 	self.m_container[ContainerType.HAND]:RemoveCardsEx()
 end
 
 function PlayerOther:OnActionMo(tbl)
-	log(self:GetName().." OnActionMo--")
+	-- log(self:GetName().." OnActionMo--")
 	self.m_container[ContainerType.HAND]:AddCard(tbl.cid)
 end
 
@@ -74,18 +74,76 @@ end
 
 function PlayerOther:OnActionPeng(tbl)
 	log(self:GetName().." OnActionPeng--")
+	local cardData = {
+		cards = {tbl.cid, tbl.cid, tbl.cid},
+		showType = CardShowType.PENG,
+		otherId = 1234
+	}
+	local target = PlayerMgr.Get(tbl.fuserId)
+	if not target then
+		util.LogError("没找到碰的人--fuserId--"..tostring(tbl.fuserId))
+	else
+		target:GetContainer(ContainerType.PUT):RemoveCardsEx()
+	end
+	
+	self.m_container[ContainerType.CHI]:AddCardGroup(cardData)
+	self.m_container[ContainerType.HAND]:RemoveCardsEx(tbl.cid, 2)	--碰牌需要扣除两个手牌
 end
 
 function PlayerOther:OnActionAn(tbl)
 	log(self:GetName().." OnActionAn--")
+	local cardData = {
+		cards = {tbl.cid, tbl.cid, tbl.cid, tbl.cid},
+		showType = CardShowType.ANGANG,
+		otherId = 1234
+	}
+
+	self.m_container[ContainerType.CHI]:AddCardGroup(cardData)
+	self.m_container[ContainerType.HAND]:RemoveCardsEx(tbl.cid, 4)	--暗杠需要扣除四个手牌
 end
 
 function PlayerOther:OnActionJie(tbl)
 	log(self:GetName().." OnActionJie--")
+	local cardData = {
+		cards = {tbl.cid, tbl.cid, tbl.cid, tbl.cid},
+		showType = CardShowType.MINGGANG,
+		otherId = 1234
+	}
+
+	local target = PlayerMgr.Get(tbl.fuserId)
+	if not target then
+		util.LogError("没找到接杠的人--fuserId--"..tostring(tbl.fuserId))
+	else
+		target:GetContainer(ContainerType.PUT):RemoveCardsEx()
+	end
+
+
+	self.m_container[ContainerType.CHI]:AddCardGroup(cardData)
+	self.m_container[ContainerType.HAND]:RemoveCardsEx(tbl.cid, 3)	--接杠需要扣除两个手牌
 end
 
-function PlayerOther:OnActionGong(tbl)
+function PlayerOther:OnActionGong(tbl)	--要把碰的牌去掉 改成杠牌
 	log(self:GetName().." OnActionGong--")
+	local cardData = {
+		cards = {tbl.cid, tbl.cid, tbl.cid, tbl.cid},
+		showType = CardShowType.MINGGANG,
+		otherId = 1234
+	}
+
+	self.m_container[ContainerType.CHI]:RemoveCardGroup(CardShowType.PENG, tbl.cid*3) 	--去掉原有碰的牌
+	self.m_container[ContainerType.CHI]:AddCardGroup(cardData)
+	self.m_container[ContainerType.HAND]:RemoveCardsEx(tbl.cid, 1)	--公杠需要扣除一个手牌
+end
+
+function PlayerOther:OnActionHu(tbl)
+	log(self:GetName().." OnActionHu--")
+	local target = PlayerMgr.Get(tbl.fuserId)
+	if not target then
+		util.LogError("没找到接杠的人--fuserId--"..tostring(tbl.fuserId))
+		return
+	end
+
+	target:GetContainer(ContainerType.PUT):RemoveCardsEx()
 end
 
 function PlayerOther:OnChat(tbl)
@@ -97,7 +155,7 @@ function PlayerOther:OnRespondDeaprt(tbl)
 end
 
 function PlayerOther:OnUpdate()
-	log("OnUpdate-----"..self:GetName())
+	-- log("OnUpdate-----"..self:GetName())
 end
 
 ----初始化牌

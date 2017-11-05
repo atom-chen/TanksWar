@@ -10,7 +10,3 @@ end
 function CertificateCtrl:OnInit()
      
 end
-
-function CertificateCtrl:OnStart(data)
-	UIMgr.Open(Main_Panel.CertificatePanel)
-end

@@ -17,9 +17,9 @@ function Event.AddListener(event,handler,obj)
 		error("handler parameter in addlistener function has to be function, " .. type(handler) .. " not right")
 	end
 
-	if not obj then
-		print("希望传入接收消息对象 避免覆盖注册或重复注册 event--"..event)
-	end
+	-- if not obj then
+	-- 	print("希望传入接收消息对象 避免覆盖注册或重复注册 event--"..event)
+	-- end
 
 	local eventList = events[event]
 	
@@ -68,9 +68,9 @@ function Event.Brocast(event,...)
 end
 
 function Event.RemoveListener(event,handler,obj)
-	if not obj then
-		print("希望传入接收消息对象 避免覆盖注册或重复注册 event--"..event)
-	end
+	-- if not obj then
+	-- 	print("希望传入接收消息对象 避免覆盖注册或重复注册 event--"..event)
+	-- end
 
 	local eventList = events[event]
 	if not eventList then
@@ -80,9 +80,11 @@ function Event.RemoveListener(event,handler,obj)
 			local e = eventList[i]
 			if not obj then 
 				e.event:disconnect(handler)
+				eventList[i] = nil
 			else
 				if e.obj == obj then
 					e.event:disconnect(handler)
+					eventList[i] = nil
 				end
 			end
 		end

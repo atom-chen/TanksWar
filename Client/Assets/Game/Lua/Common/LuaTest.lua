@@ -69,3 +69,18 @@
 -- log("tbl---"..tostring(tbl))
 -- log("recTbl.info - "..recTbl.info)
 -- log(tbl.token)
+
+
+-- -- local player = PlayerMgr.GetMyself()
+-- local player = PlayerMgr.Get(19072)
+-- local putContainer = player:GetContainer(ContainerType.CHI)
+-- -- putContainer:RemoveCardGroup(CardShowType.PENG, {0x33,0x33,0x33})
+
+-- local cardData = {
+-- 	cards = {0x33,0x33,0x33,0x33},
+-- 	showType = CardShowType.MINGGANG,
+-- 	otherId = 1234
+-- }
+-- putContainer:AddCardGroup(cardData)
+
+RoomMgr.OnExitRoom()

@@ -25,7 +25,7 @@ function LobbyCtrl:OnStart(data)
 		local roomId = my:Get("roomId")
 		if roomId and roomId ~= 0 then
 			UIMgr.Open(Common_Panel.WaitPanel)
-			log("已加入房间 ："..roomId)
+			logWarn("已加入房间 ："..roomId)
 			Game.IsReconnect = true
 			local joinCtrl = CtrlMgr.Get(Main_Ctrl.JoinCtrl)
 			joinCtrl:JoinRoom(roomId)

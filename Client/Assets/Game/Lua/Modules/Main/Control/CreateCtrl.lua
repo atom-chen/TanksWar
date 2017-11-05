@@ -31,11 +31,3 @@ function CreateCtrl:OnCreateRoom(data)
 		end	
 	end)
 end
-
-function CreateCtrl:OnStart(data)
-	UIMgr.Open(Main_Panel.CreatePanel)
-end
-
--- function CreateCtrl:OnUpdate( ... )
--- 	-- body
--- end
