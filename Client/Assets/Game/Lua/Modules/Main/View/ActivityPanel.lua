@@ -15,12 +15,12 @@ end
 function ActivityPanel:OnInit()
 	
 
-     ActivityCfg.GetActivityCount()
+     ActivityCfg.GetCfgCount()
     
     local noticePrefab = self.m_comp.noticeGrid:GetChild(0).gameObject
-    local dianPrefab =  self.m_comp.dianGrid :GetChild(0).gameObject
+    local dianPrefab =  self.m_comp.dianGrid:GetChild(0).gameObject
     --公告元素处理
-    for i=1,ActivityCfg.GetActivityCount()-1 do
+    for i=1,ActivityCfg.GetCfgCount()-1 do
         local obj = GameObject.Instantiate(noticePrefab);
         obj.transform:SetParent(noticePrefab.transform.parent)
         obj.transform.localScale = Vector3.one;
@@ -35,9 +35,9 @@ function ActivityPanel:OnInit()
     end
      
     --公告内容赋值
-    for i=1,ActivityCfg.GetActivityCount() do
+    for i=1,ActivityCfg.GetCfgCount() do
        local img = self.m_comp.noticeGrid:GetChild(i-1):GetComponentInChildren(typeof(ImageEx))
-       local sprite = "ui_Main_Activity_"..ActivityCfg.ActivityCfg[i].icon
+       local sprite = "ui_Main_Activity_"..ActivityCfg.Cfg[i].icon
        -- log(" sprite  : "..sprite)
        -- log(" img "..img.gameObject.name)
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using LuaInterface;
 using UnityEngine.SceneManagement;
@@ -174,6 +175,7 @@ public static class CustomSettings
         _GT(typeof(Slider)),
         _GT(typeof(SpriteState)),
         _GT(typeof(XXTEA)),
+        _GT(typeof(iTween)),
         _GT(typeof(UnityEngine.EventSystems.PointerEventData)),
 
         _GT(typeof(Util)),
@@ -191,10 +193,11 @@ public static class CustomSettings
         _GT(typeof(NetworkManager)),
         _GT(typeof(ResourceManager)),
         _GT(typeof(SDKManager)),
+        _GT(typeof(ResTool)),
+        _GT(typeof(ResMgr)),
         _GT(typeof(UILoading)),
-        _GT(typeof(UIResTool)),
-        _GT(typeof(UIResMgr)),
         _GT(typeof(UVTools)),
+        _GT(typeof(Hashtable)),
 
         //for thirdPart
         _GT(typeof(cn.sharesdk.unity3d.PlatformType)),

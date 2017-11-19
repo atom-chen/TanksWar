@@ -38,7 +38,8 @@ public class Packager {
         return AssetDatabase.LoadMainAssetAtPath("Assets/Game/Examples/Builds/" + file);
     }
 
-    [MenuItem("Game/Build iPhone Resource", false, 100)]
+#if UNITY_IPHONE || UNITY_IOS
+    [MenuItem("Game/Build Resource", false, 100)]
     public static void BuildiPhoneResource() {
         BuildTarget target;
 #if UNITY_5
@@ -48,11 +49,14 @@ public class Packager {
 #endif
         BuildAssetResource(target);
     }
+#endif
 
-    [MenuItem("Game/Build Android Resource", false, 101)]
+#if UNITY_ANDROID
+    [MenuItem("Game/Build Resource", false, 101)]
     public static void BuildAndroidResource() {
         BuildAssetResource(BuildTarget.Android);
     }
+#endif
 
     //[MenuItem("Game/Build Windows Resource", false, 102)]
     //public static void BuildWindowsResource() {
@@ -97,8 +101,49 @@ public class Packager {
         //打包已有bundlename的资源
         BuildPipeline.BuildAssetBundles(resPath, BuildAssetBundleOptions.None, target);
 
+        SetPlayerSetting();
+        BuildScene(target);
+
         BuildFile();
     }
+
+    static void BuildScene(BuildTarget target)
+    {
+        string testResPath = "Assets/" + AppConst.AppName + "/Scene/";
+        m_files.Clear();
+        Recursive(testResPath);
+        Dictionary<string, List<string>> sceneDict = new Dictionary<string, List<string>>();
+        foreach (string f in m_files)
+        {
+            if (!f.EndsWith(".unity"))
+                continue;
+
+            string fileName = Path.GetFileName(f);
+            string filePath = f.Replace('\\', '/');
+            string[] fList = filePath.Split('/');
+            string modName = fList[fList.Length-2].ToLower()+"_scene";
+            if (sceneDict.ContainsKey(modName))
+            {
+                sceneDict[modName].Add(fileName);
+            }
+            else
+            {
+                List<string> files = new List<string>();
+                files.Add(filePath);
+                sceneDict.Add(modName, files);
+            }
+
+        }
+
+        Caching.CleanCache();
+        foreach (var v in sceneDict)
+        {
+            string assetPath = Application.dataPath + "/" + AppConst.AssetDir + "/"+ v.Key+ AppConst.ExtName;
+            BuildPipeline.BuildPlayer(v.Value.ToArray(), assetPath, target, BuildOptions.BuildAdditionalStreamedScenes);
+        }
+        AssetDatabase.Refresh();
+    }
+
 
     [MenuItem("Game/Update Lua No Build", false, 33)]
     public static void UpdateResourceNoBuild()

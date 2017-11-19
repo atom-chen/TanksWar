@@ -9,7 +9,8 @@ function BasePlayer:Ctor()
 	self.m_info = false
 	self.m_cards = {}
 	self.m_cardsRoot = false
-	self.m_handRoot = false
+	self.m_selfRoot = false
+	self.m_handRoot = false 	--自己放在桌上的手牌
 	self.m_putRoot = false
 	self.m_chiRoot = false
 	self.m_container = {}
@@ -23,9 +24,10 @@ function BasePlayer:Init(param)
 	--"identityNum":"","createtime":1506069407,"phone":"","gender":1,"parentId":0,
 	--"token":"8ed6f3006cbc64c1aa43b652b5874ba5","fresh":0,"name":"","roomId":0,"pos":""}
 	self.m_info = param
-	self.m_handRoot = false
+	self.m_selfRoot = false
 	self.m_putRoot = false
 	self.m_chiRoot = false
+	self.m_handRoot = false
 
 	--默认设置在线
 	self.m_info.bOnline = true
@@ -111,14 +113,20 @@ function BasePlayer:InitCards(cards)
 	end
 	local sit = self:GetSit()
 	-- log("id - "..self:GetID().." isMyself -- "..tostring(self:IsMyself()))
-	if self:IsMyself() then 	----手牌分是不是自己
+	if self:IsMyself() then 	----手牌自己的
 		local tablePanel = UIMgr.Get(_G[Game.CurMod.."_Panel"].TablePanel)
-		self.m_handRoot = tablePanel:GetCardsRoot()
-		self.m_handRoot.gameObject:SetActive(true)
-	else
-		self.m_handRoot = self.m_cardsRoot:Find("player"..sit.."hand")
+		self.m_selfRoot = tablePanel:GetCardsRoot()
+		self.m_selfRoot.gameObject:SetActive(true)
 	end
 
+	if self.m_selfRoot == nil then
+		util.LogError("未找到 ".."player"..sit.."self")
+		return
+	end
+
+	local handName = "player"..sit.."hand"
+	self.m_handRoot = self.m_cardsRoot:Find(handName)
+	-- log("find player put -- "..tostring(self.m_putRoot.name))
 	if self.m_handRoot == nil then
 		util.LogError("未找到 ".."player"..sit.."hand")
 		return
@@ -142,11 +150,13 @@ function BasePlayer:InitCards(cards)
 
 	local viewCfg = ViewCfg[sit]
 	-- log(" viewCfg.handScale "..tostring(viewCfg.handScale))
-	self.m_handRoot.localScale = viewCfg.handScale
-	self.m_handRoot.localEulerAngles = viewCfg.handAngle
-	self.m_handRoot.localPosition = viewCfg.handPos
-	for i=0, (self.m_handRoot.childCount-1) do
-		self.m_handRoot:GetChild(i).gameObject:SetActive(false)
+	if self.m_selfRoot then
+		self.m_selfRoot.localScale = viewCfg.selfScale
+		self.m_selfRoot.localEulerAngles = viewCfg.selfAngle
+		self.m_selfRoot.localPosition = viewCfg.selfPos
+		for i=0, (self.m_selfRoot.childCount-1) do
+			self.m_selfRoot:GetChild(i).gameObject:SetActive(false)
+		end
 	end
 	
 	self.m_putRoot.localScale = viewCfg.putScale
@@ -163,11 +173,20 @@ function BasePlayer:InitCards(cards)
 		self.m_chiRoot:GetChild(i).gameObject:SetActive(false)
 	end
 
+	self.m_handRoot.localScale = viewCfg.handScale
+	self.m_handRoot.localEulerAngles = viewCfg.handAngle
+	self.m_handRoot.localPosition = viewCfg.handPos
+	for i=0, (self.m_handRoot.childCount-1) do
+		self.m_handRoot:GetChild(i).gameObject:SetActive(false)
+	end
 
 	self:CreateContainer(ContainerType.HAND):Init(self.m_cards.handCards)
 	self:CreateContainer(ContainerType.PUT):Init(self.m_cards.putCards)
 	self:CreateContainer(ContainerType.CHI):Init(self.m_cards.chiCards)
-	
+	if self:IsMyself() then
+		local con = self:CreateContainer(ContainerType.SELF)
+		con:Init(self.m_cards.handCards)
+	end
 	self:OnInitCards()
 end
 
@@ -183,6 +202,8 @@ function BasePlayer:CreateContainer(conType, cards)
 		self.m_container[conType] = PutContainer.New(self.m_putRoot)
 	elseif ContainerType.CHI == conType then
 		self.m_container[conType] = ChiContainer.New(self.m_chiRoot)
+	elseif ContainerType.SELF == conType then
+		self.m_container[conType] = SelfContainer.New(self.m_selfRoot)
 	end
 	
 	self.m_container[conType]:SetOwner(self)

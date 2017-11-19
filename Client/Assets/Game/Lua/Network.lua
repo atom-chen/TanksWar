@@ -26,7 +26,7 @@ this.sessionCo = {}
 this.session = 0
 
 function Network.Start() 
-    log("Network.Start!!");
+    util.Log("Network.Start!!");
     Event.AddListener(Msg.Connect, this.OnConnect, this); 
     Event.AddListener(Msg.Exception, this.OnException, this); 
     Event.AddListener(Msg.Disconnect, this.OnDisconnect, this); 
@@ -110,7 +110,7 @@ function Network.Update()
     if this.IsConnect and Time.time - this.heat_time > TimeOutSec  then
         -- log("发送心跳包------- ")
         this.heat_time = Time.time
-        this.SendMsg(proto.heart)
+        this.SendMsg(proto.heart)   --之后改用request 防止虚连接
     end
     
     if not this.IsConnect and (Time.time - this.lost_time) > this.random_time then

@@ -161,21 +161,21 @@ public class StateHandleEditor : Editor
             using (new AutoBeginHorizontal()) //音效，位置不够另起一行
             {
                 EditorGUILayout.LabelField("音效", GUILayout.Width(85));
-                using (new AutoLabelWidth(30))
+                using (new AutoLabelWidth(35))
                 {
-                    s.isEnterSound = EditorGUILayout.Toggle("进入", s.isEnterSound, GUILayout.Width(45));
+                    s.isEnterSound = EditorGUILayout.Toggle("进入", s.isEnterSound, GUILayout.Width(48));
                     if (s.isEnterSound)
                     {
-                        int.TryParse(EditorGUILayout.TextField("ID", s.enterSoundId.ToString(), GUILayout.Width(60)), out s.enterSoundId);
+                        EditorGUILayout.TextField("Name", s.enterSoundName, GUILayout.Width(130));
                     }
                 }
 
-                using (new AutoLabelWidth(30))
+                using (new AutoLabelWidth(35))
                 {
-                    s.isExitSound = EditorGUILayout.Toggle("离开", s.isExitSound, GUILayout.Width(45));
+                    s.isExitSound = EditorGUILayout.Toggle("离开", s.isExitSound, GUILayout.Width(48));
                     if (s.isExitSound)
                     {
-                        int.TryParse(EditorGUILayout.TextField("ID", s.exitSoundId.ToString(), GUILayout.Width(60)), out s.exitSoundId);
+                        EditorGUILayout.TextField("Name", s.exitSoundName, GUILayout.Width(130));
                     }
                 }
 

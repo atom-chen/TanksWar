@@ -109,20 +109,48 @@ end
 
 
 function Action(tbl)
-	local p = Get(tbl.userId)
-	if not p then
-		logError("Action 没找到玩家-userId-"..tostring(tbl.userId))
+
+	if not tbl.userId and not tbl.userIds then
+		logError("Action 消息错误 没有玩家字段userId或userIds-")
 		return
 	end
 
 	local act = {}
+
+	if tbl.userId then
+		local p = Get(tbl.userId)
+		if not p then
+			util.LogError("Action 没找到玩家-userId-"..tostring(tbl.userId))
+			return
+		end
+		act.target = p
+	elseif tbl.userIds then
+		act.targets = {}
+		for i=1, #tbl.userIds do
+			local userId = tbl.userIds[i]
+			local p = Get(userId)
+			if not p then
+				util.LogError("Action 没找到玩家-userId-"..tostring(userId))
+				return
+			end
+			act.targets[#act.targets+1] = p
+		end
+	end
+
 	act.optType = "action"
 	act.name = tbl.opt
 	act.data = tbl
-	act.target = p
 	actList[#actList+1] = act
 
-	p:OnAction(tbl)
+	if act.targets then
+		for i=1, #act.targets do
+			act.targets[i]:OnAction(tbl)
+		end
+	end
+
+	if act.target then
+		act.target:OnAction(tbl)
+	end
 	-- logWarn("添加operate操作--- "..tbl.opt)
 end
 
@@ -174,7 +202,18 @@ end
 
 --获取player--
 function Get(id)
+	if type(id) == "string" then
+		return playerList[tonumber(id)]
+	end
 	return playerList[id]
+end
+
+function GetBySit(sit)
+	for k,v in pairs(playerList) do
+		if sit == v:GetSit() then
+			return v
+		end
+	end
 end
 
 function GetAll()
@@ -275,10 +314,18 @@ end
 
 function Exec()
 	local act = actList[1]
+	local targetList = {}	--act 一次 可能是几个玩家一起的
+	if act.target then
+		targetList[#targetList+1] = act.target
+	end
 
-	local target = act.target
+	if act.targets then
+		for i=1, #act.targets do
+			targetList[#targetList+1] = act.targets[i]
+		end
+	end
 
-	if not target then
+	if #targetList == 0 then
 		util.LogError("target is nil act name -- "..act.name)
 		return
 	end
@@ -289,41 +336,52 @@ function Exec()
 	local data = act.data
 	local name = act.name
 
-	if act.optType == "action" then
-		target:OnAction(data)
+	for i=1, #targetList do
+		local target = targetList[i]
+		if act.optType == "action" then
+			target:OnAction(data)
 
-		if Operation.CHU.name == name then
-			target:OnActionChu(data)
-			PlayerMgr.curActTime = Operation.CHU.time
-		elseif Operation.MO.name == name then
-			PlayerMgr.curActTime = Operation.MO.time
-			target:OnActionMo(data)
-			Event.Brocast(Msg.ActionMo,target)
-		elseif Operation.CHI.name == name then
-			PlayerMgr.curActTime = Operation.CHI.time
-			target:OnActionChi(data)
-		elseif Operation.PENG.name == name then
-			PlayerMgr.curActTime = Operation.PENG.time
-			target:OnActionPeng(data)
-		elseif Operation.AN.name == name then
-			PlayerMgr.curActTime = Operation.AN.time
-			target:OnActionAn(data)
-		elseif Operation.JIE.name == name then
-			PlayerMgr.curActTime = Operation.JIE.time
-			target:OnActionJie(data)
-		elseif Operation.GONG.name == name then
-			PlayerMgr.curActTime = Operation.GONG.time
-			target:OnActionGong(data)
-		elseif Operation.HU.name == name then
-			PlayerMgr.curActTime = Operation.HU.time
-			target:OnActionHu(data)
-		else
-			util.LogError("没有找到操作类型 act.name : "..act.name)
-			return
+			if Operation.CHU.name == name then
+				local cardName = string.format("0x%x", data.cid)
+				if target:Get("gender") == 1 then
+					cardName = "b_"..cardName
+				else
+					cardName = "g_"..cardName
+				end
+				-- log("出牌音效名--"..cardName)
+				SoundMgr.PlayUI(cardName)
+				target:OnActionChu(data)
+				PlayerMgr.curActTime = Operation.CHU.time
+			elseif Operation.MO.name == name then
+				PlayerMgr.curActTime = Operation.MO.time
+				target:OnActionMo(data)
+				Event.Brocast(Msg.ActionMo, target)
+			elseif Operation.CHI.name == name then
+				PlayerMgr.curActTime = Operation.CHI.time
+				target:OnActionChi(data)
+			elseif Operation.PENG.name == name then
+				PlayerMgr.curActTime = Operation.PENG.time
+				target:OnActionPeng(data)
+			elseif Operation.AN.name == name then
+				PlayerMgr.curActTime = Operation.AN.time
+				target:OnActionAn(data)
+			elseif Operation.JIE.name == name then
+				PlayerMgr.curActTime = Operation.JIE.time
+				target:OnActionJie(data)
+			elseif Operation.GONG.name == name then
+				PlayerMgr.curActTime = Operation.GONG.time
+				target:OnActionGong(data)
+			elseif Operation.HU.name == name then
+				PlayerMgr.curActTime = Operation.HU.time
+				target:OnActionHu(data)
+			else
+				util.LogError("没有找到操作类型 act.name : "..act.name)
+				return
+			end
+		elseif act.optType == "operate" then
+			-- logWarn("exec---"..tostring(data))
+			target:OnOperate(data)
 		end
-	elseif act.optType == "operate" then
-		-- logWarn("exec---"..tostring(data))
-		target:OnOperate(data)
 	end
 
 	table.remove(actList, 1)

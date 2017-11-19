@@ -26,7 +26,6 @@ function Game.OnInitOK()
 	coLoad = coroutine.start(this.CoLoadModule, Module.Main)
 	----协程等待加载完资源
 	coroutine.start(this.CoUpdateProgress)
-	Network.Start()
 end
 
 --加载游戏模块--
@@ -68,6 +67,20 @@ function Game.CoLoadModule(modName)
     	-- _G[script] = require ('Modules.'..modName..'.'..script)
     end
 
+	if Game.CurMod ~= Module.Main and Game.CurMod ~= "None" then
+		local num = 0
+		local ctrlNum = 0
+		for k,v in pairs(_G[modName..'_Panel']) do
+			ctrlNum = ctrlNum + 1
+		end
+
+		-- logWarn("ctrlNum -- "..ctrlNum)
+		while ctrlNum ~= num do
+			num = UIMgr.GetModuleLoadNum()
+			-- logWarn('num -- '..num)
+			coroutine.step(1)
+		end
+	end
 end
 
 --卸载游戏模块--
@@ -99,7 +112,7 @@ function Game.CoUpdateProgress()
 	-- logWarn("CoUpdateProgress ----- ")
 	local num = 0
 	local ctrlNum = CtrlMgr.GetCurCtrlNum() + CtrlMgr.GetCommonCtrlNum() + 2
-	-- log("ctrlNum -- "..ctrlNum)
+	-- logWarn("ctrlNum -- "..ctrlNum)
 	while ctrlNum ~= num do
 		num = CtrlMgr.LoadedNum()
 		-- logWarn('num -- '..num)
@@ -126,6 +139,18 @@ function Game.OnLoadFinish(tbl)
 	CtrlMgr.OnLoadFinish(Game.CurMod)
 	UIMgr.OnLoadFinish(Game.CurMod)
 	PlayerMgr.OnLoadFinish(Game.CurMod)
+
+	SoundMgr.OnLoadFinish()
+
+	if not Game.isLoadMain then
+		Network.Start()
+	end
+
+	if Game.CurMod == Module.Main then
+		SoundMgr.PlayBG(SoundCfg.common_hallBg, true)
+	end
+
+	Game.isLoadMain = true
 
 	local moduleCtrl = CtrlMgr.GetModuleCtrl()
 	if moduleCtrl then

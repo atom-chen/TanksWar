@@ -40,6 +40,66 @@ public class ToolMenu
         Sprite2DFormatWindow.ShowWnd();
     }
 
+
+    [MenuItem("Assets/音效/设置音效到预置体", false, -1)]
+    static public void SetAudioToPrefabMenu()
+    {
+        if (Application.isPlaying)
+        {
+            Debug.LogError("运行中不能设置");
+            return;
+        }
+
+        if (Selection.assetGUIDs.Length > 1)
+        {
+            Debug.LogError("一次选中一个音效资源文件夹");
+            return;
+        }
+
+        string modName = "";
+
+        List<AudioImporter> clipImportList = new List<AudioImporter>();
+        foreach (string o in Selection.assetGUIDs)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(o);
+            if (string.IsNullOrEmpty(path))
+                continue;
+            if (File.Exists(path))
+            {
+                Debug.LogError("需要选中音效资源所在文件夹");
+                return;
+            }
+            else
+            {
+                List<string> files = Util.GetAllFileList(path);
+                foreach (string assetPath in files)
+                {
+                    AudioImporter clip = AssetImporter.GetAtPath(path + "/" + assetPath) as AudioImporter;
+                    clipImportList.Add(clip);
+                }
+
+                string[] pList = path.Split('/');
+                modName = pList[pList.Length - 1];
+            }
+        }
+
+        List<AudioClip> clipList = new List<AudioClip>();
+        foreach (var clipImport in clipImportList)
+        {
+            AudioClip s = UnityEditor.AssetDatabase.LoadAssetAtPath<AudioClip>(clipImport.assetPath);
+            if (s == null)
+            {
+                Debuger.LogError(string.Format("没有找到音效{0}", clipImport.assetPath));
+                continue;
+            }
+            clipList.Add(s);
+        }
+
+        ResMgr res = ResTool.Get(modName);
+        res.Pack(clipList);
+    }
+
+
     [MenuItem("GameObject/复制Mono属性到lua", false, -1)]
     static public void CopyMonoTableToLua()
     {

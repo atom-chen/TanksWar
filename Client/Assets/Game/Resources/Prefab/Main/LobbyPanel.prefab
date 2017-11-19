@@ -1010,9 +1010,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -1059,9 +1059,9 @@ MonoBehaviour:
     name: "\u6309\u4E0B"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -1153,9 +1153,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -1202,9 +1202,9 @@ MonoBehaviour:
     name: "\u6309\u4E0B"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -1295,10 +1295,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u63D0\u8D77"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
-    isExitSound: 0
-    exitSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
+    isExitSound: 1
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -1344,10 +1344,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u6309\u4E0B"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
-    isExitSound: 0
-    exitSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
+    isExitSound: 1
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -1424,9 +1424,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -1473,9 +1473,9 @@ MonoBehaviour:
     name: "\u6309\u4E0B"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -1590,9 +1590,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -1638,10 +1638,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u6309\u4E0B"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -1705,9 +1705,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -1753,10 +1753,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u6309\u4E0B"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -1847,9 +1847,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -1896,9 +1896,9 @@ MonoBehaviour:
     name: "\u6309\u4E0B"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -2025,10 +2025,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u63D0\u8D77"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
-    isExitSound: 0
-    exitSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
+    isExitSound: 1
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -2075,9 +2075,9 @@ MonoBehaviour:
     name: "\u6309\u4E0B"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -2297,10 +2297,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u63D0\u8D77"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -2346,10 +2346,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u6309\u4E0B"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -2497,9 +2497,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -2546,9 +2546,9 @@ MonoBehaviour:
     name: "\u6309\u4E0B"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -2612,9 +2612,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -2660,10 +2660,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u6309\u4E0B"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -2783,9 +2783,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -2831,10 +2831,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u6309\u4E0B"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -3029,9 +3029,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -3077,10 +3077,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u6309\u4E0B"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -3144,9 +3144,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -3192,10 +3192,10 @@ MonoBehaviour:
     privateHandles: []
     name: "\u6309\u4E0B"
     isDuration: 1
-    isEnterSound: 0
-    enterSoundId: 0
+    isEnterSound: 1
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -3455,9 +3455,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -3504,9 +3504,9 @@ MonoBehaviour:
     name: "\u6309\u4E0B"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0
@@ -3626,9 +3626,9 @@ MonoBehaviour:
     name: "\u63D0\u8D77"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   - publicHandles:
     - m_delay: 0
       ingore: 0
@@ -3675,9 +3675,9 @@ MonoBehaviour:
     name: "\u6309\u4E0B"
     isDuration: 1
     isEnterSound: 0
-    enterSoundId: 0
+    enterSoundName: 
     isExitSound: 0
-    exitSoundId: 0
+    exitSoundName: 
   m_curState: 0
   m_duration: 0.1
   m_isRealtime: 0

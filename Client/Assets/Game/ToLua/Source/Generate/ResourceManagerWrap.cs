@@ -9,6 +9,7 @@ public class ResourceManagerWrap
 		L.BeginClass(typeof(ResourceManager), typeof(Manager));
 		L.RegFunction("Initialize", Initialize);
 		L.RegFunction("LoadPrefab", LoadPrefab);
+		L.RegFunction("LoadScene", LoadScene);
 		L.RegFunction("UnloadAssetBundle", UnloadAssetBundle);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -107,6 +108,26 @@ public class ResourceManagerWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: ResourceManager.LoadPrefab");
 			}
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LoadScene(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 5);
+			ResourceManager obj = (ResourceManager)ToLua.CheckObject(L, 1, typeof(ResourceManager));
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			LuaFunction arg2 = ToLua.CheckLuaFunction(L, 4);
+			LuaTable arg3 = ToLua.CheckLuaTable(L, 5);
+			obj.LoadScene(arg0, arg1, arg2, arg3);
+			return 0;
 		}
 		catch(Exception e)
 		{

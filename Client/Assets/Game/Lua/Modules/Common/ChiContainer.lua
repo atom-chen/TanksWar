@@ -30,7 +30,6 @@ function ChiContainer:OnInit(cards)
 	self.m_cardsItemGroup = {}
 
 	self.m_cardsItem = {}
-	self.m_cards = {}
 
 	for i=1, #cards do
 		local dataItem = cards[i]
@@ -65,6 +64,8 @@ function ChiContainer:OnAddCardGroup(cardData, cardItemGroup)
 	if #self.m_cardsItemGroup > 0 then
 		splitDis = (#self.m_cardsItemGroup)*self.m_vCfg.chiSplit
 	end
+
+	logWarn("add group splitDis --"..splitDis.." group num -- "..#self.m_cardsItemGroup)
 
 	for i=1, #cardItemGroup do
 

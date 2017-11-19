@@ -20,6 +20,7 @@ require "UIMgr"
 require "SDKMgr"
 require "PlayerMgr"
 require "SceneMgr"
+require "SoundMgr"
 
 ActivityCfg = require "Config.ActivityCfg"
 GameCfg = require "Config.GameCfg"
@@ -28,6 +29,7 @@ SettingCfg = require "Config.SettingCfg"
 ShareCfg = require "Config.ShareCfg"
 ShopCfg = require "Config.ShopCfg"
 ViewCfg = require "Config.ViewCfg"
+SoundCfg = require "Config.SoundCfg"
 OpenCfg = require "Config.OpenModuleCfg"
 
 gyCfg= require "cs-common.gymahjong.config"
@@ -56,7 +58,6 @@ ByteBuffer = ByteBuffer;
 gameMgr = LuaHelper.GetGameManager();
 resMgr = LuaHelper.GetResManager();
 panelMgr = LuaHelper.GetPanelManager();
-soundMgr = LuaHelper.GetSoundManager();
 networkMgr = LuaHelper.GetNetManager();
 
 --unity
@@ -65,6 +66,8 @@ WWWForm = UnityEngine.WWWForm;
 GameObject = UnityEngine.GameObject;
 Transform = UnityEngine.Transform;
 RectTransform = UnityEngine.RectTransform;
+AudioSource = UnityEngine.AudioSource
+Application = UnityEngine.Application
 SceneManager = UnityEngine.SceneManagement.SceneManager
 UIText = UnityEngine.UI.Text
 UIImage = UnityEngine.UI.Image

@@ -54,7 +54,7 @@ public class ImageEx : Image
         }
 
         //color = Color.white;
-        this.overrideSprite = UIResTool.GetSprite(spriteName);
+        this.overrideSprite = ResTool.GetSprite(spriteName);
     }
 
 

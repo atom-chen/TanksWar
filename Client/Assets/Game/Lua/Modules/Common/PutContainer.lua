@@ -16,10 +16,8 @@ function PutContainer:OnInit(cards)
 	self.m_vCfg = ViewCfg[self.m_owner:GetSit()]
 	
 	self:SetCount(#cards)
-	self.m_cards = cards
-	-- log("cards count  -- "..#cards..' | #self.m_cards -- '..#self.m_cards)
-	for i=1, #self.m_cards do
-		self.m_cardsItem[i]:SetCard(self.m_cards[i])
+	for i=1, #cards do
+		self.m_cardsItem[i]:SetCard(cards[i])
 	end
 end
 

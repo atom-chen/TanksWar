@@ -13,7 +13,6 @@ function BaseContainer:Ctor(go)
 	self.m_type = ContainerType.NONE
 	self.m_go = go
 	self.m_tran = self.m_go.transform
-	self.m_cards = false
 	self.m_cardsItem = {}
 	self.m_cardsItemGroup = {}
 	self.m_cached = false
@@ -22,10 +21,11 @@ function BaseContainer:Ctor(go)
 end
 
 function BaseContainer:Cache()
-	-- util.LogError("cache -----")
 	if self.m_cached then
 		return
 	end
+
+	-- util.LogError("cache -----"..self.m_type)
 
 	local num = self.m_tran.childCount-1
 	for i=0, num do
@@ -33,6 +33,7 @@ function BaseContainer:Cache()
 		go.name = "card"..(i+1)
 		local c = Card.New(go)
 		c:Init(self)
+		c:SetIdx(i+1)
 		self:AddItem(c)
 	end
 
@@ -40,31 +41,37 @@ function BaseContainer:Cache()
 end
 
 function BaseContainer:GetItemByIdx(idx)
-	
 	self:Cache()
 
-	if idx > #self.m_cardsItem or idx < 1 then
-		return
+	for i=1, #self.m_cardsItem do
+		if idx == self.m_cardsItem[i]:GetIdx() then
+			return self.m_cardsItem[i]
+		end
 	end
-	return self.m_cardsItem[idx]
+end
+
+function BaseContainer:GetItemByNum(num)
+	self:Cache()
+	for i=1, #self.m_cardsItem do
+		if self.m_cardsItem[i]:GetCard()== num then
+			return self.m_cardsItem[i]
+		end
+	end
 end
 
 function BaseContainer:GetItemCount()
 	return #self.m_cardsItem
 end
 
-function BaseContainer:GetCardsCount()
-	return #self.m_cards
-end
-
 function BaseContainer:SetCount( count )
-	self:Cache()
 	if count == 0 then
 		self.m_go.gameObject:SetActive(false)
 		return
 	else
 		self.m_go.gameObject:SetActive(true)
 	end
+
+	self:Cache()
 
 	local curCount = #self.m_cardsItem
 	local s
@@ -80,6 +87,7 @@ function BaseContainer:SetCount( count )
 	elseif count > curCount then
 		for i = curCount, count-1 do
 			-- log("curCount--"..curCount..' #self.m_cardsItem--'..#self.m_cardsItem)
+			-- util.Log("curCount--"..curCount.." totalCount -- "..#self.m_cardsItem)
 			local tempGo = self.m_cardsItem[curCount]:GetGameObject()
 			local c = self:CreateCardItem(tempGo, i)
 			self:AddItem(c)
@@ -97,24 +105,6 @@ function BaseContainer:CreateCardItem(tempGo, idx)
 	c:Init(self)
 	c:SetScale(tempGo.transform.localScale)	
 	return c
-end
-
---添加牌值
-function BaseContainer:AddNum(num)
-	if not self.m_cards then
-		self.m_cards = {}
-	end
-	self.m_cards[#self.m_cards+1] = num
-end
-
---移除牌值
-function BaseContainer:RemoveNum(num)
-	for i=1, #self.m_cards do
-		if num == self.m_cards[i] then
-			table.remove(self.m_cards, i)
-			break
-		end
-	end
 end
 
 --添加牌item
@@ -141,14 +131,18 @@ function BaseContainer:AddCard(cardNum)
 
 	--开始没牌时要处理下 使用的是第一个已有的牌 之后在新创建
 	local cardItem 
-	if #self.m_cards == 0 then
+	-- util.Log("self.m_cardsItem -- "..#self.m_cardsItem..' type -- '..self.m_type)
+	if not self.m_cardsItem or #self.m_cardsItem == 0 then
 		--显示牌
+		if self.m_cardsItem then
+			log("m_cardsItem num -- "..#self.m_cardsItem)
+		end
+		-- logWarn("Addcard type -- "..self.m_type.." --- ")
 		self:SetCount(1)
 		self:GetItemByIdx(1)
-		self:AddNum(cardNum)
 		cardItem = self:GetItemByIdx(1)
 	else
-		self:AddNum(cardNum)
+		-- log("add card create ---- ")
 		cardItem = self:CreateCardItem(self:GetItemByIdx(1):GetGameObject(), self:GetItemCount())
 		self:AddItem(cardItem)
 	end
@@ -160,6 +154,7 @@ function BaseContainer:AddCard(cardNum)
 	return cardItem
 end
 
+-- 移除一张指定的牌
 function BaseContainer:RemoveCard(cardItem)
 	local tempRemove = {}
 
@@ -171,7 +166,19 @@ function BaseContainer:RemoveCard(cardItem)
 	end
 
 	for i=1, #tempRemove do
-		self:RemoveNum(tempRemove[i]:GetCard())
+		self:RemoveItem(tempRemove[i])
+	end
+
+	self:OnRemoveCard(tempRemove)
+end
+
+-- 随机移除一张牌
+function BaseContainer:RemoveCardRandom()
+	local tempRemove = {}
+
+	tempRemove[#tempRemove+1] = self.m_cardsItem[math.random(1,#self.m_cardsItem)]
+
+	for i=1, #tempRemove do
 		self:RemoveItem(tempRemove[i])
 	end
 
@@ -224,7 +231,6 @@ function BaseContainer:RemoveCardsEx(cardData, bKind)
 	-- log("tempRemove num -- "..#tempRemove)
 
 	for i=1, #tempRemove do
-		self:RemoveNum(tempRemove[i]:GetCard())
 		self:RemoveItem(tempRemove[i])
 	end
 
@@ -244,7 +250,6 @@ function BaseContainer:RemoveCardsInEnd(num)
 	end
 
 	for i=1, #tempRemove do
-		self:RemoveNum(tempRemove[i]:GetCard())
 		self:RemoveItem(tempRemove[i])
 	end
 
@@ -275,21 +280,21 @@ end
 -- 	otherId = 1234
 -- }
 function BaseContainer:AddCardGroup(cardData)
-	local itemGroup = {}
-	log("addCardGroup -- cards num - "..#cardData.cards.." showType - "..cardData.showType.." cardOtherId - "..cardData.otherId)
-	itemGroup.itemGroup = {}
+	local Group = {}
+	-- log("addCardGroup -- cards num - "..#cardData.cards.." showType - "..tostring(cardData.showType).." cardOtherId - "..cardData.otherId)
+	Group.itemGroup = {}
 	for i=1, #cardData.cards do
 		-- log("AddCard -- "..cardData.cards[i])
 		local cardItem = self:AddCard(cardData.cards[i])
-		-- log("cardItem name -- "..cardItem:GetCardName().." go name --"..cardItem:GetGameObject().name)
-		itemGroup.itemGroup[#itemGroup.itemGroup+1] = cardItem
+		-- log("cardItem -- "..tostring(cardItem))
+		-- log("cardItem name -- "..cardItem:GetName().." go name --"..cardItem:GetGameObject().name)
+		Group.itemGroup[#(Group.itemGroup)+1] = cardItem
 	end
-	itemGroup.showType = cardData.showType
-	itemGroup.otherId = cardData.otherId
+	Group.showType = cardData.showType
+	Group.otherId = cardData.otherId
 
-	self:OnAddCardGroup(cardData, itemGroup.itemGroup)
-	self.m_cardsItemGroup[#self.m_cardsItemGroup+1] = itemGroup
-	return itemGroup
+	self:OnAddCardGroup(cardData, Group.itemGroup)
+	return Group
 end
 
 --删除一组牌
@@ -347,17 +352,26 @@ function BaseContainer:Init(param)
 	else
 		util.LogError("初始化牌错误 传入类型不对")
 	end
-
 	self:OnInit(cards)
-
 	self:Fresh()
 end
 
 function BaseContainer:IsMyHandsCard()
-	if PlayerMgr.IsMyself(self.m_owner) and self.m_type == ContainerType.HAND then
+	if PlayerMgr.IsMyself(self.m_owner) then
 		return true
 	end
 	return false
+end
+
+function BaseContainer:IsMySelfCard()
+	if self.m_type == ContainerType.SELF then
+		return true
+	end
+	return false
+end
+
+function BaseContainer:SetActive(bActive)
+	self.m_go:SetActive(bActive)
 end
 
 function BaseContainer:ResetState()
@@ -382,9 +396,45 @@ function BaseContainer:Fresh()
 	return self:OnFresh()
 end
 
+-- 排序时会设置idx
 function BaseContainer:SortItem()
-	local fun = function(a, b) return b:GetCard() > a:GetCard() end
+	local fun = function(a, b)
+		if b:GetCard() == a:GetCard() then
+			return b:GetIdx() > a:GetIdx()
+		end
+		return b:GetCard() > a:GetCard()
+	end
+
 	table.sort(self.m_cardsItem, fun)
+
+	for i=1, #self.m_cardsItem do
+		self.m_cardsItem[i]:SetIdx(i)
+	end
+end
+
+--如果多一张最后一张牌不动 只排前面的
+function BaseContainer:SortItemEx()
+	local fun = function(a, b)
+		if b:GetCard() == a:GetCard() then
+			return b:GetIdx() > a:GetIdx()
+		end
+		return b:GetCard() > a:GetCard()
+	end
+
+	if #self.m_cardsItem%3 == 2 then
+		local tempCard = self.m_cardsItem[#self.m_cardsItem]
+		table.remove(self.m_cardsItem, #self.m_cardsItem)
+		table.sort(self.m_cardsItem, fun)
+		self.m_cardsItem[#self.m_cardsItem+1] = tempCard
+	else
+		self:SortItem()
+	end
+
+	for i=1, #self.m_cardsItem do
+		self.m_cardsItem[i]:SetIdx(i)
+	end
+
+	self:Fresh()
 end
 
 function BaseContainer:OnInit()

@@ -9,7 +9,7 @@ public class PanelManagerWrap
 		L.BeginClass(typeof(PanelManager), typeof(Manager));
 		L.RegFunction("CreatePanel", CreatePanel);
 		L.RegFunction("ClosePanel", ClosePanel);
-		L.RegFunction("LoadUIPrefab", LoadUIPrefab);
+		L.RegFunction("LoadResPrefab", LoadResPrefab);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Root", get_Root, null);
@@ -57,14 +57,14 @@ public class PanelManagerWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LoadUIPrefab(IntPtr L)
+	static int LoadResPrefab(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 2);
 			PanelManager obj = (PanelManager)ToLua.CheckObject(L, 1, typeof(PanelManager));
 			string arg0 = ToLua.CheckString(L, 2);
-			obj.LoadUIPrefab(arg0);
+			obj.LoadResPrefab(arg0);
 			return 0;
 		}
 		catch(Exception e)

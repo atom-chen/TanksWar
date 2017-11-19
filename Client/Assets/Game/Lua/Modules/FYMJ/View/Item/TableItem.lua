@@ -20,6 +20,7 @@ function TableItem:Ctor()
     self.m_comp.imgLeave = ImageEx
 
     self.m_comp.btnReady = ButtonEx
+    self.m_comp.score = UIArtFont
 
     self.m_sit = PlayerSit.None
 
@@ -38,24 +39,39 @@ function TableItem:OnInit(param)
     self.m_comp.imgLB.gameObject:SetActive(false)
     self.m_comp.imgRU.gameObject:SetActive(false)
     self.m_comp.imgRB.gameObject:SetActive(false)
+    self.m_comp.score.gameObject:SetActive(false)
     self.m_comp.readyHandle:SetStateEx(0)
 
 end
 
 function TableItem:SetInfo(player)
-	-- log("TableItem:SetInfo --- ")
 	self.m_comp.txtName.text = player:GetName()
 	self.m_comp.txtMoney.text = player:GetGold()
     if player:GetReady() == 1 then
         self.m_comp.readyHandle:SetStateEx(1)
+        -- util.Log("TableItem:SetInfo --- "..1)
     else
         self.m_comp.readyHandle:SetStateEx(0)
+        -- util.Log("TableItem:SetInfo --- "..0)
     end
 
     self.m_comp.imgLeave.gameObject:SetActive(not player:GetIsOnline())
 
     self.m_player = player
 
+end
+
+function TableItem:ShowScore(score)
+    self.m_comp.score.gameObject:SetActive(true)
+    if score > 0 then
+        self.m_comp.score:SetNum("+"..score, false)
+    else
+        self.m_comp.score:SetNum(score, false)
+    end
+    coroutine.start(function() 
+        coroutine.wait(ViewCfg.ScoreShowTime)
+        self.m_comp.score.gameObject:SetActive(false)
+    end)
 end
 
 function TableItem:OnClickItem()

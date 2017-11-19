@@ -25,7 +25,6 @@ function TableContainer:OnInit(cards)
 	self.m_vCfg = ViewCfg.tableCards
 
 	self:SetCount(#cards)
-	self.m_cards = cards
 	
 	if not self.m_vCfg[self.m_bankerSit] then
 		util.LogError("tableContainer 没有找到座位 "..self.m_bankerSit.." 对应的配置")
@@ -46,6 +45,24 @@ end
 --设置从第几堆牌开始
 function TableContainer:SetDiceNum(diceNum)
 	self.m_dice = diceNum
+end
+
+function TableContainer:ShowUpAni()
+	local oldPos = self.m_go.transform.localPosition
+	self.m_go.transform.localPosition = Vector3.New(oldPos.x, oldPos.y-0.1, oldPos.z)
+	iTween.MoveTo(self.m_go, iTween.Hash("y", oldPos.y, "islocal", true, "time", ViewCfg.TableUpTime))
+
+	local tableLeft = find("3d/Desk/Table/MahjongTable_Lift_LR")
+	local tableRight = find("3d/Desk/Table/MahjongTable_Lift_TB")
+
+	local oldLeftPos = tableLeft.transform.localPosition
+	local oldRightPos = tableRight.transform.localPosition
+
+	tableLeft.transform.localPosition = Vector3.New(oldLeftPos.x, oldLeftPos.y-0.1, oldLeftPos.z)
+	tableRight.transform.localPosition = Vector3.New(oldRightPos.x, oldRightPos.y-0.1, oldRightPos.z)
+
+	iTween.MoveTo(tableLeft, iTween.Hash("y", 0, "islocal", true, "time", ViewCfg.TableUpTime))
+	iTween.MoveTo(tableRight, iTween.Hash("y", 0, "islocal", true, "time", ViewCfg.TableUpTime))
 end
 
 -- 刷新

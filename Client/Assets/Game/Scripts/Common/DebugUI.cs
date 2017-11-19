@@ -12,6 +12,7 @@ using UnityEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 
 public class DebugUI : SingletonMonoBehaviour<DebugUI>
 {
@@ -213,7 +214,45 @@ public class DebugUI : SingletonMonoBehaviour<DebugUI>
         if (GUI.Button(new Rect(810 * s, 0 * s, 90 * s, 30 * s), "Test"))
         {
             Util.CallMethod("util", "Test");
+            GameObject go = GameObject.Find("UIRoot/CanvasRoot/TablePanel/frame/content/selfCards/card4");
+            //iTween.MoveBy(go, new Vector3(0.035f, 0, 0), 0.1f);
+            ////Debug.Log("guid --- " + Guid.NewGuid().ToString());
+            //string url = AppConst.WebUrl;
+            //string currDownFile = "font.unity3d";
+            //url = "https://up.awcdn.com/ahpgTest/main_prefab.unity3d?v=20170211010230";
+            //Debug.LogWarning("url: >>" + url);
+            //Debug.LogWarning("currDownFile : >>" + currDownFile);
+
+            //ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
+            //using (WebClient client = new WebClient())
+            //{
+            //    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+            //    Debug.Log("DownloadFileAsync-- 1");
+            //    client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
+            //    client.DownloadFileAsync(new System.Uri(url), currDownFile);
+            //    Debug.Log("DownloadFileAsync-- 2");
+            //}
         }
+    }
+
+    void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+    {
+        //UnityEngine.Debug.Log(e.ProgressPercentage);
+        /*
+        UnityEngine.Debug.Log(string.Format("{0} MB's / {1} MB's",
+            (e.BytesReceived / 1024d / 1024d).ToString("0.00"),
+            (e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00")));
+        */
+        //float value = (float)e.ProgressPercentage / 100f;
+
+        string value = string.Format("{0} kb/s", (e.BytesReceived).ToString("0.00"));
+        Debug.LogWarning("value --- " + value);
+        if (e.ProgressPercentage == 100 && e.BytesReceived == e.TotalBytesToReceive)
+        {
+            Debug.Log("ProgressChanged --- 1");
+        }
+        Debug.Log("ProgressChanged --- 2");
     }
 
 

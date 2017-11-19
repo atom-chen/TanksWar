@@ -4,12 +4,24 @@ using System.Collections.Generic;
 
 public class SoundManager : Manager
 {
-    private AudioSource audio;
+    AudioSource m_audioUI;
+    AudioSource m_audioBG;
+    AudioSource m_audio2D;
+
     private Hashtable sounds = new Hashtable();
+
+    public static SoundManager instance;
+
+    private void Awake()
+    {
+    }
 
     void Start()
     {
-        audio = GetComponent<AudioSource>();
+        m_audioUI = this.gameObject.AddComponent<AudioSource>();
+        m_audioBG = this.gameObject.AddComponent<AudioSource>();
+        m_audio2D = this.gameObject.AddComponent<AudioSource>();
+        instance = this;
     }
 
     /// <summary>
@@ -28,6 +40,21 @@ public class SoundManager : Manager
     {
         if (sounds[key] == null) return null;
         return sounds[key] as AudioClip;
+    }
+
+    public AudioSource GetUIAudio()
+    {
+        return m_audioUI;
+    }
+
+    public AudioSource Get2DAudio()
+    {
+        return m_audio2D;
+    }
+
+    public AudioSource GetBGAudio()
+    {
+        return m_audioBG;
     }
 
     /// <summary>
@@ -54,39 +81,7 @@ public class SoundManager : Manager
         int i = PlayerPrefs.GetInt(key, 1);
         return i == 1;
     }
-
-    /// <summary>
-    /// 播放背景音乐
-    /// </summary>
-    /// <param name="canPlay"></param>
-    public void PlayBacksound(string name, bool canPlay)
-    {
-        if (audio.clip != null)
-        {
-            if (name.IndexOf(audio.clip.name) > -1)
-            {
-                if (!canPlay)
-                {
-                    audio.Stop();
-                    audio.clip = null;
-                    Util.ClearMemory();
-                }
-                return;
-            }
-        }
-        if (canPlay)
-        {
-            audio.loop = true;
-            audio.clip = LoadAudioClip(name);
-            audio.Play();
-        }
-        else
-        {
-            audio.Stop();
-            audio.clip = null;
-            Util.ClearMemory();
-        }
-    }
+    
 
     /// <summary>
     /// 是否播放音效,默认是1：播放

@@ -24,7 +24,7 @@ public static class ShareSDKPostProcessBuild
 
 		XCProject project = new XCProject (targetPath);
 		//var files = System.IO.Directory.GetFiles( unityEditorAssetPath, "*.projmods", System.IO.SearchOption.AllDirectories );
-		var files = System.IO.Directory.GetFiles( unityEditorAssetPath + "/ShareSDKiOSAutoPackage/Editor/SDKPorter", "*.projmods", System.IO.SearchOption.AllDirectories);
+		var files = System.IO.Directory.GetFiles( unityEditorAssetPath + "/Game/ThirdPart/ShareSDKiOSAutoPackage/Editor/SDKPorter", "*.projmods", System.IO.SearchOption.AllDirectories);
 		foreach( var file in files ) 
 		{
 			project.ApplyMod( file );

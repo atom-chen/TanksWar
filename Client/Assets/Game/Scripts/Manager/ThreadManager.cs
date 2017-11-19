@@ -118,6 +118,9 @@ public class ThreadManager : Manager
         string url = evParams[0].ToString();
         currDownFile = evParams[1].ToString();
 
+        UnityEngine.Debug.LogWarning("url: >>" + url);
+        UnityEngine.Debug.LogWarning("currDownFile : >>" + currDownFile);
+        ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
         using (WebClient client = new WebClient())
         {
             sw.Start();

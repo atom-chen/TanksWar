@@ -27,7 +27,7 @@ end
 function SettingPanel:OnInit()
     
     --设置按钮
-	self.m_comp.btnQieHuan:AddLuaClick(self.OnClickQH, self)
+	self.m_comp.btnQieHuan:AddLuaClick(self.OnClickChangeAccount, self)
     self.m_comp.btnExit:AddLuaClick(self.OnClickExit, self)
     self.m_comp.btnKeFu:AddLuaClick(self.OnClickKefu, self)
     self.m_comp.btnYinSi:AddLuaClick(self.OnClickYS, self)
@@ -52,15 +52,19 @@ function SettingPanel:OnShowDeal()
     
 end
 
+function SettingPanel:OnOpen()
+    bgMicBar.value = SoundMgr.GetBGVol()
+    audioBar.value = SoundMgr.Get2DVol()
+end
 
 function SettingPanel:OnUpdate()
 
     --处理音效和背景音乐值
-
-
     self.m_comp.imgMscDi.fillAmount = bgMicBar.value
     self.m_comp.imgAudioDi.fillAmount = audioBar.value
 
+    SoundMgr.SetBGVol(bgMicBar.value)
+    SoundMgr.Set2DVol(audioBar.value)
 end
 
 
@@ -83,15 +87,18 @@ function SettingPanel:OnChangeShock(tog)
          log("  SettingPanel:OnChangeShock   关闭震动 ")
 	 end
 end
-
+    
 --按钮事件  切换
-function SettingPanel:OnClickQH()
-   UIMgr.Open(Common_Panel.TipsPanel, Lang.notOpen)
+function SettingPanel:OnClickChangeAccount()
+    LocalConfig = {}
+    util.SaveFile(g_Config.configFileName, LocalConfig)    
+    UIMgr.CloseAll()
+    UIMgr.Open(Main_Panel.LoginPanel)
 end
 
 --退出
 function SettingPanel:OnClickExit()
-    UIMgr.Open(Common_Panel.TipsPanel, Lang.notOpen)
+    Application.Quit()
 end
 
 --客服

@@ -66,7 +66,7 @@ function CheckTableForPrint(table)
 		if vType == "table" then
 			t2[k] = CheckTableForPrint(v)
 		elseif vType == "userdata" then
-			t2[k] =tostring(v)
+			t2[k] = tostring(v)
 		else
 			t2[k] =v
 		end      
@@ -318,7 +318,11 @@ function OnRefresh(scriptName)
 end
 
 function SaveFile(fileName, tbl)
-	jsonUtil.file_save(Util.DataPath..fileName, cjson.encode(tbl))
+	if Platform.Editor then  -- pc上就直接存在项目目录下 否则打包资源时会被删掉
+		jsonUtil.file_save(fileName, cjson.encode(tbl))
+	else
+		jsonUtil.file_save(Util.DataPath..fileName, cjson.encode(tbl))
+	end
 end
 
 function LoadFile(fileName)
@@ -326,7 +330,13 @@ function LoadFile(fileName)
 		logError("传入文件名不正确 fileName--"..tostring(fileName))
 		return nil
 	end
-	local cfg = jsonUtil.file_load(Util.DataPath..fileName)
+	local cfg
+	if Platform.Editor then  -- pc上就直接存在项目目录下 否则打包资源时会被删掉
+		cfg = jsonUtil.file_load(fileName)
+	else
+		cfg = jsonUtil.file_load(Util.DataPath..fileName)
+	end
+
 	if cfg ~= "null" and cfg then
 		return cjson.decode(cfg)
 	end
@@ -357,9 +367,30 @@ function OnGM(param)
 	local protoId = 0
 	local data = {}
 	local mySelf = PlayerMgr.GetMyself()
-	if string.lower(paramList[1]) == "forcedepart" then
+	if string.lower(paramList[1]) == "depart" then
 		protoId = proto.forceDepart
-		data.roomId = mySelf:Get("roomId")
+		local roomId = paramList[2]
+		if not roomId then
+			roomId = mySelf:Get("roomId")
+		else
+			roomId = tonumber(roomId)
+		end
+		log("roomId -- "..roomId)
+		data.roomId = roomId
+	elseif string.lower(paramList[1]) == "departallroom" then
+		coroutine.start(function()
+			local roomList = {871232,987876,876543,234263,123584,545678,548971,658945,215456,456546,564654,555688,565656,465878,456413,545878,564897,568988,965682,657852,478974,474512,567787}
+			for _,v in pairs(roomList) do
+				protoId = proto.forceDepart
+				data.roomId = v
+				local res = NetWork.Request(protoId, data)
+				if res.code ~= 0 then
+					UIMgr.Open(Common_Panel.TipsPanel, res.msg)
+				end
+			end
+		end)
+		UIMgr.Open(Common_Panel.TipsPanel, "执行GM命令成功")
+		return
 	else
 		UIMgr.Open(Common_Panel.TipsPanel, "命令错误："..param)
 		return

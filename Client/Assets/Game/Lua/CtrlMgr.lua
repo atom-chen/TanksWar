@@ -27,6 +27,9 @@ function CoInit(mdName)
 	----加载资源
 	-- log("加载资源 ---- -- ")
 	local totleTime = Time.time
+	
+	curModCtrl = _G[modName.."_Ctrl"]
+	commonCtrl = _G["Common_Ctrl"]
 
 	log("modName -- "..modName.."  Game.isLoadMain -- "..tostring(Game.isLoadMain))
 	if modName == Module.Main and Game.isLoadMain then 	----大厅只加载一次
@@ -34,12 +37,11 @@ function CoInit(mdName)
 	end
 
 	if not Game.isLoadMain then		----公共模块只加载一次
-		commonCtrl = _G["Common_Ctrl"]
 		local time = Time.time
 		curLoadName = "Common_ResMgr"
-		panelMgr:LoadUIPrefab("Common")
+		panelMgr:LoadResPrefab("Common")
 		if not Platform.Editor then
-			while not UIResTool.HasMod("Common") do
+			while not ResTool.HasMod("Common") do
 				coroutine.step(1)
 			end
 		end
@@ -63,18 +65,16 @@ function CoInit(mdName)
 				-- log("加载 ["..cName.."] 用时--"..(Time.time - time))
 			end
 		end
-		Game.isLoadMain = true
 	end
 	
 -----------------------------------------------------------------------
-	curModCtrl = _G[modName.."_Ctrl"]
 	-- logWarn("curModCtrl --- "..#curModCtrl)
 	local time = Time.time
 	curLoadName = modName.."_ResMgr"
-	-- logWarn("LoadUIPrefab -- "..modName)
-	panelMgr:LoadUIPrefab(modName)
+	-- logWarn("LoadResPrefab -- "..modName)
+	panelMgr:LoadResPrefab(modName)
 	if not Platform.Editor then
-		while not UIResTool.HasMod(modName) do
+		while not ResTool.HasMod(modName) do
 			coroutine.step(1)
 		end
 	end
@@ -128,6 +128,14 @@ end
 --获取控制器--
 function Get(ctrlName)
 	return ctrlList[ctrlName];
+end
+
+function GetCtrlNum()
+	local num = 0
+	for _,v in pairs(ctrlList) do
+		num = num + 1
+	end
+	return num
 end
 
 function GetModuleCtrl()
@@ -206,4 +214,6 @@ function UnLoad(modName)
 	cur_module_num = 0
 	common_module_num = 0
 
+	isLoaded_module_res = false
+	isLoaded_common_res = false
 end

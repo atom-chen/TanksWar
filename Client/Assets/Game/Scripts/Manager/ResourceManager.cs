@@ -214,6 +214,34 @@ public class ResourceManager : Manager
         }
     }
 
+
+    /// <summary>
+    /// 加载场景
+    /// </summary>
+    public void LoadScene(string ab, string assetName, LuaFunction func = null, LuaTable tab = null)
+    {
+        string abName = ab.ToLower() + AppConst.ExtName;
+
+        StartCoroutine(LoadSceneCo(abName, assetName, func, tab));
+    }
+
+    IEnumerator LoadSceneCo(string abName, string assetName, LuaFunction func = null, LuaTable tab = null)
+    {
+        string path = Util.GetRelativePath();
+
+        WWW download = WWW.LoadFromCacheOrDownload(path + "/" + abName, 1);
+        yield return download;
+        var bundle = download.assetBundle;
+        if (func != null)
+        {
+            if (tab != null)
+                func.Call(tab, bundle);
+            else
+                func.Call(bundle);
+        }
+
+    }
+
     AssetBundleInfo GetLoadedAssetBundle(string abName)
     {
         AssetBundleInfo bundle = null;

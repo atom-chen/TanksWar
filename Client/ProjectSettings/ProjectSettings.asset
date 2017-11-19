@@ -218,7 +218,7 @@ PlayerSettings:
   AndroidTargetDevice: 3
   AndroidSplashScreenScale: 2
   androidSplashScreen: {fileID: 2800000, guid: a79448a1acf1b3842ac4e008e885bf51, type: 3}
-  AndroidKeystoreName: D:/ahpg-client/Client/user.keystore
+  AndroidKeystoreName: E:/TanksWar/Client/user.keystore
   AndroidKeyaliasName: ahpg
   AndroidTVCompatibility: 0
   AndroidIsGame: 1

@@ -23,7 +23,6 @@ function PlayerOther:GetSit()
 	if  res < 0 then
 		res = res + 4
 	end
-
 	return (res+1)
 end
 
@@ -58,9 +57,11 @@ function PlayerOther:OnAction(tbl)
 end
 
 function PlayerOther:OnActionChu(tbl)
-	-- log(self:GetName().." OnActionChu--")
+	log(self:GetName().." OnActionChu--"..tbl.cid)
 	self.m_container[ContainerType.PUT]:AddCard(tbl.cid)
-	self.m_container[ContainerType.HAND]:RemoveCardsEx()
+	-- self.m_container[ContainerType.HAND]:RemoveCardsEx()
+	--随机出一张
+	self.m_container[ContainerType.HAND]:RemoveCardRandom()
 end
 
 function PlayerOther:OnActionMo(tbl)
@@ -137,13 +138,11 @@ end
 
 function PlayerOther:OnActionHu(tbl)
 	log(self:GetName().." OnActionHu--")
-	local target = PlayerMgr.Get(tbl.fuserId)
-	if not target then
-		util.LogError("没找到接杠的人--fuserId--"..tostring(tbl.fuserId))
-		return
+	for k,v in pairs(tbl.score) do
+		local p = PlayerMgr.Get(k)
+		Event.Brocast(Msg.ShowScore, p, v)
 	end
-
-	target:GetContainer(ContainerType.PUT):RemoveCardsEx()
+	-- target:GetContainer(ContainerType.PUT):RemoveCardsEx()
 end
 
 function PlayerOther:OnChat(tbl)

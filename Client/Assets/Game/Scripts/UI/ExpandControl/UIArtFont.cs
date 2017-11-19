@@ -73,7 +73,7 @@ public class UIArtFont : MonoBehaviour
         Image subImage;
         float totalWidth=0;
         foreach(char c in num){
-            s = UIResTool.GetSprite(m_prefix + c);
+            s = ResTool.GetSprite(m_prefix + c);
             if (s == null)continue;
 
             //获取子节点，没有则创建新的

@@ -64,7 +64,7 @@ function BasePanel:Init()
 
 	----通用关闭
 	if self.m_comp.btnClose ~= nil then
-		self.m_comp.btnClose:AddLuaClick(self.Close, self)
+		self.m_comp.btnClose:AddLuaClick(self.OnClickClose, self)
 	end
 	self:OnInit()
 	self:SetActive(false)
@@ -175,6 +175,11 @@ function BasePanel:Fresh(param)
 	self:OnOpenEnd()
 end
 
+function BasePanel:OnClickClose()
+	self:Close()
+	-- SoundMgr.PlayUI(SoundCfg.common_click)
+end
+
 function BasePanel:Close(immediate)
 	-- util.Log("Close -- "..self.m_name)
 	immediate = immediate or false
@@ -211,7 +216,7 @@ function BasePanel:Close(immediate)
 		--GCCollect()
 		self:OnClose()
 	end
-	
+		
 	--发送关闭窗口的事件
 	--EventMgr.FireAll(MSG.MSG_SYSTEM, MSG_SYSTEM.PANEL_CLOSE, uiPanel);
 end

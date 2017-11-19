@@ -13,6 +13,7 @@ function TableCtrl:Ctor()
 
 	self.playerList = {}
 	self.m_roomInfo = false
+	self.m_gameInfo = false
 end
 
 function TableCtrl:OnInit()
@@ -21,7 +22,10 @@ function TableCtrl:OnInit()
 	self:AddEvent(Msg.PlayerInfoUpdate, self.UpdatePlayerInfo, self)
 	self:AddEvent(Msg.RemovePlayer, self.OnPlayerLeave, self)
 	self:AddEvent(Msg.RoomInfoUpdate, self.UpdateRoomInfo, self)
+	self:AddEvent(Msg.GameInfoUpdate, self.UpdateGameInfo, self)
+	self:AddEvent(Msg.ChangeState, self.OnChangeState, self)
 	self:AddEvent(Msg.ActionMo, self.OnActionMo, self)
+	self:AddEvent(Msg.ShowScore, self.OnShowScore, self)
 end
 
 function TableCtrl:LoadEnd()
@@ -39,15 +43,6 @@ function TableCtrl:AddPlayer(pInfo)
 		self.m_panel:SetPlayerInfo(pInfo)
 	end
 	
-end
-
-function TableCtrl:StartPlay()
-	self.m_panel:OnStartPlay()
-
-	-- local my = PlayerMgr.GetMyself()
-	-- local handContainer = my:GetContainer(ContainerType.HAND)
-	-- handContainer:OnShowCards()
-
 end
 
 function TableCtrl:OnExit()
@@ -80,8 +75,18 @@ end
 
 function TableCtrl:UpdateRoomInfo(roomInfo)
 	self.m_roomInfo = roomInfo
-	self.m_panel:SetRoomInfo(roomInfo)
+	self.m_panel:SetRoomInfo(self.m_roomInfo)
 	-- log("update room info -- "..cjson.encode(self.m_roomInfo))
+end
+
+function TableCtrl:UpdateGameInfo(gameInfo)
+	self.m_gameInfo = gameInfo
+	self.m_panel:SetGameInfo(self.m_gameInfo)
+	-- log("update room info -- "..cjson.encode(self.m_roomInfo))
+end
+
+function TableCtrl:OnChangeState(tbl)
+	-- logWarn("TableCtrl:OnChangeState-----"..tbl)
 end
 
 function TableCtrl:SetCardNum(num)
@@ -95,7 +100,11 @@ function TableCtrl:OnActionMo(player)
 	self:OnSubCardNum()
 end
 
+function TableCtrl:OnShowScore(player, score)
+	self.m_panel:ShowScore(player, score)
+end
+
 function TableCtrl:OnSubCardNum()
-	self.m_roomInfo.lastCardNum = self.m_roomInfo.lastCardNum - 1
-	self.m_panel:SetRoomInfo(self.m_roomInfo)
+	self.m_gameInfo.lastCardNum = self.m_gameInfo.lastCardNum - 1
+	self.m_panel:SetGameInfo(self.m_gameInfo)
 end

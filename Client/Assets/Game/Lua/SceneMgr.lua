@@ -22,6 +22,19 @@ function CoChange(sceneName)
 
 	Event.Brocast(Msg.ChangeSceneStart, sceneName)
 
+	if not Platform.Editor then
+		-- 需要先加载assetbundle
+		local abName = string.lower(Game.CurMod).."_scene"
+
+		local bLoaded = false
+		resMgr:LoadScene(abName, sceneName, function(go) logWarn("go --"..tostring(go).." goType -- "..type(go)) bLoaded = true end, nil)
+
+		while not bLoaded do
+			log("等待加载场景")
+			coroutine.step(1)
+		end
+	end
+	
 	local op = SceneManager.LoadSceneAsync(sceneName)
 	while not op.isDone do
 		coroutine.step(1)

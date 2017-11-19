@@ -754,7 +754,7 @@ namespace cn.sharesdk.unity3d.sdkporter
 			ChosenPlatforms chosenPlats;
 			try
 			{
-				string binFilePath = Application.dataPath + "/ShareSDKiOSAutoPackage/Editor/SDKPorter/ManagePlatforms/ChosenPlatforms.bin";
+				string binFilePath = Application.dataPath + "/Game/ThirdPart/ShareSDKiOSAutoPackage/Editor/SDKPorter/ManagePlatforms/ChosenPlatforms.bin";
 				BinaryFormatter formatter = new BinaryFormatter();
 				Stream destream = new FileStream(binFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 				chosenPlats = (ChosenPlatforms)formatter.Deserialize(destream);

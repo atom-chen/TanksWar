@@ -14,7 +14,7 @@ Module = {
 
 ----模块脚本
 ModuleScript = {
-	Common = {"Card", "ChiContainer", "HandContainer", "PutContainer", "TableContainer"},
+	Common = {"Card", "SelfContainer", "ChiContainer", "HandContainer", "PutContainer", "TableContainer"},
 	Main = {"Player"},
 	GYMJ = {"RoomMgr", "PlayerOther",},
 	FYMJ = {"RoomMgr", "PlayerOther",},
@@ -99,11 +99,13 @@ GYMJ_Panel = {
 FYMJ_Ctrl = {
 	FYMJCtrl = "FYMJCtrl",
 	TableCtrl = "TableCtrl",
+	EndCtrl = "EndCtrl",
 }
 
 FYMJ_Panel = {
 	FYMJPanel = "FYMJPanel",
 	TablePanel = "TablePanel",
+	EndPanel = "EndPanel",
 }
 
 --------------------------------------------------------------------------
@@ -132,20 +134,19 @@ PlayerSit = {
 	Left = 4,	--左
 }
 
---牌状态
+--牌状态 -- 摸牌和亮牌都需要动画 放着状态里做比较麻烦 发出的牌方向不一致
 CardState = {
 	Normal = 0, --常规
 	Select = 1, --选中
 	Lock = 2,	--禁用
-	Show = 3,	--亮牌
-	Deal = 4,	--发牌
 }
 
 --游戏状态
 PlayState = {
 	Ready = 0,
 	Playing = 1,
-	End = 2,
+	Dealing = 2,
+	End = 3,
 }
 
 Operation = {
@@ -167,7 +168,8 @@ ContainerType = {
 	HAND = 1,
 	PUT = 2,
 	CHI = 3,
-	TABLE = 3,
+	TABLE = 4,
+	SELF = 5,	--自己摆在桌上的手牌
 }
 
 --cardShowType

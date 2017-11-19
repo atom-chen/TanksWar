@@ -18,8 +18,10 @@ public class AppConst
 #else
     public static bool UpdateMode = true;                       //更新模式-默认关闭 true:使用WebUrl地址里的资源
 #endif
+
     public static bool LuaByteMode = false;                       //Lua字节码模式-默认关闭  //MAC平台需设为false 不支持在mac下打包为byte
     public static bool LuaBundleMode = false;                    //Lua代码AssetBundle模式    //这里打开就加载不到lua脚本了 需要在LuaManager里加Assetbundle路径
+
 #if UNITY_EDITOR
     public static bool PrefabBundleMod = false;                   //调试prefab false:直接用Resources下的UI预置体资源 true:用ui打包后的AssetBundles
     public static bool UpdateResource = true;                    //自动替换更新资源
@@ -29,6 +31,7 @@ public class AppConst
     public static bool UpdateResource = true;
     public static string TestResourceFolder = "../../Other/TestResource/";
 #endif
+
     public static int TimerInterval = 1;
     public static int GameFrameRate = 30;                        //游戏帧频
 
@@ -40,6 +43,7 @@ public class AppConst
     //public static string WebUrl = "http://localhost:6688/";      //测试更新地址
     //public static string WebUrl = "http://update.yushanziben.com/mahjong/test/StreamingAssets/";
     public static string WebUrl = "http://192.168.1.186:8080/";      //测试更新地址
+    //public static string WebUrl = "https://up.awcdn.com/ahpgTest/";      //测试更新地址
 
     public static string UserId = string.Empty;                 //用户ID
     public static int SocketPort = 0;                           //Socket服务器端口

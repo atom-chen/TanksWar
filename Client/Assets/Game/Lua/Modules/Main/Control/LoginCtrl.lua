@@ -137,21 +137,30 @@ function LoginCtrl:OnConnect()
 	    local res = NetWork.Request(proto.login, sendData)
 	    if res.code == 0 then
 
-	        local data = res.data
-	        if data.guestId then
-	        	LocalConfig.guestId = data.guestId
-	        	util.SaveFile(g_Config.configFileName, LocalConfig)
-	        end
+	    	res = NetWork.Request(proto.userInfo)
 
-	        PlayerMgr.AddMainPlayer(data.userId, data)
-	        local lobbyCtrl = CtrlMgr.Get(Main_Ctrl.LobbyCtrl)
-	        lobbyCtrl:OnStart()
+	    	if res.code ~= 0 then
+	    		UIMgr.Open(Common_Panel.TipsPanel, res.msg)
 
-	        --自动登录时没有打开登录界面
-	        local panel = UIMgr.Get(Main_Panel.LoginPanel)
-	        if panel:IsOpen() then
-	        	panel:Close()
-	        end
+	    		return
+	    	end
+	    	
+    		local data = res.data
+    		if data.guestId then
+    			LocalConfig.guestId = data.guestId
+    			util.SaveFile(g_Config.configFileName, LocalConfig)
+    		end
+
+    		PlayerMgr.AddMainPlayer(data.userId, data)
+    		local lobbyCtrl = CtrlMgr.Get(Main_Ctrl.LobbyCtrl)
+    		lobbyCtrl:OnStart()
+
+    		--自动登录时没有打开登录界面
+    		local panel = UIMgr.Get(Main_Panel.LoginPanel)
+    		if panel:IsOpen() then
+    			panel:Close()
+    		end
+	        
 		elseif res.code == 1 then
 			logWarn("登录失败--"..res.msg)
 			UIMgr.Open(Main_Panel.LoginPanel)

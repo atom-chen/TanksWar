@@ -58,14 +58,14 @@ function Player:OnOperate(tbl)
 end
 
 function Player:OnActionChu(tbl)
-	-- log("my OnActionChu--")
-	self.m_container[ContainerType.PUT]:AddCard(self.m_curChuCardItem:GetCard())
-	self.m_container[ContainerType.HAND]:RemoveCard(self.m_curChuCardItem)
+	log("my OnActionChu--")
+	self.m_container[ContainerType.PUT]:AddCard(tbl.cid)
+	self.m_container[ContainerType.SELF]:RemoveCard(self.m_curChuCardItem)
 end
 
 function Player:OnActionMo(tbl)
 	-- log("my OnActionMo--")
-	self.m_container[ContainerType.HAND]:AddCard(tbl.cid)
+	self.m_container[ContainerType.SELF]:AddCard(tbl.cid)
 end
 
 function Player:OnActionChi(tbl)
@@ -87,7 +87,7 @@ function Player:OnActionPeng(tbl)
 	end
 
 	self.m_container[ContainerType.CHI]:AddCardGroup(cardData)
-	self.m_container[ContainerType.HAND]:RemoveCardsEx(tbl.cid, 2)	--碰牌需要扣除两个手牌
+	self.m_container[ContainerType.SELF]:RemoveCardsEx(tbl.cid, 2)	--碰牌需要扣除两个手牌
 end
 
 function Player:OnActionAn(tbl)
@@ -99,7 +99,7 @@ function Player:OnActionAn(tbl)
 	}
 
 	self.m_container[ContainerType.CHI]:AddCardGroup(cardData)
-	self.m_container[ContainerType.HAND]:RemoveCardsEx(tbl.cid, 4)	--暗杠需要扣除四个手牌
+	self.m_container[ContainerType.SELF]:RemoveCardsEx(tbl.cid, 4)	--暗杠需要扣除四个手牌
 end
 
 function Player:OnActionJie(tbl)
@@ -118,7 +118,7 @@ function Player:OnActionJie(tbl)
 	end
 
 	self.m_container[ContainerType.CHI]:AddCardGroup(cardData)
-	self.m_container[ContainerType.HAND]:RemoveCardsEx(tbl.cid, 3)	--接杠需要扣除三个手牌
+	self.m_container[ContainerType.SELF]:RemoveCardsEx(tbl.cid, 3)	--接杠需要扣除三个手牌
 end
 
 function Player:OnActionGong(tbl) 	--要把碰的牌去掉 改成杠牌
@@ -131,18 +131,17 @@ function Player:OnActionGong(tbl) 	--要把碰的牌去掉 改成杠牌
 
 	self.m_container[ContainerType.CHI]:RemoveCardGroup(CardShowType.PENG, tbl.cid*3) 	--去掉原有碰的牌
 	self.m_container[ContainerType.CHI]:AddCardGroup(cardData)
-	self.m_container[ContainerType.HAND]:RemoveCardsEx(tbl.cid, 1)	--公杠需要扣除一个手牌
+	self.m_container[ContainerType.SELF]:RemoveCardsEx(tbl.cid, 1)	--公杠需要扣除一个手牌
 end
 
 function Player:OnActionHu(tbl)
 	log("my OnActionHu--")
-	local target = PlayerMgr.Get(tbl.fuserId)
-	if not target then
-		util.LogError("没找到接杠的人--fuserId--"..tostring(tbl.fuserId))
-		return
+	local score = tbl.score[tostring(self:GetID())]
+	for k,v in pairs(tbl.score) do
+		local p = PlayerMgr.Get(k)
+		Event.Brocast(Msg.ShowScore, p, v)
 	end
-
-	target:GetContainer(ContainerType.PUT):RemoveCardsEx()
+	-- target:GetContainer(ContainerType.PUT):RemoveCardsEx()
 end
 
 function Player:OnChat(tbl)

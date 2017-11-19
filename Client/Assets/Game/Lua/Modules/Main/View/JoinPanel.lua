@@ -3,12 +3,10 @@ JoinPanel = Class(BasePanel);
 local  idLen = 6    --房间号长度
 local  inputNum = nil
 
-local this
 
 function JoinPanel:Ctor()
     self.m_comp.InputGrid = Transform
     self.m_comp.ShowGrid = Transform
-    this = self
 end
 
 function JoinPanel:OnInit()
@@ -42,7 +40,7 @@ function JoinPanel:OnInput(btn)
 	elseif btn.gameObject.name == "btnNum9" then
 		self:AddNum(9)
 	elseif btn.gameObject.name == "btnNumReEnter" then
-		self:ReenterNunm()
+		self:ReEnterNum()
 	elseif btn.gameObject.name == "btnNum0" then
 		self:AddNum(0)
 	elseif btn.gameObject.name == "btnNumDelete" then	
@@ -53,25 +51,25 @@ function JoinPanel:OnInput(btn)
 end
 
 function JoinPanel:OnKeyInput(key)
-    if not this:IsOpen() then
+    if not self:IsOpen() then
         return
     end
     if key >= 48 and key <= 57 then
-        this:AddNum(key - 48)
+        self:AddNum(key - 48)
     end
 
     if key >= 256 and key <= 265 then
-        this:AddNum(key - 256)
+        self:AddNum(key - 256)
     end
 
     if key == 8 then
-        this:DeletNum()
+        self:DeletNum()
     end
 
     if key == 127 or key == 266 then
-        this:ReenterNunm()
+        self:ReEnterNum()
     end
-    this:ShowRoomNum()
+    self:ShowRoomNum()
 end
 
 local InputNumArr={}
@@ -101,7 +99,7 @@ function JoinPanel:DeletNum()
 end
 
 --重新输入
-function  JoinPanel:ReenterNunm()
+function JoinPanel:ReEnterNum()
 	for i=1,#InputNumArr do
 		InputNumArr[i]=nil
 	end	
@@ -123,6 +121,8 @@ function JoinPanel:ShowRoomNum()
     end
 end
 
-function JoinPanel:OnOpen( )
+function JoinPanel:OnOpen()
+    self:ReEnterNum()
+    self:ShowRoomNum()    
 end
 

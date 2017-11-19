@@ -24,6 +24,7 @@ function BaseCtrl:Init()
 		logError('继承的panel没有给prefab名')
 		return
 	end
+	-- log("ctrl init -- "..self.m_panelName..' self.m_modName')
 	if not self.m_panel then
     	panelMgr:CreatePanel(self.m_modName, self.m_panelName, self.OnCreate, self);
 	end
@@ -72,7 +73,7 @@ function BaseCtrl:OnCreate(obj)
 		logError("未加载panel脚本："..self.m_panelName)
 		return
 	end
-	
+	-- log("on create -- "..self.m_panelName)
 	self.m_panel = panelClass.New(obj)
 	self.m_panel.m_ctrl = self
 	UIMgr.AddPanel(self.m_panelName, self.m_panel)

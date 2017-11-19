@@ -17,6 +17,11 @@ Msg = {
 	RoomInfoUpdate		= '100012',	--房间内信息变化
 	ActionMo			= '100013',	--摸牌消息
 	OnOperate			= '100014',	--显示操作
+	ShowCardsEnd		= '100015',	--发牌动画结束
+	GameInfoUpdate		= '100016',	--游戏内信息变化
+	ShowCardsStart		= '100017',	--发牌动画开始
+	OnEndShow			= '100018',	--结算显示
+	ShowScore			= '100019', --显示分数
 }
 
 

@@ -95,9 +95,9 @@ public class PanelManager : Manager
         Destroy(panelObj.gameObject);
     }
 
-    public void LoadUIPrefab(string modName)
+    public void LoadResPrefab(string modName)
     {
-        string assetName = "UIResMgr";
+        string assetName = "ResMgr";
         string abName = modName.ToLower() + "_prefab" + AppConst.ExtName;
         if (!AppConst.PrefabBundleMod)
         {
@@ -120,19 +120,19 @@ public class PanelManager : Manager
             GameObject go = Instantiate(prefab) as GameObject;
             go.name = assetName;
             
-            if (assetName == "UIResMgr")
+            if (assetName == "ResMgr")
             {
-                UIResMgr uiResMgr = go.GetComponent<UIResMgr>();
-                if (uiResMgr == null)
+                ResMgr resMgr = go.GetComponent<ResMgr>();
+                if (resMgr == null)
                 {
-                    Debug.LogError("abName : " + abName + "  assetName : " + assetName + " 没有UIResMgr脚本");
+                    Debug.LogError("abName : " + abName + "  assetName : " + assetName + " 没有ResMgr脚本");
                     return;
                 }
 
                 if (modName == "Common" || modName == "Main")
-                    uiResMgr.transform.SetParent(m_canvasRoot, false);
+                    resMgr.transform.SetParent(m_canvasRoot, false);
 
-                UIResTool.Add(uiResMgr, modName);
+                ResTool.Add(resMgr, modName);
                 return;
             }
 
@@ -178,18 +178,18 @@ public class PanelManager : Manager
             if (func != null) func.Call(tab, go);
         }
 
-        if (assetName == "UIResMgr")
+        if (assetName == "ResMgr")
         {
-            UIResMgr uiResMgr = go.GetComponent<UIResMgr>();
-            if (uiResMgr == null)
+            ResMgr resMgr = go.GetComponent<ResMgr>();
+            if (resMgr == null)
             {
-                Debug.LogError("modName : " + modName + "  assetName : " + assetName + " 没有UIResMgr脚本");
+                Debug.LogError("modName : " + modName + "  assetName : " + assetName + " 没有ResMgr脚本");
                 yield break;
             }
             if (modName == "Common" || modName == "Main")
-                uiResMgr.transform.SetParent(m_canvasRoot, false);
-            uiResMgr.gameObject.SetActive(false);
-            UIResTool.Add(uiResMgr, modName);
+                resMgr.transform.SetParent(m_canvasRoot, false);
+            resMgr.gameObject.SetActive(false);
+            ResTool.Add(resMgr, modName);
         }
         yield break;
     }

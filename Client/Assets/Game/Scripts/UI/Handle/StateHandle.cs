@@ -34,9 +34,9 @@ public partial class StateHandle : MonoBehaviour,
         public string name = "";
         public bool isDuration = false;
         public bool isEnterSound = false;
-        public int enterSoundId = 0;
+        public string enterSoundName = "";
         public bool isExitSound = false;
-        public int exitSoundId = 0;
+        public string exitSoundName = "";
         public State(string name)
         {
             this.name = name;
@@ -64,24 +64,20 @@ public partial class StateHandle : MonoBehaviour,
 
         }
 
-        public void PlayEnterSound()
+        public void PlayEnterSound(CtrlType ctrlType, string goName, int curState)
         {
-            if (isEnterSound)
-            {
-                //#if !ART_DEBUG
-                //                SoundMgr.instance.Play2DSoundAutoChannel(enterSoundId);
-                //#endif   
-            }
+            //if (isEnterSound)
+            //{
+                Util.CallMethod("SoundMgr", "PlayStateHandleEnter", enterSoundName, (int)ctrlType, goName, curState);
+            //}
         }
 
-        public void PlayExitSound()
+        public void PlayExitSound(CtrlType ctrlType, string goName, int curState)
         {
-            if (isExitSound)
-            {
-                //#if !ART_DEBUG
-                //                SoundMgr.instance.Play2DSoundAutoChannel(exitSoundId);
-                //#endif
-            }
+            //if (isExitSound)
+            //{
+                Util.CallMethod("SoundMgr", "PlayStateHandleExit", exitSoundName, (int)ctrlType, goName, curState);
+            //}
         }
 
         public void Update()
@@ -315,14 +311,14 @@ public partial class StateHandle : MonoBehaviour,
         if (checkSameState && m_curState == state && m_cached == true)
             return;
 
-        m_states[m_curState].PlayExitSound();
+        m_states[m_curState].PlayExitSound(m_ctrlType, this.gameObject.name, m_curState);
         m_curState = state;
         m_cached = true;
         if (isDuration && m_states[m_curState].isDuration)
             m_states[m_curState].Start();
         else
             m_states[m_curState].End();
-        m_states[m_curState].PlayEnterSound();
+        m_states[m_curState].PlayEnterSound(m_ctrlType, this.gameObject.name, m_curState);
 
         if (m_onChangeState != null)
         {

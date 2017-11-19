@@ -26,6 +26,8 @@ return {
 	userInfoSE = 13,
 	-- 设置下用于发牌的底牌
 	setNextLineCard = 14,
+	-- 客户端发什么，直接返回什么
+	autoReturn = 15,
 
 	----------- 涡阳麻将 ------------
 	gy_createRoom = 101,

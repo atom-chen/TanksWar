@@ -11,8 +11,10 @@ local modName = ""
 local topPanel = false
 local closingTopPanel = false
 
-function CoInit(mdName)
+local newLoadNum = 0
 
+function CoInit(mdName)
+	newLoadNum = 0
 	--加载通用内容--
 	local common_panel = _G['Common_Panel']
 	for _,pName in pairs(common_panel) do
@@ -32,7 +34,7 @@ end
 --添加panel--
 function AddPanel(panelName, panel)
 	if panel == nil then
-		logError("panel 为空")
+		util.LogError("panel 为空")
 		return
 	end
 	
@@ -59,7 +61,7 @@ function AddPanel(panelName, panel)
 	-- 	end
 	-- 	panel:Open(param)
 	-- end
-	
+	newLoadNum = newLoadNum + 1
 	return panel
 end
 
@@ -68,12 +70,19 @@ function Get(panelName)
 	return panelList[panelName];
 end
 
+function GetModuleLoadNum()
+	return newLoadNum
+end
+
 --打开panel--
 function Open(panelName, param, immediate)
 	-- util.LogError('panelName -- '..panelName)
+	-- for k,v in pairs(panelList) do
+	-- 	log("k -- "..k..' v -- '..tostring(v))
+	-- end
 	local panel = Get(panelName)
 	if panel == nil then
-		logError("没有找到panel："..panelName)
+		util.LogError("没有找到panel："..panelName)
 		return
 	end
 	
@@ -85,7 +94,7 @@ end
 function Fresh(panelName, param)
 	local panel = Get(panelName)
 	if panel == nil then
-		logError("没有找到panel："..panelName)
+		util.LogError("没有找到panel："..panelName)
 		return
 	end
 	
@@ -97,7 +106,7 @@ end
 function Close(panelName, immediate)
 	local panel = Get(panelName)
 	if panel == nil then
-		logError("没有找到panel："..panelName)
+		util.LogError("没有找到panel："..panelName)
 		return
 	end
 	
@@ -145,6 +154,8 @@ function UnLoad(modName)
 		package.loaded['Modules.'..modName..".View."..pName] = nil
 		-- log('卸载脚本--'..'Modules.'..modName..".View."..pName)
 	end
+	newLoadNum = 0
+	logWarn("UIMgr UnLoad ----- ")
 end
 
 function CheckOpenTopAndAutoOrder(panel)

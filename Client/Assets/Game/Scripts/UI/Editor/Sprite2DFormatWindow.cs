@@ -207,14 +207,14 @@ public class Sprite2DFormatWindow : EditorWindow
                 modName = pList[n + 1];
         }
 
-        UIResMgr uiRes = UIResTool.Get(modName);
+        ResMgr res = ResTool.Get(modName);
 
         if (Application.isPlaying)
         {
             Debug.LogError("运行中不能设置图片");
             return;
         }
-        uiRes.PackByPath(path);
+        res.PackByPath(path);
     }
 
 

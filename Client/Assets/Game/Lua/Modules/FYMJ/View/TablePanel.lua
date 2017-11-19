@@ -27,10 +27,13 @@ function TablePanel:Ctor()
 
 	self.m_comp.btnHu = ButtonEx
 	self.m_comp.btnTing = ButtonEx
-	self.m_comp.btnGang = ButtonEx
+	self.m_comp.btnGongGang = ButtonEx
+	self.m_comp.btnJieGang = ButtonEx
+	self.m_comp.btnAnGang = ButtonEx
 	self.m_comp.btnPeng = ButtonEx
 	self.m_comp.btnChi = ButtonEx
 	self.m_comp.btnGuo = ButtonEx
+	self.m_comp.maskInput = ButtonEx
 
 	self.m_comp.optRoot = GameObject
 	self.m_comp.centerObj = GameObject
@@ -57,7 +60,9 @@ function TablePanel:OnInit()
 
 	self.m_comp.btnHu:AddLuaClickEx(self.OnClickAction, self)
 	self.m_comp.btnTing:AddLuaClickEx(self.OnClickAction, self)
-	self.m_comp.btnGang:AddLuaClickEx(self.OnClickAction, self)
+	self.m_comp.btnGongGang:AddLuaClickEx(self.OnClickAction, self)
+	self.m_comp.btnJieGang:AddLuaClickEx(self.OnClickAction, self)
+	self.m_comp.btnAnGang:AddLuaClickEx(self.OnClickAction, self)
 	self.m_comp.btnPeng:AddLuaClickEx(self.OnClickAction, self)
 	self.m_comp.btnChi:AddLuaClickEx(self.OnClickAction, self)
 	self.m_comp.btnGuo:AddLuaClickEx(self.OnClickAction, self)
@@ -67,9 +72,9 @@ function TablePanel:OnInit()
 	self.m_optBtns[Operation.PENG.name] = self.m_comp.btnPeng
 	self.m_optBtns[Operation.CHI.name] 	= self.m_comp.btnChi
 	self.m_optBtns[Operation.GUO.name] 	= self.m_comp.btnGuo
-	self.m_optBtns[Operation.GONG.name] = self.m_comp.btnGang
-	self.m_optBtns[Operation.AN.name] 	= self.m_comp.btnGang
-	self.m_optBtns[Operation.JIE.name] 	= self.m_comp.btnGang
+	self.m_optBtns[Operation.GONG.name] = self.m_comp.btnGongGang
+	self.m_optBtns[Operation.AN.name] 	= self.m_comp.btnAnGang
+	self.m_optBtns[Operation.JIE.name] 	= self.m_comp.btnJieGang
 
 
 	self.m_comp.infoView:SetActive(false)
@@ -78,6 +83,8 @@ function TablePanel:OnInit()
 
     self:AddEvent(Msg.ChangeState, self.OnStateChange, self) --游戏状态改变
     self:AddEvent(Msg.OnOperate, self.ShowOpt, self) --操作权限
+    self:AddEvent(Msg.ShowCardsStart, self.OnShowCardsStart, self)
+    self:AddEvent(Msg.OnEndShow, self.OnGameEnd, self)
 
 	self.m_myself = PlayerMgr.GetMyself()
 
@@ -86,6 +93,8 @@ end
 
 function TablePanel:OnSettingClick()
 	log("OnSettingClick ---- ")
+	-- UIMgr.Open(Main_Panel.SettingPanel)
+	UIMgr.Open(FYMJ_Panel.EndPanel)
 end
 
 function TablePanel:OnExitClick()
@@ -139,6 +148,21 @@ function TablePanel:ShowOpt(optData)
 	end
 end
 
+function TablePanel:OnShowCardsStart(bAni)
+	--头像展示
+	self:OnStartPlay(bAni)
+
+	for i = 1, #self.m_infoViewList do
+		if self.m_infoViewList[i]:IsActive() then
+			self.m_infoViewList[i]:UpdateInfo(state)
+		end
+	end
+end
+
+function TablePanel:OnGameEnd(tbl)
+	self.m_comp.selfCards:SetActive(false)
+end
+
 function TablePanel:HideAllOpt()
 	for k,v in pairs(self.m_optBtns) do
 		v.gameObject:SetActive(false)
@@ -147,6 +171,10 @@ end
 
 function TablePanel:OnOpen()
 	-- log("TablePanel OnOpen---->>>")
+
+	self.m_comp.btnSetting.gameObject:SetActive(OpenCfg.Setting)
+	self.m_comp.btnHelp.gameObject:SetActive(OpenCfg.Help)
+
 	self.m_infoViewList = {}
 	self.m_infoStateList = {}
 	--初始化没个玩家的头像
@@ -161,6 +189,8 @@ function TablePanel:OnOpen()
 		handle:SetStateEx(PlayState.Ready)
 		self.m_infoViewList[#self.m_infoViewList+1] = item
 	end
+
+	self.m_comp.maskInput.gameObject:SetActive(true)
 end
 
 function TablePanel:OnStartPlay()
@@ -173,10 +203,12 @@ function TablePanel:OnStartPlay()
 end
 
 function TablePanel:OnStateChange(state)
-	for i = 1, #self.m_infoViewList do
-		if self.m_infoViewList[i]:IsActive() then
-			self.m_infoViewList[i]:UpdateInfo(state)
-		end
+	-- logWarn("TablePanel OnStateChange----"..state)
+
+	if state == PlayState.Dealing then
+		self.m_comp.maskInput.gameObject:SetActive(true)
+	else
+		self.m_comp.maskInput.gameObject:SetActive(false)
 	end
 end
 
@@ -187,6 +219,14 @@ function TablePanel:SetPlayerInfo(player)
 		self.m_comp.infoView:SetActive(true)
 		self.m_infoViewList[sit]:SetActive(true)
 		self.m_infoViewList[sit]:SetInfo(player)
+	end
+end
+
+function TablePanel:ShowScore(player, score)
+	local sit = player:GetSit()
+	if self.m_infoViewList[sit] ~= nil then
+		self.m_comp.infoView:SetActive(true)
+		self.m_infoViewList[sit]:ShowScore(score)
 	end
 end
 
@@ -209,10 +249,12 @@ function TablePanel:SetRoomInfo(data)
 	if data.roomId then
 		self.m_comp.txtRoomId.text = "房间:<color=blue>"..data.roomId.."</color>"
 	end
+end
+
+function TablePanel:SetGameInfo(data)
 	if data.lastCardNum then
 		self.m_comp.txtCardsNum.text = "剩余"..data.lastCardNum
 	end
-	
 end
 
 function TablePanel:SetCardPos(pos)

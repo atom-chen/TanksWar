@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using LuaInterface;
 using System.Reflection;
 using System.IO;
+using System.Net;
 
 public class GameManager : Manager
 {
@@ -154,6 +155,8 @@ public class GameManager : Manager
         string listUrl = url + "files.txt?v=" + random;
         Debug.LogWarning("LoadUpdate---->>>" + listUrl);
 
+        ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
         WWW www = new WWW(listUrl); yield return www;
         if (www.error != null)
         {
@@ -207,11 +210,12 @@ public class GameManager : Manager
                 while (!(IsDownOK(localfile))) { yield return new WaitForEndOfFrame(); }
             }
 
-
             fileNum = fileNum + 1;
             facade.SendMessageCommand(NotiConst.UPDATE_PROGRESS, Math.Floor(fileNum / (float)files.Length * 100));
         }
         yield return new WaitForEndOfFrame();
+
+        yield return new WaitForSeconds(5);
 
         message = "更新完成!!";
         facade.SendMessageCommand(NotiConst.UPDATE_MESSAGE, message);
@@ -258,6 +262,7 @@ public class GameManager : Manager
                 //
                 break;
             case NotiConst.UPDATE_DOWNLOAD: //下载一个完成
+                Debug.Log("data.evNamedata.evName" + data.evName);
                 downloadFiles.Add(data.evParam.ToString());
                 break;
         }

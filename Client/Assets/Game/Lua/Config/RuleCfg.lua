@@ -2,7 +2,7 @@
 local _M = { }
 
 --  游戏类型 ID 必须与 GameCfg id  一致
-_M.ruleCfg = 
+_M.Cfg = 
 {
 	  {id = 1,	name = "血战", 		shareDesc = "血战", 		icon = "xuezhan",    	ruleType = 1,    serverID="xuezhan" ,     childRuleID={101,102,201,202}  },
 	  {id = 2,	name = "红中", 		shareDesc = "红中", 		icon = "hongzhong", 	ruleType = 1,   serverID="hongzhong" ,    childRuleID={}  },
@@ -14,7 +14,7 @@ _M.ruleCfg =
 
 function _M.GetById(ID)
 	-- body
-   for k,v in pairs(ruleCfg) do
+   for k,v in pairs(Cfg) do
 	    -- print(k,#v.childRuleID)
 	   if v.id==ID then
           return v

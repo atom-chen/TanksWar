@@ -172,7 +172,7 @@ namespace cn.sharesdk.unity3d.sdkporter
 
 		private void Prepare()
 		{
-			string filePath = Application.dataPath + "/ShareSDKiOSAutoPackage/Editor/SDKPorter/ManagePlatforms/ChosenPlatforms.bin";
+			string filePath = Application.dataPath + "/Game/ThirdPart/ShareSDKiOSAutoPackage/Editor/SDKPorter/ManagePlatforms/ChosenPlatforms.bin";
 			try
 			{
 				BinaryFormatter formatter = new BinaryFormatter();
@@ -192,7 +192,7 @@ namespace cn.sharesdk.unity3d.sdkporter
 		{
 			try
 			{
-				string filePath = Application.dataPath + "/ShareSDKiOSAutoPackage/Editor/SDKPorter/ManagePlatforms/ChosenPlatforms.bin";
+				string filePath = Application.dataPath + "/Game/ThirdPart/ShareSDKiOSAutoPackage/Editor/SDKPorter/ManagePlatforms/ChosenPlatforms.bin";
 				BinaryFormatter formatter = new BinaryFormatter();
 				Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
 				formatter.Serialize(stream, this.chosenPlats);

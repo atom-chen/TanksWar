@@ -7,14 +7,68 @@ public class SoundManagerWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(SoundManager), typeof(Manager));
+		L.RegFunction("GetUIAudio", GetUIAudio);
+		L.RegFunction("Get2DAudio", Get2DAudio);
+		L.RegFunction("GetBGAudio", GetBGAudio);
 		L.RegFunction("LoadAudioClip", LoadAudioClip);
 		L.RegFunction("CanPlayBackSound", CanPlayBackSound);
-		L.RegFunction("PlayBacksound", PlayBacksound);
 		L.RegFunction("CanPlaySoundEffect", CanPlaySoundEffect);
 		L.RegFunction("Play", Play);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
+		L.RegVar("instance", get_instance, set_instance);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetUIAudio(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			SoundManager obj = (SoundManager)ToLua.CheckObject(L, 1, typeof(SoundManager));
+			UnityEngine.AudioSource o = obj.GetUIAudio();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Get2DAudio(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			SoundManager obj = (SoundManager)ToLua.CheckObject(L, 1, typeof(SoundManager));
+			UnityEngine.AudioSource o = obj.Get2DAudio();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetBGAudio(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			SoundManager obj = (SoundManager)ToLua.CheckObject(L, 1, typeof(SoundManager));
+			UnityEngine.AudioSource o = obj.GetBGAudio();
+			ToLua.Push(L, o);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -45,24 +99,6 @@ public class SoundManagerWrap
 			bool o = obj.CanPlayBackSound();
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int PlayBacksound(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 3);
-			SoundManager obj = (SoundManager)ToLua.CheckObject(L, 1, typeof(SoundManager));
-			string arg0 = ToLua.CheckString(L, 2);
-			bool arg1 = LuaDLL.luaL_checkboolean(L, 3);
-			obj.PlayBacksound(arg0, arg1);
-			return 0;
 		}
 		catch(Exception e)
 		{
@@ -116,6 +152,35 @@ public class SoundManagerWrap
 			bool o = arg0 == arg1;
 			LuaDLL.lua_pushboolean(L, o);
 			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_instance(IntPtr L)
+	{
+		try
+		{
+			ToLua.Push(L, SoundManager.instance);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_instance(IntPtr L)
+	{
+		try
+		{
+			SoundManager arg0 = (SoundManager)ToLua.CheckUnityObject(L, 2, typeof(SoundManager));
+			SoundManager.instance = arg0;
+			return 0;
 		}
 		catch(Exception e)
 		{
